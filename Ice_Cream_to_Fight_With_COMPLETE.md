@@ -160,7 +160,7 @@ Here's what you're getting into, organized by difficulty so you can build your s
 
 **Coconut Pandan** — Thailand's answer to vanilla, except it's green and tastes like vacation in a bowl
 
-**Bơ Chanh** — Vietnam said "fuck it, avocados are dessert now" and they were absolutely RIGHT
+**Sinh Tố Bơ** — Vietnam said "fuck it, avocados are dessert now" and they were absolutely RIGHT
 
 **Cardamom-Pistachio Kulfi** — India's been freezing dairy for centuries and making it look easy while the rest of us struggle like idiots
 
@@ -187,7 +187,7 @@ Here's what you're getting into, organized by difficulty so you can build your s
 
 **Atole de Anis** — Mexican breakfast corn drink that absolutely nobody asked us to freeze (but here we are, doing it anyway)
 
-**Bocadillo y Cafe** — Colombia's tropical fruit meets dark coffee in a mashup that shouldn't work but absolutely fucking does
+**Bocadillo y Café** — Colombia's tropical fruit meets dark coffee in a mashup that shouldn't work but absolutely fucking does
 
 **Sfogliatelle** — Naples' most extra pastry, shellacked and frozen for your convenience because we've all lost our minds
 
