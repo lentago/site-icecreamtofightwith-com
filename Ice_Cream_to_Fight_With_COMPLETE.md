@@ -1181,7 +1181,7 @@ Use Ataulfo mangos—also called Champagne or Honey mangos—if you can find the
 
 **Why corn syrup:**
 
-Look, I get it—corn syrup sounds sketchy. But hear me out, dude. It creates a noticeably smoother, creamier texture without muting that bright-ass mango flavor. It also helps prevent ice crystals in this lighter custard (we're only using 2 yolks here). The improved texture means the chili heat registers more clearly as the ice cream melts on your tongue, which is kind of the whole point. Plus it keeps the ice cream scoopable longer—stays creamy even after a week in the freezer instead of turning into a brick.
+Look, I get it—corn syrup sounds sketchy. But hear me out, dude. It creates a noticeably smoother, creamier texture without muting that bright mango flavor. It also helps prevent ice crystals in this lighter custard (we're only using 2 yolks here). The improved texture means the chili heat registers more clearly as the ice cream melts on your tongue, which is kind of the whole point. Plus it keeps the ice cream scoopable longer—stays creamy even after a week in the freezer instead of turning into a brick.
 
 **The light custard:**
 
@@ -1820,7 +1820,7 @@ Spirited. Lively. Celebratory. Tastes like a Jamaican party where everyone's inv
 
 **Total Time:** 6-8 hours across 2 days (includes simmering, custard-making, and overnight chilling, plus time spent staring at your very yellow custard and wondering if you fucked up—you didn't)
 
-Golden milk—haldi doodh in Hindi—is an Indian drink made with turmeric, and yes, it makes ice cream *very* yellow. Surprisingly yellow. Aggressively yellow. "Did someone spill highlighter ink in this?" yellow. But paired with dates—which have been sweetening Indian food for thousands of years—it actually makes perfect sense. Khajur and haldi are old friends. The turmeric's earthy warmth plays against date's deep caramel-toffee richness in a way that feels inevitable once you taste it, even though it sounds completely unhinged on paper.
+Golden milk—haldi doodh in Hindi—is an Indian drink made with turmeric, and yes, it makes ice cream *very* yellow. Surprisingly yellow. Aggressively yellow. "Did someone spill highlighter ink in this?" yellow. But paired with dates—which have been sweetening Indian food for thousands of years—it actually makes perfect sense. Khajur and haldi are old companions. The turmeric's earthy warmth plays against date's deep caramel-toffee richness in a way that feels inevitable once you taste it, even though it sounds completely unhinged on paper.
 
 You'll spend a moment wondering if you added too much turmeric. You probably didn't. It's supposed to look like that, homie. Embrace the yellow. Become one with the yellow. Let the yellow into your heart.
 
@@ -2015,7 +2015,7 @@ Let it cool completely on the baking sheet. I know you want to touch it. Don't. 
 
 **Irish Whiskey Caramel:**
 
-Have your warmed cream, whiskey, and butter measured and sitting right next to the stove—mise en place, baby. Caramel waits for no one and gives exactly zero shits about your organizational chaos.
+Have your warmed cream, whiskey, and butter measured and sitting right next to the stove—mise en place, baby. Caramel waits for no one and has zero patience for your organizational chaos.
 
 Combine sugar and water in a light-colored saucepan (so you can actually see what's happening instead of playing "is it brown or burnt?" roulette). Heat over medium-high WITHOUT STIRRING. I cannot stress this enough. Put the spoon down. Walk away from the spoon. Stirring makes it crystallize and then you're starting over and crying. Let it reach deep amber—think copper penny, think good bourbon, think "is that too dark? no wait it's fine."
 
@@ -2037,7 +2037,7 @@ Strain through a fine-mesh sieve to catch any bits of cooked egg. Even if you th
 
 Let cool for about 10 minutes—you don't want to add the buttermilk to scorching hot custard or it'll curdle and you'll have expensive cottage cheese.
 
-Once the custard has cooled slightly (warm but not "ow fuck" hot), whisk in the buttermilk, vanilla, and salt. The buttermilk adds this subtle tang that balances all the rich caramel sweetness later. Don't add it when the custard is too hot or the acidity will cause it to separate, and then you'll be sad and I'll be sad and nobody wants that.
+Once the custard has cooled slightly (warm but not "ow that's hot" hot), whisk in the buttermilk, vanilla, and salt. The buttermilk adds this subtle tang that balances all the rich caramel sweetness later. Don't add it when the custard is too hot or the acidity will cause it to separate, and then you'll be sad and I'll be sad and nobody wants that.
 
 Cool over an ice bath, stirring occasionally, then refrigerate at least 4 hours or overnight. Overnight is better—it lets the buttermilk flavor integrate fully. Plus it gives you an excuse to pour yourself a glass of that whiskey you definitely bought just for the recipe.
 
