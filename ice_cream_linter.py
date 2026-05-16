@@ -14,6 +14,7 @@ RECIPE_DIR = ROOT / "recipes"
 FRONT_DIR = ROOT / "front_matter"
 BACK_DIR = ROOT / "back_matter"
 CANONICAL_DIR = ROOT / "canonical_samples"
+FLAVORS_FILE = FRONT_DIR / "08_the_flavors.md"
 
 PROFANITY = ["fuck", "shit", "damn", "hell", "ass"]
 ADDRESS_TERMS = ["homie", "chief", "buddy", "pal", "boss", "dawg", "friendo"]
@@ -24,6 +25,39 @@ REQUIRED_SECTIONS = ["## Ingredients", "## Instructions", "## Notes"]
 REQUIRED_METADATA = ["**Difficulty:**", "**Total Time:**"]
 
 VOICE_THRESHOLD = 0.65
+
+PROFANITY_MIN = 3
+ADDRESS_MIN = 2
+
+NATIONALITY_TERMS = [
+    "indian", "vietnamese", "mexican", "thai", "japanese", "french",
+    "italian", "korean", "chinese", "australian", "haitian", "brazilian",
+    "british", "irish", "ethiopian", "colombian", "turkish", "portuguese",
+    "mozambican", "german", "spanish", "russian", "american", "english",
+    "scottish", "welsh", "filipino", "indonesian", "malaysian", "persian",
+    "iranian", "iraqi", "egyptian", "moroccan", "lebanese", "syrian",
+    "greek", "polish", "swedish", "danish", "dutch", "belgian", "swiss",
+    "argentinian", "peruvian", "cuban", "jamaican", "nigerian", "kenyan",
+    "israeli", "palestinian",
+]
+
+BANNED_PHRASES = [
+    "according to your ice cream maker's instructions",
+    "according to your ice cream maker instructions",
+]
+
+CHURN_TIME_RE = re.compile(
+    r"churn[^\n.!?]{0,80}?\d{1,3}\s*(?:-|–|to)\s*\d{1,3}\s*minutes",
+    re.IGNORECASE,
+)
+
+ALLERGEN_NOTE_RE = re.compile(r"\*\*allergen[^*]*\*\*[^\n]*", re.IGNORECASE)
+MILK_EGG_RE = re.compile(r"\b(milk|eggs?|dairy)\b", re.IGNORECASE)
+
+H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
+TAGLINE_RE = re.compile(r"^\*[^*\n]+\*\s*$")
+BOLD_TITLE_RE = re.compile(r"\*\*([^*\n]+)\*\*")
+RECIPE_FILENAME_RE = re.compile(r"^\d{2}_[a-z0-9_]+\.md$")
 
 # --- Helpers ---
 
@@ -71,7 +105,26 @@ def split_sentences(text):
 def suggest(msg, fix):
     return f"{msg} → SUGGEST: {fix}"
 
-# --- Checks ---
+
+def extract_h1(text):
+    m = H1_RE.search(text)
+    return m.group(1).strip() if m else None
+
+
+def extract_tagline(text):
+    """First non-blank line after the H1, or None."""
+    seen_h1 = False
+    for line in text.splitlines():
+        if not seen_h1:
+            if line.startswith("# "):
+                seen_h1 = True
+            continue
+        stripped = line.strip()
+        if stripped:
+            return stripped
+    return None
+
+# --- Per-file checks ---
 
 def check_blockers(text, is_recipe):
     errors = []
@@ -99,6 +152,92 @@ def check_blockers(text, is_recipe):
         errors.append(suggest("Missing 'What it Tastes Like'", "Add final section"))
 
     return errors
+
+
+def check_nationality(text, path):
+    """Recipe titles and filenames must not contain nationality terms."""
+    errors = []
+    h1 = extract_h1(text)
+    if h1:
+        lower = h1.lower()
+        for term in NATIONALITY_TERMS:
+            if re.search(rf"\b{re.escape(term)}\b", lower):
+                errors.append(suggest(
+                    f"Nationality '{term}' in title '{h1}'",
+                    "Use a region, city, or dish name instead",
+                ))
+                break
+    stem = path.stem.lower().replace("_", " ")
+    for term in NATIONALITY_TERMS:
+        if re.search(rf"\b{re.escape(term)}\b", stem):
+            errors.append(suggest(
+                f"Nationality '{term}' in filename '{path.name}'",
+                "Rename file to use region, city, or dish",
+            ))
+            break
+    return errors
+
+
+def check_banned_phrases(text):
+    errors = []
+    lower = text.lower()
+    for phrase in BANNED_PHRASES:
+        if phrase in lower:
+            errors.append(suggest(
+                f"Banned phrase: '{phrase}'",
+                "Describe churn doneness by visual/textural cues",
+            ))
+    if CHURN_TIME_RE.search(text):
+        errors.append(suggest(
+            "Churn-time estimate (e.g., '20-25 minutes')",
+            "Describe doneness, not duration—equipment varies",
+        ))
+    return errors
+
+
+def check_tagline(text):
+    """Italicized tagline must follow the H1."""
+    if not H1_RE.search(text):
+        return []
+    tagline = extract_tagline(text)
+    if tagline is None:
+        return [suggest("Missing tagline", "Add italicized tagline below H1")]
+    if not TAGLINE_RE.match(tagline):
+        return [suggest(
+            f"Tagline not italicized: '{tagline[:60]}'",
+            "Wrap in single asterisks: *tagline here*",
+        )]
+    return []
+
+
+def check_voice_minimums(text):
+    warnings = []
+    p = count_occurrences(text, PROFANITY)
+    if p < PROFANITY_MIN:
+        warnings.append(suggest(
+            f"Low profanity count ({p})",
+            f"Add emphasis—aim for {PROFANITY_MIN}-5 strategic uses",
+        ))
+    a = count_occurrences(text, ADDRESS_TERMS)
+    if a < ADDRESS_MIN:
+        warnings.append(suggest(
+            f"Low casual-address count ({a})",
+            f"Use 'homie/chief/buddy' at least {ADDRESS_MIN} times",
+        ))
+    return warnings
+
+
+def check_allergen_notes(text):
+    """Allergen notes should not flag milk/eggs (this is ice cream)."""
+    warnings = []
+    for m in ALLERGEN_NOTE_RE.finditer(text):
+        if MILK_EGG_RE.search(m.group()):
+            warnings.append(suggest(
+                "Allergen note flags milk/eggs/dairy",
+                "Only note nuts, wheat, or soy—milk and eggs are baseline",
+            ))
+            break
+    return warnings
 
 
 def check_all(text):
@@ -138,12 +277,75 @@ def lint_file(path, is_recipe):
     text = read_file(path)
     errors = check_blockers(text, is_recipe)
     warnings = check_all(text)
+    if is_recipe:
+        errors.extend(check_nationality(text, path))
+        errors.extend(check_banned_phrases(text))
+        errors.extend(check_tagline(text))
+        warnings.extend(check_voice_minimums(text))
+        warnings.extend(check_allergen_notes(text))
     return errors, warnings
 
-# --- Main ---
+# --- Global / cross-file checks ---
 
-def render_text(results, total_files, files_with_issues, total_errors, total_warnings):
+def check_filename_hygiene(recipe_files):
+    """Convention + contiguous numbering. Returns list of (path_or_None, msg)."""
+    errors = []
+    seen = {}
+    for f in recipe_files:
+        if not RECIPE_FILENAME_RE.match(f.name):
+            errors.append((f, suggest(
+                f"Filename '{f.name}' doesn't match ##_lowercase_with_underscores.md",
+                "Rename to match convention",
+            )))
+            continue
+        num = int(f.name[:2])
+        if num in seen:
+            errors.append((f, suggest(
+                f"Duplicate numeric prefix {num:02d} (also in {seen[num].name})",
+                "Renumber one of the files",
+            )))
+        else:
+            seen[num] = f
+    if seen:
+        nums = sorted(seen)
+        expected = list(range(1, len(nums) + 1))
+        if nums != expected:
+            missing = sorted(set(expected) - set(nums))
+            errors.append((None, suggest(
+                f"Non-contiguous numbering. Missing prefixes: {missing}",
+                "Renumber so prefixes run 01..N without gaps",
+            )))
+    return errors
+
+
+def check_cross_references(recipe_titles, flavors_text):
+    """recipe_titles: list of (path, h1_title). Flag titles missing from flavors index."""
+    warnings = []
+    flavors_titles = {
+        m.group(1).strip().lower()
+        for m in BOLD_TITLE_RE.finditer(flavors_text)
+    }
+    for f, h1 in recipe_titles:
+        if h1 and h1.strip().lower() not in flavors_titles:
+            warnings.append((f, suggest(
+                f"Recipe title '{h1}' not found in {FLAVORS_FILE.name}",
+                "Update the flavors index to match, or rename the recipe",
+            )))
+    return warnings
+
+# --- Rendering ---
+
+def render_text(results, total_files, files_with_issues, total_errors, total_warnings,
+                global_errors, global_warnings):
     out = []
+    if global_errors or global_warnings:
+        out.append("GLOBAL")
+        for f, msg in global_errors:
+            label = f.name if f else "(repo)"
+            out.append(f"  ERROR: {label}: {msg}")
+        for f, msg in global_warnings:
+            label = f.name if f else "(repo)"
+            out.append(f"  WARN: {label}: {msg}")
     for f, errors, warnings in results:
         out.append(f"\n{f}")
         if errors:
@@ -162,7 +364,8 @@ def render_text(results, total_files, files_with_issues, total_errors, total_war
     return "\n".join(out)
 
 
-def render_markdown(results, total_files, total_errors, total_warnings):
+def render_markdown(results, total_files, total_errors, total_warnings,
+                    global_errors, global_warnings):
     out = ["## Linter Report", ""]
     out.append(
         f"**Files checked:** {total_files} · "
@@ -170,6 +373,14 @@ def render_markdown(results, total_files, total_errors, total_warnings):
         f"**Warnings:** {total_warnings}"
     )
     out.append("")
+
+    if global_errors:
+        out.append("### Global errors")
+        out.append("")
+        for f, msg in global_errors:
+            label = f.name if f else "_(repo)_"
+            out.append(f"- **{label}**: {msg}")
+        out.append("")
 
     if total_errors:
         out.append("### Errors")
@@ -181,14 +392,22 @@ def render_markdown(results, total_files, total_errors, total_warnings):
             for e in errors:
                 out.append(f"- {e}")
             out.append("")
-    else:
+    elif not global_errors:
         out.append("No errors.")
         out.append("")
 
-    if total_warnings:
+    if global_warnings or total_warnings:
+        warn_files = sum(1 for _, _, w in results if w)
+        total_w = total_warnings
         out.append("<details>")
-        out.append(f"<summary>{total_warnings} warnings across {sum(1 for _, _, w in results if w)} files</summary>")
+        out.append(f"<summary>{total_w} warnings across {warn_files} files (plus {len(global_warnings)} global)</summary>")
         out.append("")
+        if global_warnings:
+            out.append("**Global**")
+            for f, msg in global_warnings:
+                label = f.name if f else "_(repo)_"
+                out.append(f"- {label}: {msg}")
+            out.append("")
         for f, _, warnings in results:
             if not warnings:
                 continue
@@ -202,15 +421,24 @@ def render_markdown(results, total_files, total_errors, total_warnings):
 
 
 def run_lint(fmt="text"):
+    recipe_files = sorted(RECIPE_DIR.glob("*.md"))
+    front_files = sorted(FRONT_DIR.glob("*.md"))
+    back_files = sorted(BACK_DIR.glob("*.md"))
     files = (
-        [(f, True) for f in RECIPE_DIR.glob("*.md")]
-        + [(f, False) for f in FRONT_DIR.glob("*.md")]
-        + [(f, False) for f in BACK_DIR.glob("*.md")]
+        [(f, True) for f in recipe_files]
+        + [(f, False) for f in front_files]
+        + [(f, False) for f in back_files]
     )
 
+    global_errors = check_filename_hygiene(recipe_files)
+    global_warnings = []
+    if FLAVORS_FILE.exists():
+        recipe_titles = [(f, extract_h1(read_file(f))) for f in recipe_files]
+        global_warnings = check_cross_references(recipe_titles, read_file(FLAVORS_FILE))
+
     results = []
-    total_errors = 0
-    total_warnings = 0
+    total_errors = len(global_errors)
+    total_warnings = len(global_warnings)
 
     for f, is_recipe in files:
         errors, warnings = lint_file(f, is_recipe)
@@ -225,9 +453,11 @@ def run_lint(fmt="text"):
     files_with_issues = len(results)
 
     if fmt == "markdown":
-        print(render_markdown(results, total_files, total_errors, total_warnings))
+        print(render_markdown(results, total_files, total_errors, total_warnings,
+                              global_errors, global_warnings))
     else:
-        print(render_text(results, total_files, files_with_issues, total_errors, total_warnings))
+        print(render_text(results, total_files, files_with_issues, total_errors,
+                          total_warnings, global_errors, global_warnings))
 
     return 1 if total_errors else 0
 
