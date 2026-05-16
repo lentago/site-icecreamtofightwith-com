@@ -90,7 +90,7 @@ See [STYLE_GUIDE.md](STYLE_GUIDE.md) for content conventions and [CLAUDE.md](CLA
 
 ## Related Repositories
 
-- [**cloud-platform-demo**](https://github.com/PitziLabs/cloud-platform-demo) — Terraform-managed AWS infrastructure that hosts this content at icecreamtofightwith.com. Pushes to main here trigger cross-repo dispatch to deploy.
+- [**foundry-platform-demo**](https://github.com/PitziLabs/foundry-platform-demo) — Terraform-managed AWS infrastructure that hosts this content at icecreamtofightwith.com. Pushes to main here trigger cross-repo dispatch to deploy.
 - [**PitziLabs**](https://github.com/PitziLabs) — GitHub organization housing this and related projects.
 
 ## License
