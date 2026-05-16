@@ -59,7 +59,7 @@ Let it cool completely on the baking sheet. I know you want to touch it. Don't. 
 
 **Irish Whiskey Caramel:**
 
-Have your warmed cream, whiskey, and butter measured and sitting right next to the stove—mise en place, baby. Caramel waits for no one and gives exactly zero shits about your organizational chaos.
+Have your warmed cream, whiskey, and butter measured and sitting right next to the stove—mise en place, baby. Caramel waits for no one and has zero patience for your organizational chaos.
 
 Combine sugar and water in a light-colored saucepan (so you can actually see what's happening instead of playing "is it brown or burnt?" roulette). Heat over medium-high WITHOUT STIRRING. I cannot stress this enough. Put the spoon down. Walk away from the spoon. Stirring makes it crystallize and then you're starting over and crying. Let it reach deep amber—think copper penny, think good bourbon, think "is that too dark? no wait it's fine."
 
@@ -81,7 +81,7 @@ Strain through a fine-mesh sieve to catch any bits of cooked egg. Even if you th
 
 Let cool for about 10 minutes—you don't want to add the buttermilk to scorching hot custard or it'll curdle and you'll have expensive cottage cheese.
 
-Once the custard has cooled slightly (warm but not "ow fuck" hot), whisk in the buttermilk, vanilla, and salt. The buttermilk adds this subtle tang that balances all the rich caramel sweetness later. Don't add it when the custard is too hot or the acidity will cause it to separate, and then you'll be sad and I'll be sad and nobody wants that.
+Once the custard has cooled slightly (warm but not "ow that's hot" hot), whisk in the buttermilk, vanilla, and salt. The buttermilk adds this subtle tang that balances all the rich caramel sweetness later. Don't add it when the custard is too hot or the acidity will cause it to separate, and then you'll be sad and I'll be sad and nobody wants that.
 
 Cool over an ice bath, stirring occasionally, then refrigerate at least 4 hours or overnight. Overnight is better—it lets the buttermilk flavor integrate fully. Plus it gives you an excuse to pour yourself a glass of that whiskey you definitely bought just for the recipe.
 

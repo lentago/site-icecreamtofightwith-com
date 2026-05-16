@@ -83,7 +83,7 @@ Use Ataulfo mangos—also called Champagne or Honey mangos—if you can find the
 
 **Why corn syrup:**
 
-Look, I get it—corn syrup sounds sketchy. But hear me out, dude. It creates a noticeably smoother, creamier texture without muting that bright-ass mango flavor. It also helps prevent ice crystals in this lighter custard (we're only using 2 yolks here). The improved texture means the chili heat registers more clearly as the ice cream melts on your tongue, which is kind of the whole point. Plus it keeps the ice cream scoopable longer—stays creamy even after a week in the freezer instead of turning into a brick.
+Look, I get it—corn syrup sounds sketchy. But hear me out, dude. It creates a noticeably smoother, creamier texture without muting that bright mango flavor. It also helps prevent ice crystals in this lighter custard (we're only using 2 yolks here). The improved texture means the chili heat registers more clearly as the ice cream melts on your tongue, which is kind of the whole point. Plus it keeps the ice cream scoopable longer—stays creamy even after a week in the freezer instead of turning into a brick.
 
 **The light custard:**
 

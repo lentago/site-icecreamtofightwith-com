@@ -6,7 +6,7 @@
 
 **Total Time:** 6-8 hours across 2 days (includes simmering, custard-making, and overnight chilling, plus time spent staring at your very yellow custard and wondering if you fucked up—you didn't)
 
-Golden milk—haldi doodh in Hindi—is an Indian drink made with turmeric, and yes, it makes ice cream *very* yellow. Surprisingly yellow. Aggressively yellow. "Did someone spill highlighter ink in this?" yellow. But paired with dates—which have been sweetening Indian food for thousands of years—it actually makes perfect sense. Khajur and haldi are old friends. The turmeric's earthy warmth plays against date's deep caramel-toffee richness in a way that feels inevitable once you taste it, even though it sounds completely unhinged on paper.
+Golden milk—haldi doodh in Hindi—is an Indian drink made with turmeric, and yes, it makes ice cream *very* yellow. Surprisingly yellow. Aggressively yellow. "Did someone spill highlighter ink in this?" yellow. But paired with dates—which have been sweetening Indian food for thousands of years—it actually makes perfect sense. Khajur and haldi are old companions. The turmeric's earthy warmth plays against date's deep caramel-toffee richness in a way that feels inevitable once you taste it, even though it sounds completely unhinged on paper.
 
 You'll spend a moment wondering if you added too much turmeric. You probably didn't. It's supposed to look like that, homie. Embrace the yellow. Become one with the yellow. Let the yellow into your heart.
 
