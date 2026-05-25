@@ -43,10 +43,10 @@ declare -A MAPPING=(
   [17_brown_butter_pecan]="Gemini_Generated_Image_wwxjj4wwxjj4wwxj.png"
   [18_tahini_rose]="Gemini_Generated_Image_birumabirumabiru.png"
   [19_chile_chocolate]="Gemini_Generated_Image_ (1).png"
-  # 20_piri_piri_cashew_coconut — pending
+  [20_piri_piri_cashew_coconut]="Gemini_Generated_Image_bs9popbs9popbs9p.png"
   [21_coffee_berbere]="Gemini_Generated_Image_1brvoc1brvoc1brv.png"
   [22_earl_grey_burnt_honey]="Gemini_Generated_Image_w6kanaw6kanaw6ka.png"
-  # 23_pain_patate — pending
+  [23_pain_patate]="Gemini_Generated_Image_87ec4u87ec4u87ec.png"
   [24_brigadeiro_passion_fruit]="Gemini_Generated_Image_ (19).png"
   [25_lemon_rosemary_honey]="Gemini_Generated_Image_ (15).png"
   [26_nabulsi_knafeh]="Gemini_Generated_Image_ (12).png"
