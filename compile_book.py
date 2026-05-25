@@ -12,6 +12,8 @@ Output:
 import os
 from pathlib import Path
 
+ILLUSTRATIONS_DIR = Path('illustrations')
+
 
 def get_markdown_files(directory):
     """Get all markdown files from a directory, sorted naturally."""
@@ -20,6 +22,28 @@ def get_markdown_files(directory):
         return []
     md_files = sorted(dir_path.glob('*.md'))
     return [str(f) for f in md_files]
+
+
+def inject_illustration(content, filepath):
+    """Insert a markdown image reference after the H1 if illustrations/<slug>.png
+    exists. Front-matter/back-matter files have no matching illustration so
+    they pass through unchanged."""
+    slug = Path(filepath).stem
+    image_path = ILLUSTRATIONS_DIR / f'{slug}.png'
+    if not image_path.exists():
+        return content
+
+    lines = content.split('\n')
+    for i, line in enumerate(lines):
+        if line.startswith('# '):
+            title = line[2:].strip()
+            # Place the image block after the H1 and its trailing blank line.
+            insert_at = i + 1
+            if insert_at < len(lines) and lines[insert_at].strip() == '':
+                insert_at += 1
+            image_block = [f'![{title}]({image_path.as_posix()})', '']
+            return '\n'.join(lines[:insert_at] + image_block + lines[insert_at:])
+    return content
 
 
 def compile_book():
@@ -47,6 +71,7 @@ def compile_book():
             # Strip trailing separator to avoid doubles when joining
             while content.endswith('---'):
                 content = content[:-3].rstrip()
+            content = inject_illustration(content, filepath)
             output.append(content)
             print(f"  Added: {filepath}")
 

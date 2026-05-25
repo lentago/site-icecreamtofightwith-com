@@ -363,6 +363,8 @@ Now stop reading the front matter like a nerd and let's make some fucking ice cr
 
 # Coconut Pandan
 
+![Coconut Pandan](illustrations/01_coconut_pandan.png)
+
 *Southeast Asia's vanilla, now frozen*
 
 **Difficulty:** CHILL - You're making tea, basically. Fancy tea, sure, but tea. Heat coconut milk and cream with pandan leaves and sugar, let it steep until it turns pale green and smells like a tropical daydream, strain, chill, churn. No tempering, no emulsification, no eggs, no catastrophic failure points. The only challenge is sourcing fresh pandan leaves, which might require a field trip to an Asian market. Pandan extract exists as a backup, but using extract when you could use fresh leaves is like bringing a kazoo to a symphony—technically it makes noise, but come on, homie.
@@ -459,6 +461,8 @@ Creamy coconut richness with this incredible aromatic complexity from the pandan
 
 # Sinh Tố Bơ
 
+![Sinh Tố Bơ](illustrations/02_sinh_to_bo.png)
+
 *Vietnam's beloved avocado smoothie, frozen solid and ready to fight*
 
 **Difficulty:** CHILL - This is almost offensively easy, homie. You're blending ripe avocado with sweetened condensed milk and lime juice, then freezing the result. No heating, no tempering, no custard anxiety. The only challenge is psychological—your Western brain is going to scream "avocado is for guacamole, not dessert!" but Vietnamese cuisine has known for generations that avocado's buttery richness works beautifully in sweets. Trust the process, blend the fruit, and prepare to have your assumptions thoroughly fucking scrambled.
@@ -541,6 +545,8 @@ Buttery. That's the first hit—pure, smooth, almost obscenely rich avocado that
 ---
 
 # Cardamom-Pistachio Kulfi
+
+![Cardamom-Pistachio Kulfi](illustrations/03_cardamom_pistachio_kulfi.png)
 
 *India's frozen dessert tradition, now achievable on a Tuesday*
 
@@ -796,6 +802,8 @@ Tastes like India. Like summer afternoons and celebration dinners and the best s
 
 # Horchata
 
+![Horchata](illustrations/04_horchata.png)
+
 *Rice, cinnamon, almonds—Mexico's agua fresca, now frozen*
 
 **Difficulty:** LEGIT - You're soaking and blending rice to infuse the dairy (easy but takes time), making a cinnamon-sugar swirl (straightforward), and candying almonds (hard to fuck up). The rice infusion is an extra step but it's not complicated—you're basically making horchata and then turning it into custard. Nothing here will break you, chief, just requires a bit of advance planning.
@@ -936,6 +944,8 @@ If you've had good horchata, you'll recognize this immediately—richer and more
 ---
 
 # Miso Matcha
+
+![Miso Matcha](illustrations/05_miso_matcha.png)
 
 *Umami in ice cream (trust us)*
 
@@ -1098,6 +1108,8 @@ Green tea, clearly and immediately—vegetal, earthy, unmistakable. Then somethi
 
 # Chili Mango
 
+![Chili Mango](illustrations/06_chili_mango.png)
+
 *Mexico City street cart meets your freezer*
 
 **Difficulty:** LEGIT - You've got three components here (base, swirl, pepitas) and the real challenge is calibrating the spice level for frozen consumption. Cold absolutely murders heat, so what tastes aggressively spicy at room temperature will be perfectly balanced when frozen. You'll need to trust your palate and taste-test multiple times. It's not technically difficult, but it requires judgment calls and confidence.
@@ -1212,6 +1224,8 @@ Bright, tropical mango smacks you first—sweet and loud and unapologetic. Lime 
 ---
 
 # Wattleseed & Macadamia
+
+![Wattleseed & Macadamia](illustrations/07_wattleseed_macadamia.png)
 
 *Bush tucker meets buttery nuts*
 
@@ -1353,6 +1367,8 @@ Complex as hell. Deep nutty base—almost coffee-like with chocolate undertones 
 ---
 
 # Tarte Tatin
+
+![Tarte Tatin](illustrations/08_tarte_tatin.png)
 
 *France's iconic upside-down caramelized apple tart, now frozen*
 
@@ -1518,6 +1534,8 @@ Then you bite into a chunk of roasted apple—concentrated tart-sweet with jammy
 
 # Gochugaru and Sesame
 
+![Gochugaru and Sesame](illustrations/09_gochugaru_sesame.png)
+
 *Korean heat meets nutty depth*
 
 **Difficulty:** LEGIT - You're making two kinds of caramel (one dry, one wet), integrating thick sesame paste without lumps, and calibrating Korean chili heat for frozen consumption. The brittle happens FAST and you'll be swirling pans instead of stirring which feels wrong but is right. The sesame paste needs that two-step integration or it'll fight you. Nothing will break you, but you gotta pay attention, pal.
@@ -1635,6 +1653,8 @@ Nutty and earthy from the black sesame, with pockets of fruity, warming heat fro
 ---
 
 # Rum Banana
+
+![Rum Banana](illustrations/10_rum_banana.png)
 
 *Allspice, rum, bananas—Caribbean celebration*
 
@@ -1814,6 +1834,8 @@ Spirited. Lively. Celebratory. Tastes like a Jamaican party where everyone's inv
 
 # Golden Milk and Date
 
+![Golden Milk and Date](illustrations/11_golden_milk_date.png)
+
 *India's turmeric latte meets its oldest sweetener*
 
 **Difficulty:** LEGIT - You're making a date caramel swirl, dissolving turmeric powder without creating lumpy nightmares, and making custard. The techniques are straightforward but the date caramel demands your attention toward the end or it'll go from glossy to scorched in a heartbeat. The real challenge is psychological: accepting that your ice cream will be AGGRESSIVELY yellow and that's exactly what it's supposed to be. Embrace the yellow, homie.
@@ -1955,6 +1977,8 @@ Warming without being heavy, sweet without being cloying, complex without being 
 ---
 
 # Brown Bread
+
+![Brown Bread](illustrations/12_brown_bread.png)
 
 *Buttermilk custard with caramelized bread crumble and whiskey*
 
@@ -2117,6 +2141,8 @@ Smooth against crunchy is the real star here. You'll tell yourself "one more bit
 
 # Atole de Anis
 
+![Atole de Anis](illustrations/13_atole_de_anis.png)
+
 *Mexico's comfort drink, now frozen*
 
 **Difficulty:** LEGIT - You've got three components to manage here (brittle, toasted masa, custard base), and that masa crumble will have you stirring frantically while muttering "don't burn don't burn don't burn" for a solid 5 minutes. The piloncillo needs grating if you buy the cone, which is like attacking a sugar rock with a cheese grater. But nothing's going to actually break you, pal.
@@ -2229,6 +2255,8 @@ If you've had real atole, you'll recognize this immediately. If you haven't, ima
 ---
 
 # Bocadillo y Café
+
+![Bocadillo y Café](illustrations/14_bocadillo_y_cafe.png)
 
 *Tropical fruit meets caffeine*
 
@@ -2360,6 +2388,8 @@ Bright tropical guava up front—floral, sweet, unmistakably guava in a way that
 
 # Sfogliatelle
 
+![Sfogliatelle](illustrations/15_sfogliatelle.png)
+
 *Naples' pastry, now frozen*
 
 **Difficulty:** LEGIT - You've got four components to manage (candied apricots, reduction, semolina crumble, ricotta custard), and those candied apricots will sit around drying for 4+ hours while you contemplate your life choices. The ricotta MUST be whipped smooth or you'll have grainy ice cream. Nothing technically hard, just lots of waiting and component juggling. Multi-day commitment, homie.
@@ -2484,6 +2514,8 @@ Creamy ricotta first—smooth, slightly tangy, unmistakably Italian. Warm cinnam
 
 # Sichuan Plum
 
+![Sichuan Plum](illustrations/16_sichuan_plum.png)
+
 *Five-spice and stone fruit*
 
 **Difficulty:** LEGIT - You're roasting plums with five-spice (easy), making custard (standard), and either making candied ginger from scratch (which takes 4+ hours of drying time) or buying it pre-made (smart). The individual techniques are straightforward, but if you make the ginger yourself you'll be checking on those drying pieces obsessively. Nothing technically hard, just time management, homie.
@@ -2607,6 +2639,8 @@ Deep wine-like plum up front—not candy-sweet, real plum, dark and jammy with t
 ---
 
 # Brown Butter Pecan
+
+![Brown Butter Pecan](illustrations/17_brown_butter_pecan.png)
 
 *Deep South tradition, elevated*
 
@@ -2767,6 +2801,8 @@ The triple brown butter approach (candied nuts, infused base, butterscotch swirl
 
 # Tahini Rose
 
+![Tahini Rose](illustrations/18_tahini_rose.png)
+
 *Turkish sesame sweetness meets delicate floral notes*
 
 **Difficulty:** THE REAL DEAL - Tahini is oily and thick, which means it can split your custard if you're not careful about integration. Rose water is potent as fuck and the line between "delicate floral" and "soap factory" is thinner than you think. You're also working with halva, which has a specific crumbly-but-cohesive texture that you need to respect. Plus candying pistachios. None of this is technically hard, but you need to pay attention and follow the steps in order or you'll end up with a grainy, soapy mess. Not trying to scare you, just being real.
@@ -2910,6 +2946,8 @@ Deeply nutty. Intensely sesame-forward from the tahini, with halva chunks adding
 ---
 
 # Chile Chocolate
+
+![Chile Chocolate](illustrations/19_chile_chocolate.png)
 
 *Dark chocolate meets earthy chile heat*
 
@@ -3064,6 +3102,8 @@ Deep, dark chocolate with coffee undertones—almost bittersweet. Then chile hea
 ---
 
 # Piri Piri Cashew Coconut
+
+![Piri Piri Cashew Coconut](illustrations/20_piri_piri_cashew_coconut.png)
 
 *Vegan and surprisingly rich*
 
@@ -3229,6 +3269,8 @@ Creamy cashew richness up front—thick, smooth, and nobody's going to believe i
 ---
 
 # Coffee & Berbere
+
+![Coffee & Berbere](illustrations/21_coffee_berbere.png)
 
 *Coffee's birthplace meets ancient spice tradition*
 
@@ -3410,6 +3452,8 @@ Rich coffee-honey base—aromatic, floral, slightly wine-like if you used good E
 
 # Earl Grey and Burnt Honey
 
+![Earl Grey and Burnt Honey](illustrations/22_earl_grey_burnt_honey.png)
+
 *Tea time gets complicated (in the best possible way)*
 
 **Difficulty:** THE REAL DEAL - You're making honeycomb that'll foam up like a volcano, burning honey in TWO different batches while praying you don't take it too far, steeping tea, and making custard. The honeycomb demands lightning reflexes when that baking soda hits. The burnt honey requires you to stare intensely at a pan and make judgment calls with zero margin for error. Every single component here can go sideways on you, and at least one of them probably will. This is not your first rodeo, homie.
@@ -3551,6 +3595,8 @@ Earl Grey up front—clear, bergamot-y, unmistakable. Honey depth keeps revealin
 ---
 
 # Pain Patate
+
+![Pain Patate](illustrations/23_pain_patate.png)
 
 *Haiti's pudding cake, frozen*
 
@@ -3742,6 +3788,8 @@ Dense. Intensely spiced. Deeply satisfying. Warm five-spice—cinnamon, nutmeg, 
 
 # Brigadeiro & Passion Fruit
 
+![Brigadeiro & Passion Fruit](illustrations/24_brigadeiro_passion_fruit.png)
+
 *Chocolate fudge balls meet tropical brightness*
 
 **Difficulty:** THE REAL DEAL - You're making chocolate fudge from scratch, handling passion fruit pulp (which is slippery as hell), creating caramel, and managing four components with different textures. The brigadeiro needs to cool completely before you can roll it, the passion fruit curd needs careful tempering, and the timing matters. Nothing here will break you, but you'll be juggling enough that you can't wander off to watch TV.
@@ -3894,6 +3942,8 @@ Intensely chocolatey base—thick with that characteristic sweetened condensed m
 ---
 
 # Lemon and Rosemary Honey
+
+![Lemon and Rosemary Honey](illustrations/25_lemon_rosemary_honey.png)
 
 *Greek summer in a bowl*
 
@@ -4055,6 +4105,8 @@ Bright lemon first—zesty, almost zingy. Olive oil underneath, fruity and peppe
 
 # Nabulsi Knafeh
 
+![Nabulsi Knafeh](illustrations/26_nabulsi_knafeh.png)
+
 *Stretchy cheese, crispy pastry, and zero apologies*
 
 **Difficulty:** THE REAL DEAL - You're managing a cheese-based custard (which can go grainy as shit if you look at it wrong), turning shredded dough into hard candy praline, and making a floral syrup that requires the precision of a chemist. The challenge is balancing the salt from the cheese with the sweet of the base so it tastes like dessert, not a confusing salad course. You're also sourcing ingredients that might require a trip to a different neighborhood.
@@ -4166,6 +4218,8 @@ Salty-tangy creaminess up front from the Nabulsi cheese—savory in a way no oth
 ---
 
 # New Orleans Chicory Coffee & Beignet
+
+![New Orleans Chicory Coffee & Beignet](illustrations/27_new_orleans_chicory_beignet.png)
 
 *Bourbon Street at 2 AM, frozen and swirled with rum*
 
@@ -4313,6 +4367,8 @@ Tastes like New Orleans feels at 2 AM—a little boozy, a lot sweet, impossibly 
 ---
 
 # Appalachian Pawpaw & Maple
+
+![Appalachian Pawpaw & Maple](illustrations/28_appalachian_pawpaw_maple.png)
 
 *America's forgotten fruit meets mountain sweetness*
 
