@@ -203,6 +203,29 @@ class TestCountOccurrences(unittest.TestCase):
         self.assertEqual(L.count_occurrences("homie chief buddy pal", L.ADDRESS_TERMS), 4)
 
 
+class TestCheckAllRecipeScoping(unittest.TestCase):
+    """Recipe-specific voice rules should not fire on front/back matter."""
+
+    HEAVY_VOICE = " ".join(["fuck damn shit hell ass"] * 3)  # 15 profanities
+
+    def test_recipe_flags_heavy_profanity(self):
+        warnings = L.check_all(self.HEAVY_VOICE, is_recipe=True)
+        self.assertTrue(any("Too much profanity" in w for w in warnings))
+
+    def test_non_recipe_skips_profanity_check(self):
+        warnings = L.check_all(self.HEAVY_VOICE, is_recipe=False)
+        self.assertFalse(any("profanity" in w.lower() for w in warnings))
+
+    def test_non_recipe_skips_voice_drift(self):
+        warnings = L.check_all("Generic prose totally unlike a recipe.", is_recipe=False)
+        self.assertFalse(any("voice drift" in w.lower() for w in warnings))
+
+    def test_sentence_length_still_applies_to_non_recipe(self):
+        long_sentence = " ".join(["word"] * 30) + "."
+        warnings = L.check_all(long_sentence, is_recipe=False)
+        self.assertTrue(any("Sentences too long" in w for w in warnings))
+
+
 class TestHelpers(unittest.TestCase):
     def test_extract_h1(self):
         self.assertEqual(L.extract_h1("# Hello\n\nbody"), "Hello")

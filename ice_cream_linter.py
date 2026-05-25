@@ -243,8 +243,24 @@ def check_allergen_notes(text):
     return warnings
 
 
-def check_all(text):
+def check_all(text, is_recipe=True):
+    """Universal warnings; recipe-specific voice rules gated on is_recipe.
+
+    The STYLE_GUIDE's voice thresholds ("3-5 profanity per recipe",
+    "2-4 address terms") are explicitly per-recipe. Front/back matter
+    has different rhetorical needs (philosophy, intros, fundamentals)
+    and shouldn't be measured against those limits.
+    """
     warnings = []
+
+    sentences = split_sentences(text)
+    if sentences:
+        avg = sum(len(s.split()) for s in sentences) / len(sentences)
+        if avg > 22:
+            warnings.append(suggest("Sentences too long", "Split long sentences"))
+
+    if not is_recipe:
+        return warnings
 
     if count_occurrences(text, PROFANITY) > 5:
         warnings.append(suggest("Too much profanity", "Remove 1–3 uses"))
@@ -256,12 +272,6 @@ def check_all(text):
         sim = cosine_similarity(vectorize(text), CANONICAL_PROFILE)
         if sim < VOICE_THRESHOLD:
             warnings.append(suggest(f"Voice drift ({sim:.2f})", "Align intro/notes to canonical"))
-
-    sentences = split_sentences(text)
-    if sentences:
-        avg = sum(len(s.split()) for s in sentences) / len(sentences)
-        if avg > 22:
-            warnings.append(suggest("Sentences too long", "Split long sentences"))
 
     for i, p in enumerate(split_paragraphs(text)):
         if count_occurrences(p, PROFANITY) > 2:
@@ -279,7 +289,7 @@ def check_all(text):
 def lint_file(path, is_recipe):
     text = read_file(path)
     errors = check_blockers(text, is_recipe)
-    warnings = check_all(text)
+    warnings = check_all(text, is_recipe)
     if is_recipe:
         errors.extend(check_nationality(text, path))
         errors.extend(check_banned_phrases(text))
