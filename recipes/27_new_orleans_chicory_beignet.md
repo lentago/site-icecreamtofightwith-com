@@ -1,3 +1,14 @@
+---
+cuisine: "American (Cajun/Creole)"
+active_time_minutes: 150
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+  - contains-wheat
+---
+
 # New Orleans Chicory Coffee & Beignet
 
 *Bourbon Street at 2 AM, frozen and swirled with rum*

@@ -1,3 +1,13 @@
+---
+cuisine: "Vietnamese"
+active_time_minutes: 15
+total_time_minutes_min: 240
+total_time_minutes_max: 360
+yield: "About 1.5 quarts"
+dietary:
+  - egg-free
+---
+
 # Sinh Tố Bơ
 
 *Vietnam's beloved avocado smoothie, frozen solid and ready to fight*

@@ -1,3 +1,13 @@
+---
+cuisine: "Japanese"
+active_time_minutes: 30
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - contains-soy
+---
+
 # Miso Matcha
 
 *Umami in ice cream (trust us)*

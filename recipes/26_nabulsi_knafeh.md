@@ -1,3 +1,14 @@
+---
+cuisine: "Palestinian"
+active_time_minutes: 60
+total_time_minutes_min: 480
+total_time_minutes_max: 600
+yield: "About 1.5 quarts"
+dietary:
+  - contains-wheat
+  - contains-nuts
+---
+
 # Nabulsi Knafeh
 
 *Stretchy cheese, crispy pastry, and zero apologies*

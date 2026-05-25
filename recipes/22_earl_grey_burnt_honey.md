@@ -1,3 +1,12 @@
+---
+cuisine: "British"
+active_time_minutes: 60
+total_time_minutes_min: 480
+total_time_minutes_max: 600
+yield: "About 1.5 quarts"
+dietary: []
+---
+
 # Earl Grey and Burnt Honey
 
 *Tea time gets complicated (in the best possible way)*

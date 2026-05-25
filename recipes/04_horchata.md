@@ -1,3 +1,13 @@
+---
+cuisine: "Mexican"
+active_time_minutes: 30
+total_time_minutes_min: 600
+total_time_minutes_max: 720
+yield: "About 1.5 quarts"
+dietary:
+  - contains-nuts
+---
+
 # Horchata
 
 *Rice, cinnamon, almonds—Mexico's agua fresca, now frozen*

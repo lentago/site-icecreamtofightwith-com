@@ -89,7 +89,48 @@ Graphics and visual elements get added during layout/design phase. Keep it clean
 - Format: `*Brief evocative description*`
 - Example: `*Naples' pastry, now frozen*`
 
-### Metadata (Required)
+### YAML Frontmatter (Required)
+
+Every recipe file begins with a YAML frontmatter block that carries structured metadata for the website renderer. Voice and prose stay in the body; this block is data only.
+
+**Format:**
+```
+---
+cuisine: "Vietnamese"
+active_time_minutes: 20
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1 quart"
+dietary:
+  - egg-free
+  - contains-nuts
+---
+
+# Recipe Name
+...
+```
+
+**Fields:**
+- `cuisine` — primary cultural origin as displayed. Free text, but prefer the established list: Thai, Vietnamese, Indian, Mexican, Japanese, Australian, French, Korean, Caribbean (Jamaican), South Asian, Irish, Colombian, Italian, Chinese (Sichuan), American (Southern / Cajun-Creole / Appalachian), Middle Eastern, African (Portuguese-influenced), Ethiopian, British, Haitian, Brazilian, Mediterranean (Greek), Palestinian.
+- `active_time_minutes` — integer minutes of hands-on work. Estimate from the funny parenthetical in `**Total Time:**` if not measured directly.
+- `total_time_minutes_min` / `total_time_minutes_max` — integer minutes. Same range as the `**Total Time:**` prose line.
+- `yield` — free text. The compiled book treats all recipes as standardized batches; this field captures the actual finished-volume estimate for the website (overrun included).
+- `dietary` — list of canonical tags. Use empty list `[]` if none apply. Allowed tags:
+  - `vegan` (no animal products)
+  - `dairy-free` (no dairy — implied by `vegan`)
+  - `egg-free` (no eggs)
+  - `gluten-free` (no wheat/gluten)
+  - `contains-alcohol` (rum, bourbon, whiskey, calvados, beer)
+  - `contains-nuts` (pistachio, almond, pecan, macadamia, cashew, walnut)
+  - `contains-soy` (miso, soy sauce)
+  - `contains-sesame` (tahini, sesame seeds)
+  - `contains-wheat` (beignet, bread crumble, semolina, kataifi, all-purpose flour)
+
+Pepitas (pumpkin seeds) and pine nuts are not flagged as `contains-nuts` (they're seeds, not tree nuts).
+
+`compile_book.py` strips this block before assembling the book PDF/markdown, so it doesn't pollute the reading experience.
+
+### Inline Prose Metadata (Required)
 
 Every recipe must include difficulty and total time immediately after the tagline. No exceptions.
 
@@ -134,7 +175,7 @@ Opening paragraph starts here...
   - "(2 hours of browning butter and questioning your sanity, the rest is chilling)"
   - "(you'll be free to do other things for most of this, don't panic)"
 
-**Note:** Yield is NOT included in metadata since all recipes are standardized to 1 quart
+**Note:** Yield is NOT included in the inline prose metadata — the recipes are written as standardized batches. Structured `yield` lives in the YAML frontmatter for the website renderer.
 
 ### Opening Paragraph(s)
 - 1-3 paragraphs explaining the recipe

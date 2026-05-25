@@ -1,3 +1,13 @@
+---
+cuisine: "Korean"
+active_time_minutes: 45
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - contains-sesame
+---
+
 # Gochugaru and Sesame
 
 *Korean heat meets nutty depth*
