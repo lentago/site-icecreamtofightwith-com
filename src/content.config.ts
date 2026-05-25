@@ -13,6 +13,12 @@ const recipes = defineCollection({
     recipeSlug: z.string(),
     recipeNumber: z.number(),
     illustration: image().optional(),
+    cuisine: z.string().optional(),
+    activeTimeMinutes: z.number().optional(),
+    totalTimeMinutesMin: z.number().optional(),
+    totalTimeMinutesMax: z.number().optional(),
+    recipeYield: z.string().optional(),
+    dietary: z.array(z.string()).optional(),
   }),
 });
 

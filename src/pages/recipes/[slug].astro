@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import RecipeMeta from '../../components/RecipeMeta.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
@@ -13,13 +14,6 @@ export async function getStaticPaths() {
 
 const { recipe } = Astro.props;
 const { Content } = await recipe.render();
-
-const tierClass = {
-  'CHILL': 'chill',
-  'LEGIT': 'legit',
-  'THE REAL DEAL': 'real-deal',
-  'A FUCKING ORDEAL': 'ordeal',
-}[recipe.data.tier] || 'legit';
 
 // Find prev/next recipes
 const allRecipes = await getCollection('recipes');
@@ -44,22 +38,20 @@ const next = idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
     )}
 
     <header class="recipe-header">
-      <span class={`tier-badge ${tierClass}`}>{recipe.data.tier}</span>
       <span class="recipe-number">Recipe #{String(recipe.data.recipeNumber).padStart(2, '0')}</span>
       <h1>{recipe.data.title}</h1>
       <p class="subtitle">{recipe.data.subtitle}</p>
-
-      <div class="meta-bar">
-        <div class="meta-item">
-          <span class="meta-label">Difficulty</span>
-          <span class="meta-value">{recipe.data.difficultyText}</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">Total Time</span>
-          <span class="meta-value">{recipe.data.totalTime}</span>
-        </div>
-      </div>
     </header>
+
+    <RecipeMeta
+      tier={recipe.data.tier}
+      difficultyText={recipe.data.difficultyText}
+      totalTime={recipe.data.totalTime}
+      cuisine={recipe.data.cuisine}
+      activeTimeMinutes={recipe.data.activeTimeMinutes}
+      recipeYield={recipe.data.recipeYield}
+      dietary={recipe.data.dietary}
+    />
 
     <div class="recipe-body">
       <Content />
@@ -125,31 +117,6 @@ const next = idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
     font-style: italic;
     color: var(--color-text-muted);
     margin-bottom: 1.5rem;
-  }
-
-  .meta-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.25rem;
-  }
-
-  .meta-label {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    margin-bottom: 0.25rem;
-  }
-
-  .meta-value {
-    font-size: 0.9rem;
-    line-height: 1.5;
   }
 
   .recipe-nav {

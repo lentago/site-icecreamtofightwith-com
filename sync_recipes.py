@@ -40,9 +40,60 @@ TIER_MAP = {
 }
 
 
+FRONTMATTER_FIELDS = (
+    "cuisine",
+    "active_time_minutes",
+    "total_time_minutes_min",
+    "total_time_minutes_max",
+    "yield",
+    "dietary",
+)
+
+
+def parse_yaml_frontmatter(text):
+    """Tiny YAML reader covering only what recipe frontmatter uses:
+    quoted/unquoted scalars, integers, and `- item` lists. Returns
+    (parsed_dict, body_text). If no frontmatter, returns ({}, text)."""
+    if not text.startswith("---\n"):
+        return {}, text
+    end = text.find("\n---\n", 4)
+    if end < 0:
+        return {}, text
+    block = text[4:end]
+    body = text[end + len("\n---\n"):]
+
+    data = {}
+    current_list_key = None
+    for raw in block.split("\n"):
+        if not raw.strip():
+            continue
+        if raw.startswith("  - ") and current_list_key:
+            data[current_list_key].append(raw[4:].strip())
+            continue
+        current_list_key = None
+        if ":" not in raw:
+            continue
+        key, _, val = raw.partition(":")
+        key = key.strip()
+        val = val.strip()
+        if val == "":
+            data[key] = []
+            current_list_key = key
+        elif val == "[]":
+            data[key] = []
+        elif val.startswith('"') and val.endswith('"'):
+            data[key] = val[1:-1]
+        elif val.lstrip("-").isdigit():
+            data[key] = int(val)
+        else:
+            data[key] = val
+    return data, body
+
+
 def parse_recipe(filepath):
     """Parse a recipe markdown file and extract metadata + body."""
     text = filepath.read_text(encoding="utf-8")
+    fm, text = parse_yaml_frontmatter(text)
     lines = text.split("\n")
 
     metadata = {
@@ -56,6 +107,9 @@ def parse_recipe(filepath):
         "recipeSlug": filepath.stem,
         "recipe_number": 0,
     }
+    for k in FRONTMATTER_FIELDS:
+        if k in fm:
+            metadata[k] = fm[k]
 
     # Extract recipe number from filename
     num_match = re.match(r"(\d+)_", filepath.name)
@@ -138,6 +192,23 @@ def generate_frontmatter(metadata):
         f'recipeSlug: "{metadata["recipeSlug"]}"',
         f'recipeNumber: {metadata["recipe_number"]}',
     ]
+    if "cuisine" in metadata:
+        lines.append(f'cuisine: "{esc(metadata["cuisine"])}"')
+    if "active_time_minutes" in metadata:
+        lines.append(f'activeTimeMinutes: {metadata["active_time_minutes"]}')
+    if "total_time_minutes_min" in metadata:
+        lines.append(f'totalTimeMinutesMin: {metadata["total_time_minutes_min"]}')
+    if "total_time_minutes_max" in metadata:
+        lines.append(f'totalTimeMinutesMax: {metadata["total_time_minutes_max"]}')
+    if "yield" in metadata:
+        lines.append(f'recipeYield: "{esc(metadata["yield"])}"')
+    if "dietary" in metadata:
+        if metadata["dietary"]:
+            lines.append("dietary:")
+            for tag in metadata["dietary"]:
+                lines.append(f"  - {tag}")
+        else:
+            lines.append("dietary: []")
     if metadata.get("illustration"):
         # Path is relative to the markdown file location (src/content/recipes/)
         lines.append(f'illustration: "{metadata["illustration"]}"')
