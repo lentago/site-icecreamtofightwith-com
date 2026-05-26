@@ -49,7 +49,7 @@ if (recipe.data.illustration) {
     dietary={recipe.data.dietary}
   />
 
-  <article class="page-container">
+  <article class="page-container" data-pagefind-body data-pagefind-meta={`title:${recipe.data.title},cuisine:${recipe.data.cuisine ?? ''},tier:${recipe.data.tier}`}>
     <Breadcrumbs
       tier={recipe.data.tier}
       recipeTitle={recipe.data.title}
