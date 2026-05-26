@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RecipeMeta from '../../components/RecipeMeta.astro';
 import RecipeNav from '../../components/RecipeNav.astro';
 import RecipeJsonLd from '../../components/RecipeJsonLd.astro';
@@ -48,6 +49,13 @@ if (recipe.data.illustration) {
   />
 
   <article class="page-container">
+    <Breadcrumbs
+      tier={recipe.data.tier}
+      recipeTitle={recipe.data.title}
+      recipeUrl={canonicalUrl}
+      siteUrl={Astro.site!.toString()}
+    />
+
     {recipe.data.illustration && (
       <figure class="recipe-hero">
         <Image

@@ -26,7 +26,7 @@ const tiers = [
 
   <main class="page-container wide">
     {tiers.map(tier => (
-      <section class="tier-section">
+      <section class="tier-section" id={tier.class}>
         <div class="tier-header">
           <span class={`tier-badge ${tier.class}`}>{tier.name}</span>
           <span class="tier-count">{tier.recipes.length} recipes</span>
