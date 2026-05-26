@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title?: string;
@@ -7,6 +8,11 @@ interface Props {
 }
 
 const { title = 'Ice Cream to Fight With', description = 'Recipes You\'ll Fuck Up At Least Once' } = Astro.props;
+
+// Slugs are baked into the page at build time so the "Surprise me" button
+// can pick a random recipe with zero network round-trips.
+const allRecipes = await getCollection('recipes');
+const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +104,22 @@ const { title = 'Ice Cream to Fight With', description = 'Recipes You\'ll Fuck U
     }
 
     .site-nav .nav-links a:hover {
+      color: var(--color-accent);
+    }
+
+    .site-nav .nav-random {
+      /* Style the button so it reads as a peer of the nav links */
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      letter-spacing: inherit;
+      text-transform: inherit;
+    }
+
+    .site-nav .nav-random:hover {
       color: var(--color-accent);
     }
 
@@ -200,8 +222,18 @@ const { title = 'Ice Cream to Fight With', description = 'Recipes You\'ll Fuck U
     <ul class="nav-links">
       <li><a href="/">Recipes</a></li>
       <li><a href="/about">About</a></li>
+      <li><button type="button" id="random-recipe" class="nav-random">Surprise me</button></li>
     </ul>
   </nav>
+
+  <script define:vars={{ recipeSlugs }}>
+    // Random recipe button. transition:persist keeps the nav across
+    // SPA navigations so this listener only needs to bind once.
+    document.getElementById('random-recipe')?.addEventListener('click', () => {
+      const slug = recipeSlugs[Math.floor(Math.random() * recipeSlugs.length)];
+      window.location.href = `/recipes/${slug}/`;
+    });
+  </script>
 
   <slot />
 
