@@ -8,7 +8,7 @@ A 28-recipe custard-based ice cream cookbook spanning international cuisines, bu
 
 What started as a personal recipe collection became a full cookbook project: 28 recipes developed through iterative design, flavor pairing research, and obsessive attention to technique. Every recipe has been tested, revised, and documented with the kind of detail that actually helps someone make ice cream — not the sanitized, hedge-everything approach of most cookbooks.
 
-The project is also a deliberate exercise in modular content architecture. The book lives as individual Markdown files, compiled on demand, version-controlled with git, and deployed as a static site through the companion infrastructure repository. No CMS, no database, no proprietary formats — just text files and a build script.
+The project is also a deliberate exercise in modular content architecture. The book lives as individual Markdown files, compiled on demand, version-controlled with git, and deployed as a static site by an Astro/Nginx app that lives in the same repo. The companion infrastructure repository ([foundry-platform-demo](https://github.com/PitziLabs/foundry-platform-demo)) provides ECR, ECS, ALB, and the IAM trust this repo's deploy workflow assumes via OIDC. No CMS, no database, no proprietary formats — just text files, a build script, and a tiny Astro site.
 
 ## What's in the Book
 
@@ -28,28 +28,31 @@ Twenty-eight recipes organized by difficulty, from approachable to genuinely dem
 ice-cream-book/
 ├── front_matter/                  # Book introduction (9 files)
 │   ├── 01_title_and_intro.md
-│   ├── 02_table_of_contents.md
-│   ├── 03_what_makes_different.md
-│   ├── 04_philosophy.md
-│   ├── 05_how_to_use.md
-│   ├── 06_difficulty_ratings.md
-│   ├── 07_the_flavors.md
-│   ├── 08_custard_fundamentals.md
+│   ├── ...
 │   └── 09_final_thoughts.md
-├── recipes/                       # Individual recipes (28 files)
+├── recipes/                       # Individual recipes (28 files, YAML frontmatter + prose)
 │   ├── 01_coconut_pandan.md
-│   ├── 02_sinh_to_bo.md
 │   ├── ...
 │   └── 28_appalachian_pawpaw_maple.md
 ├── back_matter/
-│   └── 99_closing.md             # Closing remarks
-├── compile_book.py                # Python compilation script
-├── compile_book.sh                # Bash compilation script
-├── STYLE_GUIDE.md                 # Comprehensive style guide
+│   └── 99_closing.md
+├── illustrations/                 # Per-recipe hero images (one PNG per slug)
+├── compile_book.py                # Compiles the book into one Markdown file
+├── STYLE_GUIDE.md                 # Editorial conventions + frontmatter schema
 ├── CLAUDE.md                      # AI assistant development guide
-└── docs/
-    └── ...                        # Additional documentation
+│
+│   # Website (Astro static site, served by Nginx on ECS Fargate)
+├── src/                           # Astro source: layouts, pages, components, content config
+├── sync_recipes.py                # Translates recipes/*.md into Astro content collection
+├── astro.config.mjs
+├── package.json / package-lock.json
+├── Dockerfile                     # Production container — copies dist/ into nginx
+├── nginx.conf                     # Port 8080, /health endpoint, clean URLs
+├── .github/workflows/deploy.yml   # Build → ECR → ECS, authenticated via OIDC
+└── docs/INFRASTRUCTURE_RELATIONSHIP.md  # How this repo lands on icecreamtofightwith.com
 ```
+
+The book and the website share the same `recipes/` directory as source of truth. `compile_book.py` produces the printable Markdown; `sync_recipes.py` produces the Astro content collection.
 
 ## Design Decisions
 
@@ -92,7 +95,7 @@ See [STYLE_GUIDE.md](STYLE_GUIDE.md) for content conventions and [CLAUDE.md](CLA
 
 ## Related Repositories
 
-- [**foundry-platform-demo**](https://github.com/PitziLabs/foundry-platform-demo) — Terraform-managed AWS infrastructure that hosts this content at icecreamtofightwith.com. Pushes to main here trigger cross-repo dispatch to deploy.
+- [**foundry-platform-demo**](https://github.com/PitziLabs/foundry-platform-demo) — Terraform-managed AWS platform that provides the ECR registry, ECS cluster, ALB, and IAM trust this repo's deploy workflow assumes via OIDC. Pushes to main here trigger `Build & Deploy`, which lands directly on icecreamtofightwith.com.
 - [**PitziLabs**](https://github.com/PitziLabs) — GitHub organization housing this and related projects.
 
 ## License

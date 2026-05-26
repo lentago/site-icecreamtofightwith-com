@@ -47,34 +47,45 @@
 
 ```
 ice-cream-book/
-├── .git/                          # Git repository
-├── front_matter/                  # Book introduction (9 files, ~31KB)
-│   ├── 01_title_and_intro.md
-│   ├── 02_table_of_contents.md
-│   ├── 03_what_makes_different.md
-│   ├── 04_philosophy.md
-│   ├── 05_how_to_use.md
-│   ├── 06_difficulty_ratings.md
-│   ├── 07_the_flavors.md
-│   ├── 08_custard_fundamentals.md
-│   └── 09_final_thoughts.md
-├── recipes/                       # Individual recipes (27 files, ~325KB)
-│   ├── 01_cardamom_pistachio_kulfi.md
-│   ├── 02_sinh_to_bo.md
-│   ├── ... (27 total)
-│   ├── 27_new_orleans_chicory_beignet.md
-│   └── re.sh                      # Recipe renumbering utility
-├── back_matter/                   # Closing content (1 file, ~4KB)
-│   └── 99_closing.md
-├── Ice_Cream_to_Fight_With_COMPLETE.md  # Compiled output (~345KB)
-├── README.md                      # Workflow documentation
-├── STYLE_GUIDE.md                 # Comprehensive style guide (515 lines)
-├── CLAUDE.md                      # This file
-├── EXAMPLE_front_matter_01_title_and_intro.md
-├── EXAMPLE_recipe_02_chili_mango.md
-├── compile_book.py                # Python compilation script
-└── compile_book.sh                # Bash compilation script
+├── .git/
+│
+│   # Editorial source
+├── front_matter/                  # Book introduction (9 files)
+├── recipes/                       # 28 recipes (YAML frontmatter + HOMIE-voice prose)
+├── back_matter/99_closing.md
+├── illustrations/                 # Hero images, one PNG per recipe slug
+├── EXAMPLE_*.md                   # Reference recipe + front matter formats
+├── STYLE_GUIDE.md                 # Editorial conventions + canonical YAML frontmatter schema
+├── _typos.toml                    # Spelling allowlist
+│
+│   # Book build
+├── compile_book.py                # Concatenates front_matter + recipes + back_matter
+├── compile_book.sh                # Bash equivalent
+├── ice_cream_linter.py            # Voice / structure / encoding checker
+├── tests/test_linter.py           # pytest for the linter
+├── Ice_Cream_to_Fight_With_COMPLETE.md  # Compiled book output
+│
+│   # Website (post-#55 migration from foundry-platform-demo)
+├── src/                           # Astro: layouts, pages, components, content config
+├── sync_recipes.py                # Reads recipes/*.md → writes src/content/recipes/
+├── astro.config.mjs
+├── package.json / package-lock.json
+├── Dockerfile                     # Production container (copies built dist/ into nginx)
+├── nginx.conf                     # Port 8080, /health endpoint, clean URLs
+├── .github/workflows/
+│   ├── deploy.yml                 # Build → ECR → ECS, OIDC into foundry-dev-github-actions
+│   ├── compile-book.yml           # PR validation: spell check + book compile
+│   └── lint.yml                   # Recipe linting
+│
+└── docs/
+    └── INFRASTRUCTURE_RELATIONSHIP.md  # How this repo lands on icecreamtofightwith.com
 ```
+
+Two build pipelines, one content source:
+- `compile_book.py` produces the book Markdown.
+- `sync_recipes.py` + Astro produces the website.
+
+Both read `recipes/*.md`. The YAML frontmatter block at the top of each recipe is stripped by `compile_book.py` (keeping the book pure prose) and parsed by `sync_recipes.py` (feeding the website's structured metadata card).
 
 ### Directory Purposes
 

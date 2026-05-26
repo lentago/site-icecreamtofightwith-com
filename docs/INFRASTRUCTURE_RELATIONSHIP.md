@@ -1,79 +1,119 @@
 # How This Book Becomes a Website
 
-This document describes how `ice-cream-book` relates to its companion repository, [`PitziLabs/foundry-platform-demo`](https://github.com/PitziLabs/foundry-platform-demo), which turns these recipes into a live website at **icecreamtofightwith.com**.
+This document describes how `ice-cream-book` reaches **icecreamtofightwith.com**, and how this repo relates to its companion infrastructure repo, [`PitziLabs/foundry-platform-demo`](https://github.com/PitziLabs/foundry-platform-demo).
 
-## This Repo's Role
+Before May 2026, the Astro application source and the deploy workflow lived in `foundry-platform-demo/app/`, and this repo fired a cross-repo `repository_dispatch` event when recipes changed. Issue [foundry-platform-demo#55](https://github.com/PitziLabs/foundry-platform-demo/issues/55) split that arrangement: the application now lives here alongside the content it serves; the foundry repo provides infrastructure (ECR, ECS, ALB, IAM trust) and nothing else.
 
-`ice-cream-book` is the **content source of truth**. Every recipe, the front matter, the back matter, and the style guide all live here as plain Markdown files. This repo knows nothing about AWS, Docker, or web frameworks — it is purely editorial.
+## This Repo's Two Build Pipelines
 
-The key content that flows downstream:
+Both pipelines read `recipes/*.md` as their source of truth. They produce different artifacts.
 
-```
-recipes/
-├── 01_coconut_pandan.md
-├── 02_sinh_to_bo.md
-├── ...
-└── 28_appalachian_pawpaw_maple.md
-```
-
-Each recipe file follows a consistent structure — H1 title, italic subtitle, difficulty tier, total time, ingredient list, numbered steps, and notes — that the infrastructure side depends on for automated parsing.
-
-## What Happens to the Content
-
-The `foundry-platform-demo` repo contains a script called `sync_recipes.py` that reads these Markdown files and transforms them into web-ready content:
+### Book pipeline
 
 ```
-ice-cream-book/recipes/*.md
+recipes/*.md + front_matter/ + back_matter/
         │
         ▼
-  sync_recipes.py (in foundry-platform-demo)
-        │  - Extracts title, subtitle, difficulty tier, total time
-        │  - Generates YAML frontmatter for Astro
-        │  - Writes to src/content/recipes/
+   compile_book.py        ← strips the YAML frontmatter block,
+        │                   concatenates with --- separators
         ▼
-  Astro static site build → nginx container → ECS Fargate → icecreamtofightwith.com
+Ice_Cream_to_Fight_With_COMPLETE.md
 ```
 
-In CI/CD, the `RECIPE_SOURCE` environment variable points `sync_recipes.py` at this repo's recipe files. For local development, the script defaults to `../ice-cream-book/recipes/`, expecting both repos to be cloned as siblings.
+This is the printable/portable Markdown book. The compile script lives at the repo root; CI runs it on every PR via `.github/workflows/compile-book.yml`.
 
-## What the Infrastructure Expects from Us
-
-The parsing in `sync_recipes.py` relies on specific conventions in our recipe files:
-
-| Convention | What Gets Parsed | Example |
-|-----------|-----------------|---------|
-| First `# ` line | Recipe title | `# Coconut Pandan` |
-| First `*italic*` line | Subtitle | `*Southeast Asian dessert meets churned custard*` |
-| `**Difficulty:**` line | Tier + description | `**Difficulty:** Legit - Coconut milk requires attention` |
-| `**Total Time:**` line | Time estimate | `**Total Time:** 5-6 hours (including chill time)` |
-| Filename pattern `##_name.md` | Recipe number + URL slug | `01_coconut_pandan.md` → recipe #1, slug `01_coconut_pandan` |
-
-Breaking these conventions will cause the website to display missing or incorrect metadata. The recipe body (everything after the Total Time line) is passed through as-is.
-
-## What Changes Here Affect the Website
-
-- **Editing a recipe** — Content updates flow through on the next site build. No infra changes needed.
-- **Adding a new recipe** — Create a new numbered `.md` file in `recipes/`. The sync script auto-discovers all `*.md` files in the directory.
-- **Renaming a recipe file** — Changes the URL slug on the website. Old URLs will 404 unless redirects are added on the infra side.
-- **Changing the format** — If the H1, italic subtitle, `**Difficulty:**`, or `**Total Time:**` patterns change, `sync_recipes.py` must be updated in `foundry-platform-demo` to match.
-
-## What Does NOT Affect the Website
-
-- `front_matter/` and `back_matter/` — These are used by `compile_book.py` to produce the complete book document but are **not** consumed by the website.
-- `STYLE_GUIDE.md`, `CLAUDE.md`, `_typos.toml` — Editorial tooling only.
-- `compile_book.py` / `compile_book.sh` — These compile the full book into a single Markdown file. The website uses a completely separate build pipeline.
-
-## Local Development Setup
-
-To work on both repos together locally:
+### Website pipeline
 
 ```
-~/projects/
-├── ice-cream-book/        # this repo
-└── foundry-platform-demo/
-    └── app/
-        └── ice_cream_site/
-            └── sync_recipes.py   # expects ../ice-cream-book/recipes/
+recipes/*.md + illustrations/
+        │
+        ▼
+   sync_recipes.py        ← parses YAML frontmatter + the
+        │                   **Difficulty:** / **Total Time:** prose lines,
+        ▼                   emits Astro content collection files
+src/content/recipes/*.md (gitignored — regenerated on every build)
+        │
+        ▼
+   npx astro build
+        │
+        ▼
+dist/ (static HTML + assets, gitignored)
+        │
+        ▼
+   docker build → push to ECR → ECS rolls new tasks
+        │
+        ▼
+icecreamtofightwith.com
 ```
 
-With this layout, running `python sync_recipes.py` from the `ice_cream_site` directory will pull recipes directly from your local `ice-cream-book` checkout.
+This is what `.github/workflows/deploy.yml` runs on every push to `main`.
+
+## What the Foundry Platform Provides
+
+| Resource | What this repo uses it for |
+|---|---|
+| ECR repository `foundry-dev-app` | Tag target for `docker push` |
+| ECS cluster `foundry-dev-cluster` + service `foundry-dev-app` | Where the container actually runs |
+| IAM role `foundry-dev-github-actions` | Assumed via OIDC from this repo's `Build & Deploy` workflow; grants ECR push + ECS update permissions |
+| ALB + Route 53 + ACM certificate | HTTPS termination, DNS, TLS. Health check probes `/health:8080` |
+
+The IAM role's trust policy is scoped to `repo:PitziLabs/ice-cream-book:*` — only workflows from this repo can assume it. The foundry repo holds the Terraform that creates and maintains the role; this repo holds the workflow that uses it.
+
+No stored AWS credentials in GitHub Secrets. Every deploy run gets fresh short-lived credentials via the OIDC JWT exchange.
+
+## The Recipe Frontmatter Schema
+
+Each recipe file in `recipes/` begins with a YAML frontmatter block:
+
+```yaml
+---
+cuisine: "Vietnamese"
+active_time_minutes: 20
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - egg-free
+  - contains-nuts
+---
+```
+
+`compile_book.py` strips this block before assembling the book — readers see only prose. `sync_recipes.py` parses it and emits the values into the Astro content collection so the website's `RecipeMeta` component can render the cuisine, time, yield, and dietary chips.
+
+The canonical schema and allowed `dietary` tags are documented in [`STYLE_GUIDE.md`](../STYLE_GUIDE.md).
+
+## What Changes Here Affect
+
+| Change | Effect on the book | Effect on the website |
+|---|---|---|
+| Edit recipe body prose | Next compile picks it up | Next deploy picks it up |
+| Edit YAML frontmatter | No effect (stripped) | Metadata card updates on next deploy |
+| Add a recipe `.md` file | New section in the book | New page at `/recipes/<slug>/` |
+| Rename a recipe file | Section order may shift | URL slug changes — old URL 404s (no redirects yet) |
+| Edit `src/`, `Dockerfile`, `nginx.conf` | No effect | Container behavior changes on next deploy |
+| Edit `compile_book.py` | Book output may differ | No effect |
+
+## Local Development
+
+Book only (no Node or Docker needed):
+
+```bash
+python3 compile_book.py
+```
+
+Website preview:
+
+```bash
+npm ci
+python3 sync_recipes.py
+npx astro dev   # http://localhost:4321
+```
+
+Or build the production image locally to verify the deploy pipeline before pushing:
+
+```bash
+npx astro build
+docker build -t ice-cream-test .
+docker run --rm -p 8080:8080 ice-cream-test
+curl -sI http://localhost:8080/health   # expect 200
+```
