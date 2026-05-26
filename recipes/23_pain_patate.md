@@ -1,3 +1,13 @@
+---
+cuisine: "Haitian"
+active_time_minutes: 90
+total_time_minutes_min: 720
+total_time_minutes_max: 840
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+---
+
 # Pain Patate
 
 *Haiti's pudding cake, frozen*

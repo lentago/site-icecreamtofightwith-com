@@ -1,3 +1,12 @@
+---
+cuisine: "Brazilian"
+active_time_minutes: 75
+total_time_minutes_min: 480
+total_time_minutes_max: 600
+yield: "About 1.5 quarts"
+dietary: []
+---
+
 # Brigadeiro & Passion Fruit
 
 *Chocolate fudge balls meet tropical brightness*

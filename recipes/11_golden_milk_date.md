@@ -1,3 +1,12 @@
+---
+cuisine: "South Asian"
+active_time_minutes: 30
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary: []
+---
+
 # Golden Milk and Date
 
 *India's turmeric latte meets its oldest sweetener*

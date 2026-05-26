@@ -1,3 +1,13 @@
+---
+cuisine: "Italian"
+active_time_minutes: 60
+total_time_minutes_min: 600
+total_time_minutes_max: 720
+yield: "About 1.5 quarts"
+dietary:
+  - contains-wheat
+---
+
 # Sfogliatelle
 
 *Naples' pastry, now frozen*

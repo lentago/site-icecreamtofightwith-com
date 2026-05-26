@@ -1,3 +1,13 @@
+---
+cuisine: "Ethiopian"
+active_time_minutes: 75
+total_time_minutes_min: 420
+total_time_minutes_max: 540
+yield: "About 1.5 quarts"
+dietary:
+  - contains-wheat
+---
+
 # Coffee & Berbere
 
 *Coffee's birthplace meets ancient spice tradition*

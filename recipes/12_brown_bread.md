@@ -1,3 +1,14 @@
+---
+cuisine: "Irish"
+active_time_minutes: 45
+total_time_minutes_min: 480
+total_time_minutes_max: 600
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+  - contains-wheat
+---
+
 # Brown Bread
 
 *Buttermilk custard with caramelized bread crumble and whiskey*

@@ -1,3 +1,14 @@
+---
+cuisine: "American (Southern)"
+active_time_minutes: 90
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+  - contains-nuts
+---
+
 # Brown Butter Pecan
 
 *Deep South tradition, elevated*

@@ -1,3 +1,13 @@
+---
+cuisine: "Thai"
+active_time_minutes: 20
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - egg-free
+---
+
 # Coconut Pandan
 
 *Southeast Asia's vanilla, now frozen*

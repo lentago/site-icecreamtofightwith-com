@@ -1,3 +1,14 @@
+---
+cuisine: "Indian"
+active_time_minutes: 20
+total_time_minutes_min: 420
+total_time_minutes_max: 540
+yield: "About 2 quarts"
+dietary:
+  - egg-free
+  - contains-nuts
+---
+
 # Cardamom-Pistachio Kulfi
 
 *India's frozen dessert tradition, now achievable on a Tuesday*

@@ -1,3 +1,16 @@
+---
+cuisine: "African (Portuguese-influenced)"
+active_time_minutes: 75
+total_time_minutes_min: 480
+total_time_minutes_max: 600
+yield: "About 1.5 quarts"
+dietary:
+  - vegan
+  - dairy-free
+  - egg-free
+  - contains-nuts
+---
+
 # Piri Piri Cashew Coconut
 
 *Vegan and surprisingly rich*

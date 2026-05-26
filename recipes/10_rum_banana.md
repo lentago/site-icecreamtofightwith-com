@@ -1,3 +1,13 @@
+---
+cuisine: "Caribbean (Jamaican)"
+active_time_minutes: 60
+total_time_minutes_min: 360
+total_time_minutes_max: 480
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+---
+
 # Rum Banana
 
 *Allspice, rum, bananas—Caribbean celebration*

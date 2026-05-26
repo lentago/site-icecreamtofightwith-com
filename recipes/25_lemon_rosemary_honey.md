@@ -1,3 +1,12 @@
+---
+cuisine: "Mediterranean (Greek)"
+active_time_minutes: 90
+total_time_minutes_min: 600
+total_time_minutes_max: 720
+yield: "About 1.5 quarts"
+dietary: []
+---
+
 # Lemon and Rosemary Honey
 
 *Greek summer in a bowl*

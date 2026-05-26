@@ -1,3 +1,14 @@
+---
+cuisine: "French"
+active_time_minutes: 40
+total_time_minutes_min: 420
+total_time_minutes_max: 540
+yield: "About 1.5 quarts"
+dietary:
+  - contains-alcohol
+  - contains-wheat
+---
+
 # Tarte Tatin
 
 *France's iconic upside-down caramelized apple tart, now frozen*

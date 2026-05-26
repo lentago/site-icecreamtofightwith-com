@@ -15,6 +15,18 @@ from pathlib import Path
 ILLUSTRATIONS_DIR = Path('illustrations')
 
 
+def strip_frontmatter(content):
+    """Drop a leading YAML frontmatter block (between `---` fences) if present.
+    Recipe files carry structured metadata for the website renderer that
+    has no place in the compiled book."""
+    if not content.startswith('---\n'):
+        return content
+    end = content.find('\n---\n', 4)
+    if end < 0:
+        return content
+    return content[end + len('\n---\n'):].lstrip('\n')
+
+
 def get_markdown_files(directory):
     """Get all markdown files from a directory, sorted naturally."""
     dir_path = Path(directory)
@@ -67,7 +79,8 @@ def compile_book():
             continue
 
         with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
+            content = f.read()
+            content = strip_frontmatter(content).strip()
             # Strip trailing separator to avoid doubles when joining
             while content.endswith('---'):
                 content = content[:-3].rstrip()
