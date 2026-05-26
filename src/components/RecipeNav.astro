@@ -35,8 +35,10 @@ const nextHref = next ? `/recipes/${next.slug}` : null;
 </nav>
 
 <script>
-  // Keyboard nav: ← previous, → next.
-  // Skip when the user is typing, holding a modifier, or there's no target.
+  // Keyboard nav: ← previous, → next. Triggers the link's own click so
+  // Astro's ClientRouter intercepts it for an SPA-style transition (and
+  // falls back to a normal navigation in browsers without View Transitions).
+  // Skip when the user is typing or holding a modifier.
   function isTypingTarget(el: EventTarget | null): boolean {
     if (!(el instanceof HTMLElement)) return false;
     const tag = el.tagName;
@@ -47,17 +49,17 @@ const nextHref = next ? `/recipes/${next.slug}` : null;
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     if (isTypingTarget(e.target)) return;
 
-    const nav = document.querySelector<HTMLElement>('.recipe-nav');
-    if (!nav) return;
-
-    const href =
-      e.key === 'ArrowLeft' ? nav.dataset.prev :
-      e.key === 'ArrowRight' ? nav.dataset.next :
+    const selector =
+      e.key === 'ArrowLeft' ? '.recipe-nav a[rel="prev"]' :
+      e.key === 'ArrowRight' ? '.recipe-nav a[rel="next"]' :
       null;
-    if (!href) return;
+    if (!selector) return;
+
+    const link = document.querySelector<HTMLAnchorElement>(selector);
+    if (!link) return;
 
     e.preventDefault();
-    window.location.assign(href);
+    link.click();
   }
 
   document.addEventListener('keydown', navFromKey);
