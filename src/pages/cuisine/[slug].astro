@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import RecipeCard from '../../components/RecipeCard.astro';
+import { getCollection } from 'astro:content';
+import { cuisineToSlug } from '../../lib/cuisine';
+
+export async function getStaticPaths() {
+  const all = await getCollection('recipes');
+  const byCuisine = new Map<string, typeof all>();
+  for (const recipe of all) {
+    const cuisine = recipe.data.cuisine;
+    if (!cuisine) continue;
+    const bucket = byCuisine.get(cuisine) ?? [];
+    bucket.push(recipe);
+    byCuisine.set(cuisine, bucket);
+  }
+  return Array.from(byCuisine.entries()).map(([cuisine, recipes]) => ({
+    params: { slug: cuisineToSlug(cuisine) },
+    props: { cuisine, recipes },
+  }));
+}
+
+const { cuisine, recipes } = Astro.props;
+const sorted = [...recipes].sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
+
+const tierClassMap: Record<string, string> = {
+  'CHILL': 'chill',
+  'LEGIT': 'legit',
+  'THE REAL DEAL': 'real-deal',
+  'A FUCKING ORDEAL': 'ordeal',
+};
+---
+<Base title={`${cuisine} — Ice Cream to Fight With`} description={`${sorted.length} ${cuisine} recipe${sorted.length === 1 ? '' : 's'} from Ice Cream to Fight With.`}>
+  <main class="page-container wide">
+    <header class="cuisine-page-header">
+      <p class="cuisine-eyebrow">Cuisine</p>
+      <h1>{cuisine}</h1>
+      <p class="cuisine-count">{sorted.length} {sorted.length === 1 ? 'recipe' : 'recipes'}</p>
+    </header>
+
+    <div class="recipe-grid">
+      {sorted.map(recipe => (
+        <RecipeCard
+          slug={recipe.data.recipeSlug}
+          title={recipe.data.title}
+          subtitle={recipe.data.subtitle}
+          number={recipe.data.recipeNumber}
+          tierClass={tierClassMap[recipe.data.tier] ?? 'legit'}
+        />
+      ))}
+    </div>
+  </main>
+</Base>
+
+<style>
+  .cuisine-page-header {
+    margin: 1rem 0 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cuisine-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .cuisine-page-header h1 {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    margin: 0.25rem 0 0.5rem;
+    line-height: 1.15;
+  }
+
+  .cuisine-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .recipe-grid { grid-template-columns: 1fr; }
+  }
+</style>

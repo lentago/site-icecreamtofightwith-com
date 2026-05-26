@@ -1,4 +1,6 @@
 ---
+import { cuisineToSlug } from '../lib/cuisine';
+
 interface Props {
   tier: string;
   difficultyText: string;
@@ -51,7 +53,9 @@ const dietaryLabels: Record<string, string> = {
 <aside class="recipe-meta">
   <div class="meta-top">
     <span class={`tier-badge ${tierClass}`}>{tier}</span>
-    {cuisine && <span class="meta-cuisine">{cuisine}</span>}
+    {cuisine && (
+      <a class="meta-cuisine" href={`/cuisine/${cuisineToSlug(cuisine)}/`}>{cuisine}</a>
+    )}
   </div>
 
   <p class="meta-difficulty">{difficultyText}</p>
@@ -109,6 +113,12 @@ const dietaryLabels: Record<string, string> = {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .meta-cuisine:hover {
+    color: var(--color-accent);
   }
 
   .meta-difficulty {
