@@ -18,7 +18,7 @@ Twenty-eight recipes organized by difficulty, from approachable to genuinely dem
 
 **Recipes:** International flavors spanning kulfi, Vietnamese avocado smoothie ice cream, Sichuan peppercorn plum, wattleseed and macadamia, ube, miso matcha, and more. Each recipe includes cultural context, technique instruction, sourcing guidance, and detailed notes.
 
-**Difficulty System:** Four tiers — CHILL (minimal technique), LEGIT (solid fundamentals needed), THE REAL DEAL (narrow margins for error), and A FUCKING ORDEAL (multi-day commitments and professional techniques). Difficulty ratings are honest, not aspirational.
+**Difficulty System:** Four tiers — CHILL (minimal technique), LEGIT (solid fundamentals needed), THE REAL DEAL (narrow margins for error), and A F█CK█NG ORDEAL (multi-day commitments and professional techniques). Difficulty ratings are honest, not aspirational. (The redaction is load-bearing: the author is job hunting, so profanity here and on [icecreamtofightwith.com](https://icecreamtofightwith.com) has its vowels censored. The book itself remains gloriously uncensored.)
 
 **Voice:** The "HOMIE voice" — casual, educational, self-deprecating, and technically precise. Like a smart friend who's already made all the mistakes teaching you what actually works. Strategic profanity for emphasis, not decoration.
 
@@ -66,7 +66,7 @@ The number one rule. Emojis corrupt across platforms, display inconsistently, an
 
 ### Difficulty Ratings Over Skill Levels
 
-Recipes are rated by what they demand, not what the reader brings. CHILL means minimal technique. A FUCKING ORDEAL means multi-day commitment with professional techniques. The ratings are honest about what the reader is signing up for, explained in the same conversational voice as the recipes themselves.
+Recipes are rated by what they demand, not what the reader brings. CHILL means minimal technique. A F█CK█NG ORDEAL means multi-day commitment with professional techniques. The ratings are honest about what the reader is signing up for, explained in the same conversational voice as the recipes themselves.
 
 ### Cultural Context as a Requirement, Not a Garnish
 
