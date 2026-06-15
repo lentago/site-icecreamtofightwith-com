@@ -11,8 +11,8 @@ on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
     paths-ignore:
-      - "*.md"
-      - "docs/**"
+      # The recipes ARE markdown and the linter rules govern them, so *.md is
+      # deliberately NOT ignored — only the license and gitignore are.
       - "LICENSE"
       - ".gitignore"
 
@@ -27,13 +27,25 @@ jobs:
     secrets: inherit
     with:
       review_prompt: |
-        This repository contains bash bootstrap scripts for Linux workstations
-        and Terraform infrastructure code. Focus your review on:
+        This repository is a markdown ice-cream cookbook ("Ice Cream to Fight
+        With"): 28 custard-based recipes plus front/back matter, compiled by
+        Python build scripts (`compile_book.py`, `ice_cream_linter.py`,
+        `sync_recipes.py`) and served as an Astro/Nginx static site deployed
+        to AWS via OIDC. Focus your review on:
 
-        1. **Bash correctness** — quoting bugs, unset variable references,
-           broken conditionals, incorrect exit codes, non-portable syntax
-        2. **Idempotency** — will re-running the script break anything?
-        3. **Security** — hardcoded credentials, secrets in output, unsafe
-           permissions, curl|bash pitfalls
-        4. **Terraform** — if HCL files changed: dependency graph issues,
-           resources requiring multiple applies, missing variable validation
+        1. **Recipe & prose correctness** — ingredient/quantity/step
+           consistency, technique accuracy, and adherence to `STYLE_GUIDE.md`
+           (the conversational voice is intentional — don't sand it flat, but
+           flag genuine errors).
+        2. **Build & lint scripts** — Python correctness in `compile_book.py`,
+           `ice_cream_linter.py`, `sync_recipes.py`: globbing, ordering,
+           encoding, and linter rules that could silently drop or mis-order
+           content.
+        3. **Markdown structure** — heading hierarchy, tables, and the
+           front-matter / recipe / back-matter conventions the compiler
+           depends on.
+        4. **Site & deploy** — Astro config, `Dockerfile` / `nginx.conf`, and
+           the deploy workflow's OIDC assumptions against the
+           foundry-platform-demo infrastructure.
+        5. **Security** — no secrets in scripts, workflows, or committed
+           build output.
