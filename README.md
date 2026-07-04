@@ -1,6 +1,6 @@
-# ice-cream-book — "Ice Cream to Fight With"
+# site-icecreamtofightwith-com — "Ice Cream to Fight With"
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/lentago/ice-cream-book)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/lentago/site-icecreamtofightwith-com)
 
 A 28-recipe custard-based ice cream cookbook spanning international cuisines, built as a modular Markdown project and served as content for [icecreamtofightwith.com](https://icecreamtofightwith.com). The book combines sophisticated technique instruction with a distinctive conversational voice — recipes you'll actually want to read, not just follow.
 
@@ -27,7 +27,7 @@ Twenty-eight recipes organized by difficulty, from approachable to genuinely dem
 ## Repository Structure
 
 ```
-ice-cream-book/
+site-icecreamtofightwith-com/
 ├── front_matter/                  # Book introduction (10 files)
 │   ├── 01_title.md
 │   ├── ...
