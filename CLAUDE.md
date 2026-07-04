@@ -21,7 +21,7 @@ make a meal of it.
 A 28-recipe markdown cookbook that compiles into both a printable book
 (`Ice_Cream_to_Fight_With_COMPLETE.md`) and a static website
 (`icecreamtofightwith.com`, Astro + nginx on ECS Fargate via the
-`solidago` platform (formerly foundry-platform-demo)). Plain text only — no emojis, no
+`solidago` platform). Plain text only — no emojis, no
 decorative Unicode. The "HOMIE voice" is the distinctive ingredient and
 the linter checks for it.
 

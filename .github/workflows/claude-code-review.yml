@@ -44,6 +44,6 @@ jobs:
            depends on.
         4. **Site & deploy** — Astro config, `Dockerfile` / `nginx.conf`, and
            the deploy workflow's OIDC assumptions against the
-           foundry-platform-demo infrastructure.
+           solidago infrastructure.
         5. **Security** — no secrets in scripts, workflows, or committed
            build output.

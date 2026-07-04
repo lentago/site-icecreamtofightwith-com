@@ -10,7 +10,7 @@ A 28-recipe custard-based ice cream cookbook spanning international cuisines, bu
 
 What started as a personal recipe collection became a full cookbook project: 28 recipes developed through iterative design, flavor pairing research, and obsessive attention to technique. Every recipe has been tested, revised, and documented with the kind of detail that actually helps someone make ice cream — not the sanitized, hedge-everything approach of most cookbooks.
 
-The project is also a deliberate exercise in modular content architecture. The book lives as individual Markdown files, compiled on demand, version-controlled with git, and deployed as a static site by an Astro/Nginx app that lives in the same repo. The companion infrastructure repository ([solidago](https://github.com/lentago/solidago) (formerly foundry-platform-demo)) provides ECR, ECS, ALB, and the IAM trust this repo's deploy workflow assumes via OIDC. No CMS, no database, no proprietary formats — just text files, a build script, and a tiny Astro site.
+The project is also a deliberate exercise in modular content architecture. The book lives as individual Markdown files, compiled on demand, version-controlled with git, and deployed as a static site by an Astro/Nginx app that lives in the same repo. The companion infrastructure repository ([solidago](https://github.com/lentago/solidago)) provides ECR, ECS, ALB, and the IAM trust this repo's deploy workflow assumes via OIDC. No CMS, no database, no proprietary formats — just text files, a build script, and a tiny Astro site.
 
 ## What's in the Book
 
@@ -97,7 +97,7 @@ See [STYLE_GUIDE.md](STYLE_GUIDE.md) for content conventions and [CLAUDE.md](CLA
 
 ## Related Repositories
 
-- [**solidago**](https://github.com/lentago/solidago) (formerly foundry-platform-demo) — Terraform-managed AWS platform that provides the ECR registry, ECS cluster, ALB, and IAM trust this repo's deploy workflow assumes via OIDC. Pushes to main here trigger `Build & Deploy`, which lands directly on icecreamtofightwith.com.
+- [**solidago**](https://github.com/lentago/solidago) — Terraform-managed AWS platform that provides the ECR registry, ECS cluster, ALB, and IAM trust this repo's deploy workflow assumes via OIDC. Pushes to main here trigger `Build & Deploy`, which lands directly on icecreamtofightwith.com.
 - [**Lentago Labs**](https://github.com/lentago) — GitHub organization housing this and related projects.
 
 ## License
