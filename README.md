@@ -1,5 +1,7 @@
 # ice-cream-book — "Ice Cream to Fight With"
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/lentago/ice-cream-book)
+
 A 28-recipe custard-based ice cream cookbook spanning international cuisines, built as a modular Markdown project and served as content for [icecreamtofightwith.com](https://icecreamtofightwith.com). The book combines sophisticated technique instruction with a distinctive conversational voice — recipes you'll actually want to read, not just follow.
 
 **Authorship:** The recipes, front matter, and build scripts in this repo are co-written with [Claude](https://claude.ai) (Anthropic). I bring the flavor ideas, technique experience, and editorial direction; Claude writes the prose and the code. I'm an infrastructure operator, not a software engineer or a professional writer — please don't read this repo as a portfolio of either coding or authorship.
