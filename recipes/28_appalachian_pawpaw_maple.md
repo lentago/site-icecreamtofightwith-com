@@ -1,4 +1,5 @@
 ---
+date: "2026-05-30"
 cuisine: "American (Appalachian)"
 active_time_minutes: 30
 total_time_minutes_min: 360

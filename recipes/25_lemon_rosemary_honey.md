@@ -1,4 +1,5 @@
 ---
+date: "2025-05-16"
 cuisine: "Mediterranean (Greek)"
 active_time_minutes: 90
 total_time_minutes_min: 600

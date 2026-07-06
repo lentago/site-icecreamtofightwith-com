@@ -1,4 +1,5 @@
 ---
+date: "2025-07-05"
 cuisine: "French"
 active_time_minutes: 40
 total_time_minutes_min: 420

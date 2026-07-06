@@ -46,17 +46,11 @@ fallbackPool.sort((a, b) =>
   shuffleKey(current.data.recipeSlug, b.data.recipeNumber)
 );
 const filled = [...real, ...fallbackPool.slice(0, Math.max(0, count - real.length))];
-
-const tierClassMap: Record<string, string> = {
-  'CHILL': 'chill',
-  'LEGIT': 'legit',
-  'THE REAL DEAL': 'real-deal',
-  'A FUCKING ORDEAL': 'ordeal',
-};
 ---
 {filled.length > 0 && (
   <section class="related-recipes" aria-labelledby="related-heading">
-    <h2 id="related-heading">If you liked this, try:</h2>
+    <hr class="cut-line" />
+    <h2 id="related-heading" class="related-head">More to Fight With</h2>
     <div class="related-grid">
       {filled.map(recipe => (
         <RecipeCard
@@ -64,7 +58,8 @@ const tierClassMap: Record<string, string> = {
           title={recipe.data.title}
           subtitle={recipe.data.subtitle}
           number={recipe.data.recipeNumber}
-          tierClass={tierClassMap[recipe.data.tier] ?? 'legit'}
+          tier={recipe.data.tier}
+          date={recipe.data.date}
         />
       ))}
     </div>
@@ -72,23 +67,24 @@ const tierClassMap: Record<string, string> = {
 )}
 
 <style>
-  .related-recipes {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
-  }
+  .related-recipes { margin-top: 3rem; }
 
-  .related-recipes h2 {
+  .related-head {
     font-family: var(--font-display);
-    font-size: 1.4rem;
-    margin: 0 0 1rem;
-    color: var(--color-text);
+    font-weight: 400;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    text-align: center;
+    margin: 0 0 1.75rem;
+    color: var(--ink);
+    transform: rotate(-1deg);
   }
 
   .related-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    gap: 1rem;
+    gap: 1.75rem;
   }
 
   @media (max-width: 640px) {

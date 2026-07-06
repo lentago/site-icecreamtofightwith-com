@@ -44,14 +44,16 @@ export async function getStaticPaths() {
 const { tier } = Astro.props as { tier: TierMeta };
 const recipes = (await getCollection('recipes'))
   .filter(r => r.data.tier === tier.name)
-  .sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 <Base title={`${tier.name} — Ice Cream to Fight With`} description={tier.description}>
   <main class="page-container wide">
-    <header class="tier-page-header">
-      <span class={`tier-badge ${tier.slug}`} set:html={redactHtml(tier.name)} />
-      <span class="tier-page-count">{recipes.length} {recipes.length === 1 ? 'recipe' : 'recipes'}</span>
-      <p class="tier-page-description">{tier.description}</p>
+    <header class="desk-header">
+      <p class="desk-eyebrow kicker">Damage Level</p>
+      <h1 class="desk-title"><span class={`tier-badge ${tier.slug}`} set:html={redactHtml(tier.name)} /></h1>
+      <p class="desk-count">{recipes.length} {recipes.length === 1 ? 'issue' : 'issues'} at this level</p>
+      <hr class="desk-hr" />
+      <p class="desk-description" set:html={redactHtml(tier.description)} />
     </header>
 
     <div class="recipe-grid">
@@ -61,7 +63,8 @@ const recipes = (await getCollection('recipes'))
           title={recipe.data.title}
           subtitle={recipe.data.subtitle}
           number={recipe.data.recipeNumber}
-          tierClass={tier.slug}
+          tier={recipe.data.tier}
+          date={recipe.data.date}
         />
       ))}
     </div>
@@ -69,37 +72,38 @@ const recipes = (await getCollection('recipes'))
 </Base>
 
 <style>
-  .tier-page-header {
-    margin: 1rem 0 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-    display: grid;
-    grid-template-columns: auto auto 1fr;
-    gap: 0.75rem 1rem;
-    align-items: center;
+  .desk-header {
+    margin: 0.5rem 0 2.5rem;
+    text-align: center;
   }
-
-  .tier-page-count {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
+  .desk-eyebrow { display: block; margin-bottom: 0.9rem; }
+  .desk-title { margin: 0 0 0.7rem; }
+  .desk-title .tier-badge { font-size: 1rem; padding: 0.4rem 0.9rem 0.35rem; }
+  .desk-count {
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
   }
-
-  .tier-page-description {
-    grid-column: 1 / -1;
-    margin: 0.5rem 0 0;
-    font-size: 1rem;
-    line-height: 1.55;
-    color: var(--color-text-muted);
+  .desk-hr { border: 0; border-top: 2px dashed var(--ink); margin: 1.1rem auto; max-width: 24rem; }
+  .desk-description {
+    max-width: 40rem;
+    margin: 0 auto;
+    font-family: var(--font-marker);
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--pink-deep);
   }
 
   .recipe-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 1rem;
+    gap: 1.75rem;
   }
 
   @media (max-width: 640px) {
-    .tier-page-header { grid-template-columns: auto 1fr; }
     .recipe-grid { grid-template-columns: 1fr; }
   }
 </style>

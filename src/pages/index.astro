@@ -1,11 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import RecipeCard from '../components/RecipeCard.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { redactHtml } from '../lib/redact.mjs';
+import { formatLong, formatShort, excerpt, isoDate } from '../lib/dispatch';
 
+const issueNo = (n: number) => '#' + String(n).padStart(2, '0');
+
+// Newest dispatch first — the whole point of the blog framing.
 const recipes = await getCollection('recipes');
-recipes.sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
+recipes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const TIER_CLASS: Record<string, string> = {
   'CHILL': 'chill',
@@ -15,10 +19,8 @@ const TIER_CLASS: Record<string, string> = {
 };
 const TIERS = ['CHILL', 'LEGIT', 'THE REAL DEAL', 'A FUCKING ORDEAL'] as const;
 
-// Build the filter UI option lists from the actual corpus, alphabetical.
 const cuisines = [...new Set(recipes.map(r => r.data.cuisine).filter((c): c is string => Boolean(c)))].sort();
 
-// Dietary tags split into "is" (positive identity) and "is not" (allergen/restriction)
 const DIETARY_YES: Array<[string, string]> = [
   ['vegan', 'Vegan'],
   ['dairy-free', 'Dairy-free'],
@@ -32,131 +34,187 @@ const DIETARY_NO: Array<[string, string]> = [
   ['contains-sesame', 'No sesame'],
   ['contains-wheat', 'No wheat'],
 ];
-
 const TIME_BUDGETS: Array<[number, string]> = [
   [60, 'Under 1 hour'],
   [180, 'Under 3 hours'],
   [360, 'Under 6 hours'],
 ];
 
-const tiers = TIERS.map(name => ({
-  name,
-  class: TIER_CLASS[name],
-  recipes: recipes.filter(r => r.data.tier === name),
+// Precompute per-dispatch view data (date strings, roman issue no, lede).
+const entries = recipes.map(r => ({
+  data: r.data,
+  tierClass: TIER_CLASS[r.data.tier] ?? 'legit',
+  issue: issueNo(r.data.recipeNumber),
+  dateLong: formatLong(r.data.date),
+  dateShort: formatShort(r.data.date),
+  iso: isoDate(r.data.date),
+  lede: excerpt(r.body, 150),
+  leadLede: excerpt(r.body, 260),
+  dietaryAttr: (r.data.dietary ?? []).join(' '),
 }));
----
-<Base title="Ice Cream to Fight With" description="Recipes You'll Fuck Up At Least Once">
 
-  <header class="hero">
-    <div class="hero-inner">
-      <h1>Ice Cream<br /><span class="accent">to Fight With</span></h1>
-      <p class="tagline"><span set:html={redactHtml("Recipes You'll Fuck Up At Least Once")} /><a
+const lead = entries[0];
+const feed = entries.slice(1);
+---
+<Base title="Ice Cream to Fight With" description="Recipes You'll Fuck Up At Least Once — a photocopied ice cream zine from around the world.">
+
+  <header class="cover" data-reveal>
+    <div class="cover-strip">
+      <span>Free &mdash; take one</span>
+      <span>Photocopied whenever</span>
+      <span>Issue-a-whatever</span>
+    </div>
+    <h1 class="cover-title misreg">Ice Cream to Fight With</h1>
+    <p class="cover-motto"><span set:html={redactHtml('Recipes You\'ll Fuck Up At Least Once')} /><a
         href="https://pl-preview-e8ef58a5.icecreamtofightwith.com"
-        class="hero-dot"
+        class="cover-dot"
         aria-hidden="true"
         tabindex="-1"
       >.</a></p>
+    <div class="cover-tags">
+      <span>28 issues</span>
+      <span>4 damage levels</span>
+      <span>0 apologies</span>
     </div>
   </header>
 
   <main class="page-container wide">
 
-    <section class="filters" aria-label="Filter recipes">
-      <details class="filter-group">
-        <summary>Tier <span class="filter-hint">multi-select</span></summary>
-        <div class="chip-row">
-          {TIERS.map(name => (
-            <button type="button" class="chip" data-filter="tier" data-value={name} aria-pressed="false" set:html={redactHtml(name)} />
-          ))}
+    <!-- FRESH OFF THE COPIER — the newest issue -->
+    <article
+      class="frontpage-lead"
+      data-dispatch
+      data-tier={lead.data.tier}
+      data-cuisine={lead.data.cuisine ?? ''}
+      data-dietary={lead.dietaryAttr}
+      data-max-minutes={lead.data.totalTimeMinutesMax ?? ''}
+      data-reveal
+    >
+      <a class="lead-figure" href={`/recipes/${lead.data.recipeSlug}/`} tabindex="-1" aria-hidden="true">
+        {lead.data.illustration && (
+          <Image
+            src={lead.data.illustration}
+            alt=""
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 820px) 100vw, 40rem"
+            loading="eager"
+          />
+        )}
+      </a>
+      <div class="lead-copy">
+        <div class="lead-topline">
+          <span class="kicker lead-flag">Fresh off the copier</span>
+          <span class={`tier-badge ${lead.tierClass}`} set:html={redactHtml(lead.data.tier)} />
         </div>
-      </details>
+        <time class="lead-dateline" datetime={lead.iso}>Issue {lead.issue} &middot; {lead.dateLong}</time>
+        <h2 class="lead-head"><a href={`/recipes/${lead.data.recipeSlug}/`}>{lead.data.title}</a></h2>
+        <p class="lead-deck">{lead.data.subtitle}</p>
+        <p class="lead-lede" set:html={redactHtml(lead.leadLede)} />
+        <a class="lead-more" href={`/recipes/${lead.data.recipeSlug}/`}>
+          Read this one{lead.data.cuisine ? ` (${lead.data.cuisine})` : ''} &rarr;
+        </a>
+      </div>
+    </article>
 
-      <details class="filter-group">
-        <summary>Cuisine <span class="filter-hint">multi-select</span></summary>
-        <div class="chip-row">
-          {cuisines.map(cuisine => (
-            <button type="button" class="chip" data-filter="cuisine" data-value={cuisine} aria-pressed="false">{cuisine}</button>
-          ))}
-        </div>
-      </details>
-
-      <details class="filter-group">
-        <summary>Dietary <span class="filter-hint">multi-select</span></summary>
-        <div class="dietary-groups">
-          <div class="dietary-subgroup">
-            <p class="dietary-label">Recipes that are:</p>
-            <div class="chip-row">
-              {DIETARY_YES.map(([tag, label]) => (
-                <button type="button" class="chip" data-filter="dietary-yes" data-value={tag} aria-pressed="false">{label}</button>
-              ))}
-            </div>
-          </div>
-          <div class="dietary-subgroup">
-            <p class="dietary-label">Avoiding:</p>
-            <div class="chip-row">
-              {DIETARY_NO.map(([tag, label]) => (
-                <button type="button" class="chip" data-filter="dietary-no" data-value={tag} aria-pressed="false">{label}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details class="filter-group">
-        <summary>Time budget <span class="filter-hint">single-select</span></summary>
-        <div class="chip-row">
-          {TIME_BUDGETS.map(([minutes, label]) => (
-            <button type="button" class="chip" data-filter="time" data-value={minutes} aria-pressed="false">{label}</button>
-          ))}
-        </div>
-      </details>
-
-      <div class="filter-actions">
-        <button type="button" id="filters-clear" class="filter-clear" hidden>Clear filters</button>
+    <!-- SORT THE PILE — filters -->
+    <section class="morgue" aria-label="Filter issues">
+      <div class="morgue-head">
+        <span class="kicker">Sort the pile</span>
         <span id="filter-count" class="filter-count" aria-live="polite"></span>
+      </div>
+      <div class="morgue-groups">
+        <details class="filter-group">
+          <summary>Damage Level</summary>
+          <div class="chip-row">
+            {TIERS.map(name => (
+              <button type="button" class="chip" data-filter="tier" data-value={name} aria-pressed="false" set:html={redactHtml(name)} />
+            ))}
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Region</summary>
+          <div class="chip-row">
+            {cuisines.map(cuisine => (
+              <button type="button" class="chip" data-filter="cuisine" data-value={cuisine} aria-pressed="false">{cuisine}</button>
+            ))}
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Dietary</summary>
+          <div class="dietary-groups">
+            <div class="dietary-subgroup">
+              <p class="dietary-label">Recipes that are:</p>
+              <div class="chip-row">
+                {DIETARY_YES.map(([tag, label]) => (
+                  <button type="button" class="chip" data-filter="dietary-yes" data-value={tag} aria-pressed="false">{label}</button>
+                ))}
+              </div>
+            </div>
+            <div class="dietary-subgroup">
+              <p class="dietary-label">Avoiding:</p>
+              <div class="chip-row">
+                {DIETARY_NO.map(([tag, label]) => (
+                  <button type="button" class="chip" data-filter="dietary-no" data-value={tag} aria-pressed="false">{label}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Timetable</summary>
+          <div class="chip-row">
+            {TIME_BUDGETS.map(([minutes, label]) => (
+              <button type="button" class="chip" data-filter="time" data-value={minutes} aria-pressed="false">{label}</button>
+            ))}
+          </div>
+        </details>
+      </div>
+      <div class="morgue-actions">
+        <button type="button" id="filters-clear" class="filter-clear" hidden>Trash the filters</button>
       </div>
     </section>
 
-    {tiers.map(tier => (
-      <section class="tier-section" id={tier.class} data-tier-section={tier.name}>
-        <div class="tier-header">
-          <a href={`/tier/${tier.class}/`} class="tier-link">
-            <span class={`tier-badge ${tier.class}`} set:html={redactHtml(tier.name)} />
-          </a>
-          <span class="tier-count">{tier.recipes.length} recipes</span>
-        </div>
-        <div class="recipe-grid">
-          {tier.recipes.map(recipe => (
-            <div
-              class="recipe-card-wrap"
-              data-recipe-tier={recipe.data.tier}
-              data-recipe-cuisine={recipe.data.cuisine ?? ''}
-              data-recipe-dietary={(recipe.data.dietary ?? []).join(' ')}
-              data-recipe-max-minutes={recipe.data.totalTimeMinutesMax ?? ''}
-            >
-              <RecipeCard
-                slug={recipe.data.recipeSlug}
-                title={recipe.data.title}
-                subtitle={recipe.data.subtitle}
-                number={recipe.data.recipeNumber}
-                tierClass={tier.class}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-    ))}
+    <hr class="cut-line feed-divider" />
+    <p class="feed-label kicker">The Stack &mdash; newest on top</p>
 
-    <p id="empty-state" class="empty-state" hidden>No recipes match every filter. Loosen one and try again.</p>
+    <!-- THE FEED -->
+    <div class="dispatch-feed">
+      {feed.map((e, i) => (
+        <article
+          class="dispatch"
+          data-dispatch
+          data-tier={e.data.tier}
+          data-cuisine={e.data.cuisine ?? ''}
+          data-dietary={e.dietaryAttr}
+          data-max-minutes={e.data.totalTimeMinutesMax ?? ''}
+          data-reveal
+          style={`--i:${Math.min(i, 12)}`}
+        >
+          <div class="dispatch-topline">
+            <span class="dispatch-issue">Issue&nbsp;{e.issue}</span>
+            <time class="dispatch-date" datetime={e.iso}>{e.dateShort}</time>
+          </div>
+          <span class={`tier-badge ${e.tierClass}`} set:html={redactHtml(e.data.tier)} />
+          <h3 class="dispatch-head"><a href={`/recipes/${e.data.recipeSlug}/`}>{e.data.title}</a></h3>
+          <p class="dispatch-deck">{e.data.subtitle}</p>
+          <p class="dispatch-lede" set:html={redactHtml(e.lede)} />
+          {e.data.cuisine && <span class="dispatch-cuisine kicker">{e.data.cuisine}</span>}
+        </article>
+      ))}
+    </div>
+
+    <p id="empty-state" class="empty-state" hidden>Nothing in the pile matches every filter. Loosen one and try again, homie.</p>
 
   </main>
 
 </Base>
 
 <script>
-  // Homepage filter island. Reads/writes URL state, AND across dimensions,
-  // OR within each. Time uses totalTimeMinutesMax so the filter is honest
-  // about worst-case duration (no surprise long recipes).
+  // Front-page filter island. Reverse-chron feed of dispatches; filters
+  // hide/show entries (AND across dimensions, OR within each). URL-synced.
   type FilterState = {
     tier: Set<string>;
     cuisine: Set<string>;
@@ -186,8 +244,7 @@ const tiers = TIERS.map(name => ({
     if (state.dietaryNo.size) p.set('dietary-no', [...state.dietaryNo].join(','));
     if (state.maxMinutes != null) p.set('time', String(state.maxMinutes));
     const qs = p.toString();
-    const url = qs ? `${location.pathname}?${qs}` : location.pathname;
-    history.replaceState({}, '', url);
+    history.replaceState({}, '', qs ? `${location.pathname}?${qs}` : location.pathname);
   }
 
   function activeCount(state: FilterState): number {
@@ -195,34 +252,26 @@ const tiers = TIERS.map(name => ({
   }
 
   function applyFilters(state: FilterState) {
-    const cards = document.querySelectorAll<HTMLElement>('.recipe-card-wrap');
+    const cards = document.querySelectorAll<HTMLElement>('[data-dispatch]');
     let visible = 0;
     cards.forEach(card => {
       let show = true;
-      if (state.tier.size && !state.tier.has(card.dataset.recipeTier ?? '')) show = false;
-      if (show && state.cuisine.size && !state.cuisine.has(card.dataset.recipeCuisine ?? '')) show = false;
-      const dietary = (card.dataset.recipeDietary ?? '').split(' ').filter(Boolean);
+      if (state.tier.size && !state.tier.has(card.dataset.tier ?? '')) show = false;
+      if (show && state.cuisine.size && !state.cuisine.has(card.dataset.cuisine ?? '')) show = false;
+      const dietary = (card.dataset.dietary ?? '').split(' ').filter(Boolean);
       if (show) for (const tag of state.dietaryYes) if (!dietary.includes(tag)) { show = false; break; }
       if (show) for (const tag of state.dietaryNo) if (dietary.includes(tag)) { show = false; break; }
       if (show && state.maxMinutes != null) {
-        const mm = parseInt(card.dataset.recipeMaxMinutes || '0', 10);
+        const mm = parseInt(card.dataset.maxMinutes || '0', 10);
         if (mm > state.maxMinutes) show = false;
       }
       card.hidden = !show;
       if (show) visible++;
     });
-    // Auto-hide whole tier sections that have nothing left
-    document.querySelectorAll<HTMLElement>('[data-tier-section]').forEach(section => {
-      const any = section.querySelectorAll('.recipe-card-wrap:not([hidden])').length > 0;
-      section.hidden = !any;
-    });
     const empty = document.getElementById('empty-state');
     if (empty) empty.hidden = visible > 0;
     const counter = document.getElementById('filter-count');
-    if (counter) {
-      const n = activeCount(state);
-      counter.textContent = n === 0 ? '' : `${visible} of 28 recipes match`;
-    }
+    if (counter) counter.textContent = activeCount(state) === 0 ? '' : `${visible} of 28 filed`;
     const clear = document.getElementById('filters-clear');
     if (clear) clear.hidden = activeCount(state) === 0;
   }
@@ -240,14 +289,13 @@ const tiers = TIERS.map(name => ({
       if (filter === 'time') {
         btn.setAttribute('aria-pressed', String(parseInt(value, 10) === state.maxMinutes));
       } else {
-        const set = stateMap[filter];
-        btn.setAttribute('aria-pressed', String(set?.has(value) ?? false));
+        btn.setAttribute('aria-pressed', String(stateMap[filter]?.has(value) ?? false));
       }
     });
   }
 
   function init() {
-    if (!document.querySelector('.filters')) return; // Only on homepage
+    if (!document.querySelector('.morgue')) return; // homepage only
     const state = readUrl();
 
     document.querySelectorAll<HTMLButtonElement>('.chip[data-filter]').forEach(btn => {
@@ -291,205 +339,350 @@ const tiers = TIERS.map(name => ({
 </script>
 
 <style>
-  .hero {
-    background: linear-gradient(145deg, #2d2a26 0%, #4a3f35 100%);
-    color: #faf7f2;
-    padding: 5rem 2rem 4rem;
+  /* ---------- Cover ---------- */
+  .cover {
+    position: relative;
+    z-index: 2;
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1.5rem;
     text-align: center;
   }
 
-  .hero h1 {
+  .cover-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.9rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .cover-strip span {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.2rem 0.55rem;
+    transform: rotate(-1.5deg);
+  }
+  .cover-strip span:nth-child(2) { transform: rotate(1deg); background: var(--pink); color: #fff; }
+  .cover-strip span:nth-child(3) { transform: rotate(-0.5deg); background: var(--teal); color: #16130d; }
+
+  .cover-title {
     font-family: var(--font-display);
-    font-size: 3.5rem;
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
-  }
-
-  .hero .accent {
-    color: var(--color-accent);
-    font-style: italic;
-  }
-
-  .tagline {
-    font-size: 1.1rem;
-    color: #b8aea4;
     font-weight: 400;
-    letter-spacing: 0.02em;
+    font-size: clamp(2.7rem, 10vw, 7rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    transform: rotate(-1.5deg);
+    margin: 0 auto;
+    max-width: 15ch;
   }
 
-  /* The full stop after the tagline is a doorway, not punctuation: it links
-     to the (not-yet-launched) Lentago Labs site. Styled to be visually
-     identical to a plain period — same color, no underline, no focus ring —
-     so the only tell is the pointer cursor when you happen to hover it.
-     aria-hidden + tabindex=-1 keep it out of the a11y tree and tab order;
-     it's strictly an easter egg, not navigation. */
-  .tagline .hero-dot {
-    color: inherit;
-    text-decoration: none;
-    outline: none;
+  .cover-motto {
+    font-family: var(--font-marker);
+    font-size: clamp(1.05rem, 3vw, 1.7rem);
+    color: var(--pink);
+    margin-top: 1.5rem;
+    transform: rotate(-1deg);
   }
+  /* The trailing period is a doorway, not punctuation: it links to the
+     (not-yet-launched) Lentago Labs site. */
+  .cover-motto .cover-dot { color: inherit; text-decoration: none; outline: none; }
+  .cover-motto .cover-dot:hover,
+  .cover-motto .cover-dot:focus,
+  .cover-motto .cover-dot:visited { color: inherit; }
 
-  .tagline .hero-dot:hover,
-  .tagline .hero-dot:focus,
-  .tagline .hero-dot:visited {
-    color: inherit;
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    margin-top: 1.75rem;
   }
+  .cover-tags span {
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 2px solid var(--ink);
+    padding: 0.2rem 0.6rem;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .cover-tags span:nth-child(1) { transform: rotate(-2deg); }
+  .cover-tags span:nth-child(2) { transform: rotate(1.5deg); color: var(--pink); border-color: var(--pink); box-shadow: 2px 2px 0 var(--pink); }
+  .cover-tags span:nth-child(3) { transform: rotate(-1deg); }
 
-  /* --- Filters --- */
-  .filters {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin: 1.5rem 0 2rem;
+  /* ---------- Fresh-off-the-copier lead ---------- */
+  .frontpage-lead {
     display: grid;
-    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    padding-bottom: 2rem;
+    margin: 1.5rem 0;
   }
 
-  .filter-group {
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 0.65rem;
+  .lead-figure {
+    display: block;
+    border: 3px solid var(--ink);
+    background: var(--panel);
+    padding: 0.5rem;
+    box-shadow: 6px 6px 0 var(--pink);
+    transform: rotate(-1.5deg);
+  }
+  .lead-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(1.05) contrast(1.05);
   }
 
-  .filter-group:last-of-type {
-    border-bottom: none;
-    padding-bottom: 0;
+  .lead-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .lead-flag { color: var(--pink); }
+
+  .lead-dateline {
+    display: block;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 0.6rem;
+  }
+
+  .lead-head {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 0.98;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .lead-head a { color: var(--ink); text-decoration: none; }
+  .lead-head a:hover { text-shadow: 2px 0 0 var(--pink), -2px 1px 0 var(--teal); }
+
+  .lead-deck {
+    font-family: var(--font-marker);
+    font-size: 1.25rem;
+    color: var(--pink-deep);
+    margin-bottom: 0.9rem;
+    line-height: 1.25;
+  }
+
+  .lead-lede {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .lead-more {
+    display: inline-block;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #16130d;
+    background: var(--teal);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    padding: 0.35rem 0.7rem;
+    text-decoration: none;
+    transform: rotate(-1deg);
+  }
+  .lead-more:hover { background: var(--pink); color: #fff; }
+
+  /* ---------- Sort the pile (filters) ---------- */
+  .morgue {
+    border-top: 3px dashed var(--ink);
+    border-bottom: 3px dashed var(--ink);
+    padding: 1.1rem 0;
+  }
+  .morgue-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .filter-count { font-family: var(--font-stencil); font-weight: 700; font-size: 0.74rem; color: var(--pink); letter-spacing: 0.04em; }
+
+  .morgue-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.35rem 1.5rem;
   }
 
   .filter-group summary {
     cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 0.35rem 0;
-    list-style: revert; /* keep native marker for affordance */
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    padding: 0.4rem 0;
+    list-style: revert;
   }
+  .filter-group[open] summary { color: var(--pink); }
 
-  .filter-hint {
-    font-weight: 400;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    margin-left: 0.5rem;
-  }
-
-  .chip-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0 0.7rem; }
 
   .chip {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    font: inherit;
-    font-size: 0.8rem;
-    color: var(--color-text);
+    background: var(--panel);
+    border: 2px solid var(--ink);
+    padding: 0.28rem 0.65rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--ink);
     cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    transition: transform 0.1s ease, background 0.12s ease, color 0.12s ease;
   }
-
-  .chip:hover {
-    border-color: var(--color-accent);
-  }
-
+  .chip:hover { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 var(--ink); }
   .chip[aria-pressed="true"] {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: white;
+    background: var(--pink);
+    border-color: var(--ink);
+    color: #fff;
+    box-shadow: 2px 2px 0 var(--ink);
   }
 
-  .dietary-groups {
-    display: grid;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-  }
+  .dietary-groups { display: grid; gap: 0.4rem; }
+  .dietary-label { font-family: var(--font-stencil); font-weight: 700; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin: 0.3rem 0 0; }
 
-  .dietary-label {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    margin: 0 0 0.35rem;
-  }
-
-  .filter-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
-    min-height: 1.5rem;
-  }
-
+  .morgue-actions { margin-top: 0.4rem; min-height: 1.4rem; }
   .filter-clear {
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    font: inherit;
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 0.3rem 0.7rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--paper);
     cursor: pointer;
   }
+  .filter-clear:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
 
-  .filter-clear:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
+  .feed-divider { margin: 2rem 0 0.75rem; }
+  .feed-label { display: block; text-align: center; margin-bottom: 1.75rem; color: var(--pink); font-size: 0.9rem; }
+
+  /* ---------- The stack (collage grid) ---------- */
+  .dispatch-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1.75rem;
   }
 
-  .filter-count {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
+  .dispatch {
+    background: var(--panel);
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 1.1rem 1.15rem 1.2rem;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
   }
+  .dispatch:nth-child(3n)   { transform: rotate(-1.3deg); }
+  .dispatch:nth-child(3n+1) { transform: rotate(0.8deg); }
+  .dispatch:nth-child(3n+2) { transform: rotate(-0.4deg); }
+  .dispatch:hover {
+    transform: rotate(0deg) translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--pink);
+  }
+
+  .dispatch-topline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 0.55rem;
+  }
+  .dispatch-issue { color: var(--pink); }
+
+  .dispatch .tier-badge { margin-bottom: 0.55rem; }
+
+  .dispatch-head {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.0;
+    text-transform: uppercase;
+    margin: 0.35rem 0 0.4rem;
+  }
+  .dispatch-head a { color: var(--ink); text-decoration: none; }
+  .dispatch-head a:hover { color: var(--pink); }
+
+  .dispatch-deck {
+    font-family: var(--font-marker);
+    font-size: 1rem;
+    line-height: 1.2;
+    color: var(--pink-deep);
+    margin-bottom: 0.6rem;
+  }
+
+  .dispatch-lede {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .dispatch-cuisine { display: block; font-size: 0.64rem; color: var(--ink-faint); }
+
+  .dispatch[hidden], .frontpage-lead[hidden] { display: none; }
 
   .empty-state {
     text-align: center;
     padding: 3rem 1rem;
-    color: var(--color-text-muted);
-    font-size: 1rem;
+    font-family: var(--font-marker);
+    font-size: 1.2rem;
+    color: var(--pink);
   }
 
-  /* --- Tier sections --- */
-  .tier-section {
-    margin-bottom: 3rem;
+  /* ---------- Load choreography ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] { animation: slam 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+    .cover { animation-delay: 0.02s; }
+    .frontpage-lead { animation-delay: 0.14s; }
+    .dispatch { animation: slam 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(0.24s + var(--i, 0) * 0.04s); }
+    @keyframes slam {
+      from { opacity: 0; transform: scale(1.06) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    /* keep the resting rotation after the slam settles */
+    .dispatch:nth-child(3n)   { animation-name: slam-a; }
+    .dispatch:nth-child(3n+1) { animation-name: slam-b; }
+    .dispatch:nth-child(3n+2) { animation-name: slam-c; }
+    @keyframes slam-a { from { opacity: 0; transform: scale(1.06); } to { opacity: 1; transform: rotate(-1.3deg); } }
+    @keyframes slam-b { from { opacity: 0; transform: scale(1.06); } to { opacity: 1; transform: rotate(0.8deg); } }
+    @keyframes slam-c { from { opacity: 0; transform: scale(1.06); } to { opacity: 1; transform: rotate(-0.4deg); } }
   }
 
-  .tier-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border);
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .frontpage-lead { grid-template-columns: 1fr; gap: 1.25rem; }
   }
-
-  .tier-count {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-  }
-
-  .tier-link {
-    text-decoration: none;
-    transition: opacity 0.15s ease;
-  }
-
-  .tier-link:hover {
-    opacity: 0.85;
-  }
-
-  .recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .recipe-card-wrap[hidden] {
-    display: none;
-  }
-
   @media (max-width: 640px) {
-    .hero h1 { font-size: 2.5rem; }
-    .hero { padding: 3.5rem 1.5rem 3rem; }
-    .recipe-grid { grid-template-columns: 1fr; }
+    .cover-title { max-width: none; }
+    .dispatch-feed { grid-template-columns: 1fr; }
   }
 </style>

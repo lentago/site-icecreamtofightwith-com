@@ -1,4 +1,5 @@
 ---
+date: "2026-04-18"
 cuisine: "Mexican"
 active_time_minutes: 30
 total_time_minutes_min: 600

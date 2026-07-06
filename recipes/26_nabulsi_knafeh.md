@@ -1,4 +1,5 @@
 ---
+date: "2025-11-17"
 cuisine: "Palestinian"
 active_time_minutes: 60
 total_time_minutes_min: 480

@@ -1,4 +1,5 @@
 ---
+date: "2025-08-08"
 cuisine: "American (Cajun/Creole)"
 active_time_minutes: 150
 total_time_minutes_min: 360

@@ -1,4 +1,5 @@
 ---
+date: "2026-06-10"
 cuisine: "African (Portuguese-influenced)"
 active_time_minutes: 75
 total_time_minutes_min: 480

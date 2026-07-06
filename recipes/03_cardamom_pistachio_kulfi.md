@@ -1,4 +1,5 @@
 ---
+date: "2025-01-06"
 cuisine: "Indian"
 active_time_minutes: 20
 total_time_minutes_min: 420

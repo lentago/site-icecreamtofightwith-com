@@ -1,4 +1,5 @@
 ---
+date: "2024-12-10"
 cuisine: "Japanese"
 active_time_minutes: 30
 total_time_minutes_min: 360

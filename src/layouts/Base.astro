@@ -15,8 +15,8 @@ const { title = 'Ice Cream to Fight With', description = 'Recipes You\'ll Fuck U
 const safeTitle = redactPlain(title);
 const safeDescription = redactPlain(description);
 
-// Slugs are baked into the page at build time so the "Surprise me" button
-// can pick a random recipe with zero network round-trips.
+// Slugs are baked into the page at build time so the "Random" button can
+// pick a random issue with zero network round-trips.
 const allRecipes = await getCollection('recipes');
 const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
 ---
@@ -29,11 +29,11 @@ const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
   <title>{safeTitle}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Permanent+Marker&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="alternate" type="application/rss+xml" title="Ice Cream to Fight With" href="/rss.xml" />
 
   <script is:inline>
-    // FOUC prevention: apply saved theme before first paint.
+    // FOUC prevention: apply saved lights before first paint.
     // Allowed values: 'light' | 'dark'. Anything else means "follow system",
     // which the CSS prefers-color-scheme media query handles.
     (() => {
@@ -49,280 +49,385 @@ const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
   <ClientRouter />
   <style is:global>
     :root {
-      /* Light palette — warm, food-inspired */
-      --color-bg: #faf7f2;
-      --color-surface: #ffffff;
-      --color-text: #2d2a26;
-      --color-text-muted: #6b6560;
-      --color-accent: #c4533a;
-      --color-accent-light: #f0d5cf;
-      --color-border: #e8e2da;
-      --color-nav-bg: rgba(250, 247, 242, 0.92);
+      /* --- Day shift (light): photocopy off-white + riso inks --- */
+      --paper: #f1ead9;
+      --paper-2: #e7dcc6;
+      --panel: #fbf7ec;
+      --ink: #16130d;
+      --ink-soft: #5a5346;
+      --ink-faint: #8b8271;
+      --pink: #ff1f7c;      /* riso fluoro pink — primary */
+      --pink-deep: #d1085f;
+      --teal: #0f9b96;      /* riso teal — secondary */
+      --teal-deep: #0a726e;
+      --nav-bg: #f1ead9;
 
-      /* Tier brand colors — same in both modes */
-      --tier-chill: #4a9e82;
-      --tier-legit: #d4a12e;
-      --tier-real-deal: #d07030;
-      --tier-ordeal: #c4533a;
+      /* Difficulty stamps */
+      --tier-chill: #14a8a0;
+      --tier-legit: #f2a200;
+      --tier-real-deal: #ff1f7c;
+      --tier-ordeal: #e01e34;
 
-      /* Type scale */
-      --font-display: 'DM Serif Display', Georgia, serif;
-      --font-body: 'Space Grotesk', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --font-display: 'Anton', 'Arial Narrow', sans-serif;
+      --font-stencil: 'Stardos Stencil', 'Courier New', monospace;
+      --font-marker: 'Permanent Marker', 'Comic Sans MS', cursive;
+      --font-body: 'Courier Prime', 'Courier New', monospace;
 
+      --measure: 44rem;
       color-scheme: light;
     }
 
-    /* Dark palette — applies when:
-       1. User has chosen dark explicitly (data-theme="dark"), OR
-       2. User has no preference set AND system is dark.
-       :not([data-theme="light"]) keeps the media query from overriding
-       an explicit light choice. */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --color-bg: #1c1a17;
-        --color-surface: #28241f;
-        --color-text: #ece5da;
-        --color-text-muted: #a59c8e;
-        --color-accent: #d96b52;
-        --color-accent-light: #3a2a25;
-        --color-border: #3a342c;
-        --color-nav-bg: rgba(28, 26, 23, 0.92);
+        --paper: #100f12;
+        --paper-2: #1a181d;
+        --panel: #17161a;
+        --ink: #f3ede0;
+        --ink-soft: #a89f8f;
+        --ink-faint: #6f6757;
+        --pink: #ff4f9e;
+        --pink-deep: #ff7fb8;
+        --teal: #2ce0cf;
+        --teal-deep: #66efe0;
+        --nav-bg: #100f12;
+        --tier-chill: #2ce0cf;
+        --tier-legit: #ffc23d;
+        --tier-real-deal: #ff4f9e;
+        --tier-ordeal: #ff4b5c;
         color-scheme: dark;
       }
     }
 
     :root[data-theme="dark"] {
-      --color-bg: #1c1a17;
-      --color-surface: #28241f;
-      --color-text: #ece5da;
-      --color-text-muted: #a59c8e;
-      --color-accent: #d96b52;
-      --color-accent-light: #3a2a25;
-      --color-border: #3a342c;
-      --color-nav-bg: rgba(28, 26, 23, 0.92);
+      --paper: #100f12;
+      --paper-2: #1a181d;
+      --panel: #17161a;
+      --ink: #f3ede0;
+      --ink-soft: #a89f8f;
+      --ink-faint: #6f6757;
+      --pink: #ff4f9e;
+      --pink-deep: #ff7fb8;
+      --teal: #2ce0cf;
+      --teal-deep: #66efe0;
+      --nav-bg: #100f12;
+      --tier-chill: #2ce0cf;
+      --tier-legit: #ffc23d;
+      --tier-real-deal: #ff4f9e;
+      --tier-ordeal: #ff4b5c;
       color-scheme: dark;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      font-size: 18px;
-      scroll-behavior: smooth;
-    }
+    html { font-size: 18px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: var(--font-body);
-      color: var(--color-text);
-      background: var(--color-bg);
-      line-height: 1.65;
+      color: var(--ink);
+      background-color: var(--paper);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- Navigation --- */
-    .site-nav {
+    ::selection { background: var(--pink); color: #fff; }
+
+    a { color: var(--pink-deep); }
+
+    /* Photocopy grain — heavier than a clean site wants. This is a zine. */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.09;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    :root[data-theme="dark"] .grain { mix-blend-mode: screen; opacity: 0.07; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .grain { mix-blend-mode: screen; opacity: 0.07; }
+    }
+
+    /* Off-register riso print echo behind big type */
+    .misreg { text-shadow: 3px 0 0 var(--pink), -3px 2px 0 var(--teal); }
+
+    /* --- Stapled masthead --- */
+    .zine-nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--color-nav-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      padding: 0.75rem 2rem;
+      background: var(--nav-bg);
+      border-bottom: 5px solid var(--ink);
+      box-shadow: 0 5px 0 var(--pink);
+    }
+    .zine-nav-inner {
+      max-width: 76rem;
+      margin: 0 auto;
+      padding: 0.55rem 1.5rem 0.6rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
-
-    .site-nav a {
-      text-decoration: none;
-      color: var(--color-text);
-    }
-
-    .site-nav .logo {
+    .zine-brand {
       font-family: var(--font-display);
-      font-size: 1.1rem;
-      letter-spacing: -0.01em;
-    }
-
-    .site-nav .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 1.35rem;
+      line-height: 0.95;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      text-decoration: none;
+      transform: rotate(-1.5deg);
+      white-space: nowrap;
     }
+    .zine-brand span { color: var(--pink); }
+    .zine-brand:hover { text-shadow: 2px 0 0 var(--pink), -2px 1px 0 var(--teal); }
 
-    .site-nav .nav-links a:hover {
-      color: var(--color-accent);
+    .zine-links {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      list-style: none;
+      font-family: var(--font-stencil);
+      font-weight: 700;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-
-    .site-nav .nav-random,
-    .site-nav .nav-theme {
-      /* Style buttons so they read as peers of the nav links */
+    .zine-links a, .zine-links button {
+      color: var(--ink);
+      text-decoration: none;
       background: none;
       border: none;
-      padding: 0;
+      padding: 0.1rem 0;
       font: inherit;
-      color: inherit;
-      cursor: pointer;
       letter-spacing: inherit;
       text-transform: inherit;
+      cursor: pointer;
     }
-
-    .site-nav .nav-random:hover,
-    .site-nav .nav-theme:hover {
-      color: var(--color-accent);
+    .zine-links a:hover, .zine-links button:hover { color: var(--pink); }
+    .zine-links .nav-lights {
+      color: var(--ink);
+      background: var(--teal);
+      border: 2px solid var(--ink);
+      padding: 0.1rem 0.45rem;
+      transform: rotate(2deg);
+      box-shadow: 2px 2px 0 var(--ink);
     }
+    .zine-links .nav-lights:hover { background: var(--pink); color: #fff; }
 
-    /* --- Main content --- */
+    /* --- Page container --- */
     .page-container {
-      max-width: 48rem;
+      position: relative;
+      z-index: 2;
+      max-width: var(--measure);
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 2.25rem 1.5rem 4rem;
+    }
+    .page-container.wide { max-width: 76rem; }
+
+    /* --- Shared furniture --- */
+    .kicker {
+      font-family: var(--font-stencil);
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--pink);
     }
 
-    .page-container.wide {
-      max-width: 64rem;
+    .cut-line {
+      border: 0;
+      border-top: 2px dashed var(--ink);
+      position: relative;
+      margin: 2rem 0;
+    }
+    .cut-line::before {
+      content: "\2702";
+      position: absolute;
+      left: 1.25rem;
+      top: -0.72rem;
+      background: var(--paper);
+      padding: 0 0.35rem;
+      font-size: 1rem;
+      color: var(--ink-soft);
     }
 
-    /* --- Typography for rendered markdown --- */
+    /* --- Difficulty stamps (kept as .tier-badge for component reuse) --- */
+    .tier-badge {
+      display: inline-block;
+      font-family: var(--font-stencil);
+      font-weight: 700;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.5rem 0.18rem;
+      border: 2px solid var(--ink);
+      color: #16130d;
+      line-height: 1;
+      white-space: nowrap;
+      transform: rotate(-2deg);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .tier-badge.chill     { background: var(--tier-chill); }
+    .tier-badge.legit     { background: var(--tier-legit); }
+    .tier-badge.real-deal { background: var(--tier-real-deal); color: #fff; }
+    .tier-badge.ordeal    { background: var(--tier-ordeal); color: #fff; }
+
+    /* --- Rendered recipe markdown (the zine body) --- */
+    .recipe-body { font-size: 1rem; line-height: 1.7; }
+
     .recipe-body h2 {
       font-family: var(--font-display);
-      font-size: 1.6rem;
-      margin-top: 2.5rem;
-      margin-bottom: 0.75rem;
-      color: var(--color-text);
+      font-weight: 400;
+      font-size: 1.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 1.05;
+      color: #16130d;
+      background: var(--pink);
+      display: inline-block;
+      padding: 0.12em 0.4em 0.18em;
+      margin: 2.75rem 0 1rem;
+      transform: rotate(-1deg);
+      box-shadow: 3px 3px 0 var(--ink);
     }
+    .recipe-body h2:nth-of-type(even) { background: var(--teal); transform: rotate(1deg); }
 
     .recipe-body h3 {
-      font-family: var(--font-body);
+      font-family: var(--font-stencil);
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
-      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      margin: 1.85rem 0 0.5rem;
+      color: var(--pink-deep);
     }
 
-    .recipe-body p {
-      margin-bottom: 1rem;
+    .recipe-body p { margin-bottom: 1.1rem; }
+
+    .recipe-body ul, .recipe-body ol { margin: 0.5rem 0 1.3rem 1.4rem; }
+    .recipe-body li { margin-bottom: 0.4rem; padding-left: 0.2rem; }
+    .recipe-body ul li::marker { content: "\25AA  "; color: var(--pink); }
+    .recipe-body ol li::marker { color: var(--pink); font-weight: 700; }
+
+    .recipe-body strong { font-weight: 700; }
+    .recipe-body em { font-style: italic; }
+
+    .recipe-body a {
+      color: var(--pink-deep);
+      font-weight: 700;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 2px;
     }
 
-    .recipe-body ul, .recipe-body ol {
-      margin: 0.5rem 0 1rem 1.5rem;
-    }
-
-    .recipe-body li {
-      margin-bottom: 0.35rem;
-    }
-
-    .recipe-body strong {
-      font-weight: 600;
-    }
-
-    .recipe-body em {
+    .recipe-body blockquote {
+      margin: 1.5rem 0;
+      padding: 0.75rem 1rem;
+      border-left: 4px solid var(--teal);
+      background: var(--panel);
       font-style: italic;
+      transform: rotate(-0.4deg);
     }
 
     .recipe-body hr {
-      border: none;
-      border-top: 1px solid var(--color-border);
-      margin: 2rem 0;
+      border: 0;
+      border-top: 2px dashed var(--ink);
+      margin: 2.25rem 0;
     }
 
-    /* --- Tier badges --- */
-    .tier-badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      color: white;
-    }
-
-    .tier-badge.chill { background: var(--tier-chill); }
-    .tier-badge.legit { background: var(--tier-legit); }
-    .tier-badge.real-deal { background: var(--tier-real-deal); }
-    .tier-badge.ordeal { background: var(--tier-ordeal); }
-
-    /* --- Redaction bars --- */
-    /* The book swears; the website pleads the fifth. Hover to reveal.
-       Real text stays in the DOM (transparent under the bar), so
-       copy/paste and screen readers get the uncensored experience. */
+    /* --- Redaction: marker blackout ---
+       Real text stays in the DOM (transparent under the bar) so copy/paste
+       and screen readers get the uncensored experience; hover reveals. */
     .redacted {
-      background: var(--color-text);
+      background: var(--ink);
       color: transparent;
-      border-radius: 3px;
-      transition: color 0.2s ease, background 0.2s ease;
+      padding: 0 0.12em;
+      transform: rotate(-0.8deg);
+      display: inline-block;
+      box-shadow: 0 0 0 2px var(--ink), 1px 1px 0 var(--pink);
+      transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
     }
-
-    .redacted:hover,
-    .redacted:active {
+    .redacted:hover, .redacted:active {
       background: transparent;
       color: inherit;
+      transform: none;
+      box-shadow: none;
     }
+    .redacted::selection { color: transparent; }
 
-    .redacted::selection {
-      color: transparent; /* stays coy even when selected — paste it to find out */
-    }
-
-    /* --- Footer --- */
-    .site-footer {
+    /* --- Colophon footer --- */
+    .zine-colophon {
+      position: relative;
+      z-index: 2;
+      max-width: 76rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3rem;
+      border-top: 5px solid var(--ink);
+      box-shadow: 0 -5px 0 var(--teal);
       text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-      border-top: 1px solid var(--color-border);
+      font-family: var(--font-stencil);
+      font-weight: 700;
+      font-size: 0.72rem;
+      line-height: 1.9;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
     }
+    .zine-colophon .colophon-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      display: inline-block;
+      transform: rotate(-1.5deg);
+      margin-bottom: 0.6rem;
+    }
+    .zine-colophon .colophon-name span { color: var(--pink); }
+    .zine-colophon a { color: var(--pink-deep); text-decoration: none; }
 
-    /* --- Responsive --- */
     @media (max-width: 640px) {
       html { font-size: 16px; }
-      .site-nav { padding: 0.65rem 1rem; }
-      .site-nav .nav-links { gap: 1rem; font-size: 0.75rem; }
-      .page-container { padding: 1.5rem 1rem 3rem; }
+      .zine-nav-inner { flex-wrap: wrap; gap: 0.4rem 0.9rem; padding: 0.5rem 1rem; }
+      .zine-links { font-size: 0.68rem; gap: 0.75rem; }
+      .page-container { padding: 1.5rem 1.1rem 3rem; }
     }
   </style>
 </head>
 <body>
-  <nav class="site-nav" transition:persist>
-    <a href="/" class="logo">Ice Cream to Fight With</a>
-    <ul class="nav-links">
-      <li><a href="/">Recipes</a></li>
-      <li><a href="/search">Search</a></li>
-      <li><a href="/about">About</a></li>
-      <li><button type="button" id="random-recipe" class="nav-random">Surprise me</button></li>
-      <li>
-        <button type="button" id="theme-toggle" class="nav-theme" aria-label="Toggle color theme">
-          <span class="theme-label">Auto</span>
-        </button>
-      </li>
-    </ul>
+  <div class="grain" aria-hidden="true" transition:persist></div>
+
+  <nav class="zine-nav" transition:persist>
+    <div class="zine-nav-inner">
+      <a href="/" class="zine-brand">Ice Cream <span>to</span> Fight With</a>
+      <ul class="zine-links">
+        <li><a href="/">The&nbsp;Stack</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/about">Manifesto</a></li>
+        <li><button type="button" id="random-recipe">Random</button></li>
+        <li>
+          <button type="button" id="theme-toggle" class="nav-lights" aria-label="Toggle lights (light/dark)">
+            <span class="theme-label">Auto</span>
+          </button>
+        </li>
+      </ul>
+    </div>
   </nav>
 
   <script define:vars={{ recipeSlugs }}>
-    // transition:persist keeps the nav across SPA navigations,
+    // transition:persist keeps the masthead across SPA navigations,
     // so these listeners only need to bind once.
-
     document.getElementById('random-recipe')?.addEventListener('click', () => {
       const slug = recipeSlugs[Math.floor(Math.random() * recipeSlugs.length)];
       window.location.href = `/recipes/${slug}/`;
     });
 
-    // Theme toggle: cycles Auto -> Light -> Dark -> Auto
+    // Lights toggle: cycles Auto -> Day -> Night -> Auto
     (() => {
       const order = ['auto', 'light', 'dark'];
-      const labels = { auto: 'Auto', light: 'Light', dark: 'Dark' };
+      const labels = { auto: 'Auto', light: 'Day', dark: 'Night' };
       const btn = document.getElementById('theme-toggle');
       if (!btn) return;
       const labelEl = btn.querySelector('.theme-label');
@@ -346,7 +451,6 @@ const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
         if (labelEl) labelEl.textContent = labels[state];
       }
 
-      // Sync label with the state the inline head script already applied
       if (labelEl) labelEl.textContent = labels[readState()];
 
       btn.addEventListener('click', () => {
@@ -359,8 +463,11 @@ const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
 
   <slot />
 
-  <footer class="site-footer" transition:persist>
-    Ice Cream to Fight With &copy; {new Date().getFullYear()}
+  <footer class="zine-colophon" transition:persist>
+    <span class="colophon-name">Ice Cream <span>to</span> Fight With</span><br />
+    Photocopied at 3am &middot; Stapled by hand &middot; Free, take one<br />
+    Set in Anton, Courier Prime, Stardos Stencil &amp; Permanent Marker<br />
+    All cusses redacted for the recruiters &middot; &copy; {new Date().getFullYear()}
   </footer>
 </body>
 </html>

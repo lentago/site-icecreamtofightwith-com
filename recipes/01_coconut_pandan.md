@@ -1,4 +1,5 @@
 ---
+date: "2024-11-17"
 cuisine: "Thai"
 active_time_minutes: 20
 total_time_minutes_min: 360

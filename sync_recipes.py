@@ -34,6 +34,7 @@ TIER_MAP = {
 
 
 FRONTMATTER_FIELDS = (
+    "date",
     "cuisine",
     "active_time_minutes",
     "total_time_minutes_min",
@@ -185,6 +186,8 @@ def generate_frontmatter(metadata):
         f'recipeSlug: "{metadata["recipeSlug"]}"',
         f'recipeNumber: {metadata["recipe_number"]}',
     ]
+    if "date" in metadata:
+        lines.append(f'date: "{metadata["date"]}"')
     if "cuisine" in metadata:
         lines.append(f'cuisine: "{esc(metadata["cuisine"])}"')
     if "active_time_minutes" in metadata:

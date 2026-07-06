@@ -1,4 +1,5 @@
 ---
+date: "2025-12-18"
 cuisine: "Brazilian"
 active_time_minutes: 75
 total_time_minutes_min: 480

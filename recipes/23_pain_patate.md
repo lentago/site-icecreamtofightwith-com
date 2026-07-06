@@ -1,4 +1,5 @@
 ---
+date: "2026-04-26"
 cuisine: "Haitian"
 active_time_minutes: 90
 total_time_minutes_min: 720

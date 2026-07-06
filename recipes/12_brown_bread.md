@@ -1,4 +1,5 @@
 ---
+date: "2025-01-11"
 cuisine: "Irish"
 active_time_minutes: 45
 total_time_minutes_min: 480

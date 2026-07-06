@@ -1,4 +1,5 @@
 ---
+date: "2026-04-08"
 cuisine: "British"
 active_time_minutes: 60
 total_time_minutes_min: 480

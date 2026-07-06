@@ -1,70 +1,82 @@
 ---
+import { redactHtml } from '../lib/redact.mjs';
+import { formatShort, isoDate } from '../lib/dispatch';
+
 interface Props {
   slug: string;
   title: string;
   subtitle: string;
   number: number;
-  tierClass: string;  // chill / legit / real-deal / ordeal
+  tier: string;        // raw tier name (CHILL / LEGIT / THE REAL DEAL / A FUCKING ORDEAL)
+  date: Date;
 }
 
-const { slug, title, subtitle, number, tierClass } = Astro.props;
+const { slug, title, subtitle, number, tier, date } = Astro.props;
+
+const TIER_CLASS: Record<string, string> = {
+  'CHILL': 'chill',
+  'LEGIT': 'legit',
+  'THE REAL DEAL': 'real-deal',
+  'A FUCKING ORDEAL': 'ordeal',
+};
+const tierClass = TIER_CLASS[tier] ?? 'legit';
+const issue = '#' + String(number).padStart(2, '0');
 ---
-<a href={`/recipes/${slug}/`} class={`recipe-card ${tierClass}`}>
-  <span class="recipe-number">#{String(number).padStart(2, '0')}</span>
+<a href={`/recipes/${slug}/`} class="clipping">
+  <div class="clipping-top">
+    <span class="clipping-issue">Issue&nbsp;{issue}</span>
+    <time datetime={isoDate(date)}>{formatShort(date)}</time>
+  </div>
+  <span class={`tier-badge ${tierClass}`} set:html={redactHtml(tier)} />
   <h3>{title}</h3>
-  <p class="recipe-subtitle">{subtitle}</p>
+  <p class="clipping-deck">{subtitle}</p>
 </a>
 
 <style>
-  .recipe-card {
+  .clipping {
     display: block;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.25rem;
+    background: var(--panel);
+    border: 3px solid var(--ink);
+    padding: 1rem 1.1rem 1.15rem;
     text-decoration: none;
-    color: var(--color-text);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    position: relative;
-    overflow: hidden;
+    color: var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    transform: rotate(-1deg);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+  }
+  .clipping:hover {
+    transform: rotate(0deg) translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--pink);
   }
 
-  .recipe-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-  }
-
-  .recipe-card.chill::before     { background: var(--tier-chill); }
-  .recipe-card.legit::before     { background: var(--tier-legit); }
-  .recipe-card.real-deal::before { background: var(--tier-real-deal); }
-  .recipe-card.ordeal::before    { background: var(--tier-ordeal); }
-
-  .recipe-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  }
-
-  .recipe-number {
-    font-family: var(--font-mono);
+  .clipping-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
     font-size: 0.7rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin-bottom: 0.55rem;
   }
+  .clipping-issue { color: var(--pink); }
 
-  .recipe-card h3 {
+  .clipping h3 {
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    margin: 0.25rem 0 0.35rem;
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 0.98;
+    text-transform: uppercase;
+    margin: 0.5rem 0 0.4rem;
   }
 
-  .recipe-subtitle {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    font-style: italic;
-    line-height: 1.4;
+  .clipping-deck {
+    font-family: var(--font-marker);
+    font-size: 0.98rem;
+    color: var(--pink-deep);
+    line-height: 1.2;
   }
 </style>

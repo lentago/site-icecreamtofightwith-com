@@ -21,21 +21,14 @@ export async function getStaticPaths() {
 }
 
 const { cuisine, recipes } = Astro.props;
-const sorted = [...recipes].sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
-
-const tierClassMap: Record<string, string> = {
-  'CHILL': 'chill',
-  'LEGIT': 'legit',
-  'THE REAL DEAL': 'real-deal',
-  'A FUCKING ORDEAL': 'ordeal',
-};
+const sorted = [...recipes].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<Base title={`${cuisine} — Ice Cream to Fight With`} description={`${sorted.length} ${cuisine} recipe${sorted.length === 1 ? '' : 's'} from Ice Cream to Fight With.`}>
+<Base title={`${cuisine} — Ice Cream to Fight With`} description={`${sorted.length} ${cuisine} issue${sorted.length === 1 ? '' : 's'} from Ice Cream to Fight With.`}>
   <main class="page-container wide">
-    <header class="cuisine-page-header">
-      <p class="cuisine-eyebrow">Cuisine</p>
+    <header class="desk-header">
+      <p class="desk-eyebrow kicker">The Region</p>
       <h1>{cuisine}</h1>
-      <p class="cuisine-count">{sorted.length} {sorted.length === 1 ? 'recipe' : 'recipes'}</p>
+      <p class="desk-count">{sorted.length} {sorted.length === 1 ? 'issue' : 'issues'} from here</p>
     </header>
 
     <div class="recipe-grid">
@@ -45,7 +38,8 @@ const tierClassMap: Record<string, string> = {
           title={recipe.data.title}
           subtitle={recipe.data.subtitle}
           number={recipe.data.recipeNumber}
-          tierClass={tierClassMap[recipe.data.tier] ?? 'legit'}
+          tier={recipe.data.tier}
+          date={recipe.data.date}
         />
       ))}
     </div>
@@ -53,38 +47,36 @@ const tierClassMap: Record<string, string> = {
 </Base>
 
 <style>
-  .cuisine-page-header {
-    margin: 1rem 0 2rem;
+  .desk-header {
+    margin: 0.5rem 0 2.5rem;
+    text-align: center;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 3px dashed var(--ink);
   }
-
-  .cuisine-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  .cuisine-page-header h1 {
+  .desk-eyebrow { display: block; margin-bottom: 0.6rem; }
+  .desk-header h1 {
     font-family: var(--font-display);
-    font-size: 2.25rem;
-    margin: 0.25rem 0 0.5rem;
-    line-height: 1.15;
+    font-weight: 400;
+    font-size: clamp(2.3rem, 6vw, 3.8rem);
+    margin: 0 0 0.6rem;
+    line-height: 0.95;
+    text-transform: uppercase;
+    transform: rotate(-1deg);
   }
-
-  .cuisine-count {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
+  .desk-count {
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
     margin: 0;
   }
 
   .recipe-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 1rem;
+    gap: 1.75rem;
   }
 
   @media (max-width: 640px) {

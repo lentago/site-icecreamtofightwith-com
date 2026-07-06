@@ -5,19 +5,18 @@ import { redactPlain } from '../lib/redact.mjs';
 
 export async function GET(context: APIContext) {
   const recipes = await getCollection('recipes');
-  // Order by recipeNumber so the feed walks the book front-to-back.
-  // The frontmatter doesn't carry a pubDate; this is the closest stable
-  // proxy until we start tracking real publish dates.
-  recipes.sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
+  // Newest dispatch first — a proper reverse-chronological wire feed.
+  recipes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
   return rss({
     title: 'Ice Cream to Fight With',
-    description: redactPlain("Recipes You'll Fuck Up At Least Once — custard-based ice cream from around the world."),
+    description: redactPlain("Recipes You'll Fuck Up At Least Once — a photocopied ice cream zine from around the world."),
     site: context.site!,
     items: recipes.map(recipe => ({
       title: recipe.data.title,
       description: recipe.data.subtitle,
       link: `/recipes/${recipe.data.recipeSlug}/`,
+      pubDate: recipe.data.date,
       categories: [
         redactPlain(recipe.data.tier),
         ...(recipe.data.cuisine ? [recipe.data.cuisine] : []),

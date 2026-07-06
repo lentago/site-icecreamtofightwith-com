@@ -1,4 +1,5 @@
 ---
+date: "2026-02-02"
 cuisine: "American (Southern)"
 active_time_minutes: 90
 total_time_minutes_min: 360

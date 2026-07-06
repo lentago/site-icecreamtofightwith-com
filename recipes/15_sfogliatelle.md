@@ -1,4 +1,5 @@
 ---
+date: "2026-01-12"
 cuisine: "Italian"
 active_time_minutes: 60
 total_time_minutes_min: 600

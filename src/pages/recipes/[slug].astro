@@ -7,7 +7,8 @@ import RecipeJsonLd from '../../components/RecipeJsonLd.astro';
 import RelatedRecipes from '../../components/RelatedRecipes.astro';
 import { Image, getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import { redactPlain } from '../../lib/redact.mjs';
+import { redactPlain, redactHtml } from '../../lib/redact.mjs';
+import { formatLong, isoDate } from '../../lib/dispatch';
 
 export async function getStaticPaths() {
   const recipes = await getCollection('recipes');
@@ -20,12 +21,24 @@ export async function getStaticPaths() {
 const { recipe } = Astro.props;
 const { Content } = await recipe.render();
 
-// Find prev/next recipes. Walk all 28 in recipeNumber order (01 → 28).
+// Walk the archive in publication order (oldest → newest) so prev/next
+// read as "older dispatch" / "newer dispatch" along the timeline.
 const allRecipes = await getCollection('recipes');
-allRecipes.sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
+allRecipes.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 const idx = allRecipes.findIndex(r => r.data.recipeSlug === recipe.data.recipeSlug);
-const prev = idx > 0 ? allRecipes[idx - 1] : null;
-const next = idx >= 0 && idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
+const older = idx > 0 ? allRecipes[idx - 1] : null;
+const newer = idx >= 0 && idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
+
+const TIER_CLASS: Record<string, string> = {
+  'CHILL': 'chill',
+  'LEGIT': 'legit',
+  'THE REAL DEAL': 'real-deal',
+  'A FUCKING ORDEAL': 'ordeal',
+};
+const tierClass = TIER_CLASS[recipe.data.tier] ?? 'legit';
+const dateLong = formatLong(recipe.data.date);
+const issue = '#' + String(recipe.data.recipeNumber).padStart(2, '0');
+const iso = isoDate(recipe.data.date);
 
 // Absolute URLs for JSON-LD. Astro.site is set in astro.config.mjs.
 const canonicalUrl = new URL(`/recipes/${recipe.data.recipeSlug}/`, Astro.site).toString();
@@ -58,6 +71,17 @@ if (recipe.data.illustration) {
       siteUrl={Astro.site!.toString()}
     />
 
+    <header class="recipe-header">
+      <div class="dateline">
+        <span class="dateline-issue">Issue&nbsp;{issue}</span>
+        <span class="dateline-sep" aria-hidden="true">&middot;</span>
+        <time datetime={iso}>{dateLong}</time>
+        <span class={`tier-badge ${tierClass}`} set:html={redactHtml(recipe.data.tier)} />
+      </div>
+      <h1>{recipe.data.title}</h1>
+      <p class="subtitle">{recipe.data.subtitle}</p>
+    </header>
+
     {recipe.data.illustration && (
       <figure class="recipe-hero">
         <Image
@@ -67,14 +91,9 @@ if (recipe.data.illustration) {
           sizes="(max-width: 768px) 100vw, min(1200px, 100vw)"
           loading="eager"
         />
+        <figcaption>Pictured: {recipe.data.title}, if you don&rsquo;t <span set:html={redactHtml('fuck')} /> it up. Issue {issue}.</figcaption>
       </figure>
     )}
-
-    <header class="recipe-header">
-      <span class="recipe-number">Recipe #{String(recipe.data.recipeNumber).padStart(2, '0')}</span>
-      <h1>{recipe.data.title}</h1>
-      <p class="subtitle">{recipe.data.subtitle}</p>
-    </header>
 
     <RecipeMeta
       tier={recipe.data.tier}
@@ -93,58 +112,87 @@ if (recipe.data.illustration) {
     <RelatedRecipes current={recipe} all={allRecipes} />
 
     <RecipeNav
-      prev={prev ? { slug: prev.data.recipeSlug, title: prev.data.title } : null}
-      next={next ? { slug: next.data.recipeSlug, title: next.data.title } : null}
+      prev={older ? { slug: older.data.recipeSlug, title: older.data.title } : null}
+      next={newer ? { slug: newer.data.recipeSlug, title: newer.data.title } : null}
     />
   </article>
 
 </Base>
 
 <style>
-  .recipe-hero {
-    margin: 0 0 2rem;
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  .recipe-header {
+    margin: 0.5rem 0 1.75rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px dashed var(--ink);
   }
 
+  .dateline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 1.1rem;
+  }
+  .dateline-issue { color: var(--pink); }
+  .dateline-sep { color: var(--ink-faint); }
+
+  .recipe-header h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.3rem, 7vw, 4.2rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin: 0.25rem auto 0.7rem;
+    max-width: 18ch;
+    transform: rotate(-1deg);
+  }
+
+  .subtitle {
+    font-family: var(--font-marker);
+    font-size: 1.35rem;
+    color: var(--pink-deep);
+    margin: 0 auto;
+    max-width: 34ch;
+    line-height: 1.2;
+  }
+
+  .recipe-hero {
+    margin: 0 0 2.5rem;
+    background: var(--panel);
+    border: 3px solid var(--ink);
+    padding: 0.6rem;
+    box-shadow: 7px 7px 0 var(--pink);
+    transform: rotate(-1deg);
+  }
   .recipe-hero img {
     display: block;
     width: 100%;
     height: auto;
+    filter: saturate(1.05) contrast(1.05);
   }
-
-  .recipe-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .recipe-number {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    margin-left: 0.5rem;
-  }
-
-  .recipe-header h1 {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    margin: 0.5rem 0 0.25rem;
-    line-height: 1.15;
-  }
-
-  .subtitle {
-    font-size: 1.15rem;
-    font-style: italic;
-    color: var(--color-text-muted);
-    margin-bottom: 1.5rem;
+  .recipe-hero figcaption {
+    margin-top: 0.6rem;
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    text-align: center;
   }
 
   @media (max-width: 640px) {
-    .recipe-header h1 { font-size: 1.85rem; }
+    .recipe-header { text-align: left; }
+    .dateline { justify-content: flex-start; }
+    .recipe-header h1 { margin-left: 0; }
+    .subtitle { margin-left: 0; }
   }
 </style>
