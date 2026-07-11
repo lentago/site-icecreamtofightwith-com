@@ -1,4 +1,13 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+// The 10 front-matter chapters of the book ("The Front Shit"). No YAML
+// frontmatter of their own — num/slug/title are derived from filename and
+// first heading in src/lib/essays.ts. 01 (title page) and 02 (TOC) are
+// print-only and excluded at the query layer, not here.
+const essays = defineCollection({
+  loader: glob({ pattern: '[0-9][0-9]_*.md', base: './front_matter' }),
+});
 
 const recipes = defineCollection({
   type: 'content',
@@ -22,4 +31,4 @@ const recipes = defineCollection({
   }),
 });
 
-export const collections = { recipes };
+export const collections = { recipes, essays };

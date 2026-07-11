@@ -1,0 +1,178 @@
+---
+// Shared essay ("The Front Shit") article body — used by the homepage
+// (Intro) and /read/[slug]. Renders kicker, title, markdown body (with the
+// in-body first heading suppressed — the title is rendered here), embedded
+// field diagrams, and prev/next across the essay sequence.
+import { render } from 'astro:content';
+import FieldDiagrams from './FieldDiagrams.astro';
+import type { EssayMeta } from '../lib/essays';
+import { redactHtml } from '../lib/redact.mjs';
+
+interface Props {
+  essay: EssayMeta;
+  essays: EssayMeta[]; // full 03-10 sequence, in order
+}
+
+const { essay, essays } = Astro.props;
+const { Content } = await render(essay.entry);
+
+const idx = essays.findIndex((e) => e.slug === essay.slug);
+const prev = idx > 0 ? essays[idx - 1] : null;
+const next = idx >= 0 && idx < essays.length - 1 ? essays[idx + 1] : null;
+---
+<article class="fade essay">
+  <div class="kicker">The Front Shit · {essay.num}</div>
+  <h1 set:html={redactHtml(essay.title)} />
+
+  <div class="essay-body">
+    <Content />
+  </div>
+
+  <FieldDiagrams kind="essay" slug={essay.slug} />
+
+  <nav class="pager" aria-label="Essay pagination">
+    <a href={prev ? prev.href : undefined} class:list={['pager-link', { disabled: !prev }]}>
+      <div class="pager-dir">← Previous</div>
+      <div class="pager-title">{prev?.shortTitle}</div>
+    </a>
+    <a href={next ? next.href : undefined} class:list={['pager-link', 'pager-next', { disabled: !next }]}>
+      <div class="pager-dir">Next →</div>
+      <div class="pager-title">{next?.shortTitle}</div>
+    </a>
+  </nav>
+</article>
+
+<style>
+  .essay {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 34px 26px 74px;
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(32px, 4.6vw, 54px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0 0 26px;
+    color: var(--ink);
+  }
+
+  /* The markdown body opens with the same heading rendered as <h1> above —
+     suppress the duplicate. Essays start with either "# Title" (kept
+     top-level by the sections plugin, inside .recipe-intro) or "## Title"
+     (which opens the first section). */
+  /* :first-child (not :first-of-type) is load-bearing: when the essay
+     opens with "# Title" the sections plugin emits a .recipe-intro div
+     first, so the first section holds a real content heading that must
+     stay visible — and isn't :first-child. */
+  .essay-body :global(.recipe-intro > h1:first-child),
+  .essay-body :global(section.recipe-section:first-child > h2:first-child) {
+    display: none;
+  }
+  /* When the title was an h2, the first section is the whole opening run —
+     kill its section top margin so the body starts flush. */
+  .essay-body :global(section.recipe-section) { margin-top: 40px; }
+  .essay-body :global(section.recipe-section:first-child) { margin-top: 0; }
+
+  .essay-body :global(p) {
+    font-size: 19px;
+    line-height: 1.66;
+    margin: 0 0 18px;
+    color: var(--body);
+  }
+  .essay-body :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .essay-body :global(h3) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 23px;
+    letter-spacing: -0.01em;
+    margin: 30px 0 10px;
+    color: var(--ink);
+  }
+  .essay-body :global(h3.subhead) {
+    font-size: 19px;
+    color: var(--red);
+    margin: 26px 0 8px;
+  }
+  .essay-body :global(ul),
+  .essay-body :global(ol) {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+  .essay-body :global(li) {
+    position: relative;
+    padding: 6px 0 6px 20px;
+    border-bottom: 1px dotted rgba(23, 19, 15, 0.2);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .essay-body :global(li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85em;
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+  }
+  .essay-body :global(hr) {
+    border: none;
+    border-top: 1px dotted rgba(23, 19, 15, 0.25);
+    margin: 26px 0;
+  }
+  /* Tables (the difficulty chapter has none, but the front matter may) */
+  .essay-body :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 0 20px;
+    font-size: 16px;
+  }
+  .essay-body :global(th),
+  .essay-body :global(td) {
+    border: 1px solid rgba(23, 19, 15, 0.25);
+    padding: 8px 10px;
+    text-align: left;
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 50px;
+    border-top: 2px solid var(--ink);
+    padding-top: 20px;
+  }
+  .pager-link { max-width: 46%; transition: opacity 0.15s ease; }
+  .pager-link:hover { opacity: 0.7; }
+  .pager-link.disabled { opacity: 0.25; pointer-events: none; }
+  .pager-next { text-align: right; margin-left: auto; }
+  .pager-dir {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .pager-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+  }
+</style>

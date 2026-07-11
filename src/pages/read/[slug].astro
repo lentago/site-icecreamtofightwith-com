@@ -1,0 +1,32 @@
+---
+// Essay pages — the book's front matter, "The Front Shit". The Intro (03)
+// lives at / (see index.astro), so it's excluded here; everything else in
+// the 03-10 sequence gets a /read/<slug>/ page.
+import Base from '../../layouts/Base.astro';
+import EssayArticle from '../../components/EssayArticle.astro';
+import { getEssays, type EssayMeta } from '../../lib/essays';
+
+export async function getStaticPaths() {
+  const essays = await getEssays();
+  return essays
+    .filter((e) => e.slug !== 'intro')
+    .map((essay) => ({
+      params: { slug: essay.slug },
+      props: { essay, essays },
+    }));
+}
+
+interface Props {
+  essay: EssayMeta;
+  essays: EssayMeta[];
+}
+
+const { essay, essays } = Astro.props;
+---
+<Base
+  title={`${essay.shortTitle} — Ice Cream to Fight With`}
+  description={essay.title}
+  active={{ kind: 'essay', slug: essay.slug }}
+>
+  <EssayArticle essay={essay} essays={essays} />
+</Base>

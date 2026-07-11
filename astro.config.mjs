@@ -1,12 +1,14 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import pagefind from 'astro-pagefind';
 import { rehypeRedact } from './src/lib/redact.mjs';
+import { rehypeRecipeSections } from './src/lib/sections.mjs';
 
 export default defineConfig({
   site: 'https://icecreamtofightwith.com',
-  integrations: [sitemap(), pagefind()],
+  integrations: [sitemap()],
   markdown: {
-    rehypePlugins: [rehypeRedact],
+    // Redact first (wraps profanity in spans), then sectionize — the
+    // sections plugin only moves nodes, so order keeps both correct.
+    rehypePlugins: [rehypeRedact, rehypeRecipeSections],
   },
 });
