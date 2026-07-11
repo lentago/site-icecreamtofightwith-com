@@ -86,7 +86,7 @@ Look, everyone screws this up at some point. I've screwed it up more times than 
 
 **Skin Forming**: While cooling, a skin forms on top—this is just milk proteins drying out. (Gross as hell, but harmless.) Press plastic wrap directly onto the surface of the custard before refrigerating to prevent this. If it already formed, just peel it off and discard it before churning. Done. Crisis averted.
 
-**Split/Separated Custard**: The fat separated from the liquid and now you've got an oily mess that looks like a science experiment gone wrong. Usually happens with very low-yolk custards or if you added oil-based flavoring too quickly without proper emulsification because you were in a hurry. Most recipes in this book are formulated to avoid this, but if it happens, try blending with an immersion blender—*sometimes* you can re-emulsify it if you're lucky. Not always, though. Sometimes you're just fucked and need to start over. Sorry, homie. Them's the breaks.
+**Split/Separated Custard**: The fat separated from the liquid and now you've got an oily mess that looks like a science experiment gone wrong. Usually happens with very low-yolk custards or if you added oil-based flavoring too quickly without proper emulsification because you were in a hurry. Most recipes in this book are formulated to avoid this, but if it happens, try blending with an immersion blender—*sometimes* you can re-emulsify it if you're lucky. Not always, though. Sometimes you're just fucked and need to start over. Sorry, boss. Them's the breaks.
 
 ---
 

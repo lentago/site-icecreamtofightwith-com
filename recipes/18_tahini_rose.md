@@ -19,7 +19,7 @@ dietary:
 
 **Allergen Information:** Contains tree nuts (pistachios).
 
-Halva is one of those Middle Eastern confections that's been around forever and shows up in about a dozen different forms across different countries. The Turkish version—tahini-based halva with that distinctive fibrous, flaky texture—is what we're channeling here, homie. It's intensely sweet, nutty from the sesame, and has this almost chalky mouthfeel that sounds weird but is actually addictive as hell.
+Halva is one of those Middle Eastern confections that's been around forever and shows up in about a dozen different forms across different countries. The Turkish version—tahini-based halva with that distinctive fibrous, flaky texture—is what we're channeling here, chief. It's intensely sweet, nutty from the sesame, and has this almost chalky mouthfeel that sounds weird but is actually addictive as hell.
 
 Adding rose water is traditional in Turkish sweets—it cuts the richness and adds this haunting floral note that makes everything feel more elegant. The trick is using just enough to make people wonder what that flavor is without being able to name it. Too little and it disappears. Too much and you've made potpourri ice cream.
 

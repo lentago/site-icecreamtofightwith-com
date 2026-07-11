@@ -140,7 +140,7 @@ Warm tan-coffee colored base studded with golden-brown candied macadamia pieces 
 
 **Serving note:**
 
-Wattleseed's complex flavors actually develop and deepen after 24 hours in the freezer—something about the cold does magic things. Consider making this the day before serving for optimal flavor. Patience pays off, homie.
+Wattleseed's complex flavors actually develop and deepen after 24 hours in the freezer—something about the cold does magic things. Consider making this the day before serving for optimal flavor. Patience pays off, boss.
 
 
 **What it tastes like:**

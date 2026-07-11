@@ -20,7 +20,7 @@ Yes, there's miso in this. Yes, miso is salty and savory and usually goes in sou
 
 The toasted rice crispies echo genmaicha—Japanese green tea with toasted rice—which is a classic pairing that's been around for centuries. So while this combination sounds modern and experimental, you're actually tapping into a traditional Japanese flavor profile. You're just doing it in frozen form, which is where it gets interesting.
 
-You'll probably make a face when you first read this ingredient list. That's normal, homie. Everyone does. Then they taste it and get quiet for a second while they process what just happened. Then they ask for more. It's a whole journey.
+You'll probably make a face when you first read this ingredient list. That's normal, pal. Everyone does. Then they taste it and get quiet for a second while they process what just happened. Then they ask for more. It's a whole journey.
 
 ## Ingredients
 

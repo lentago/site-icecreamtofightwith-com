@@ -56,7 +56,7 @@ Fair warning, chief: this isn't vanilla with some mix-ins. This is a texture bom
 
 **Candied Kataifi Brittle (make this first, needs to cool):**
 
-Prep the dough. Kataifi looks like shredded wheat that gave up on life. Pull the strands apart so they aren't a solid clump, then chop them into roughly 1-inch pieces. You don't want long noodles in your ice cream, homie.
+Prep the dough. Kataifi looks like shredded wheat that gave up on life. Pull the strands apart so they aren't a solid clump, then chop them into roughly 1-inch pieces. You don't want long noodles in your ice cream, dude.
 
 Melt the butter in your largest skillet over medium heat. Toss in the chopped kataifi. Cook, stirring CONSTANTLY, until it's a deep, rich golden brown. Don't rush this part; you need the moisture *out* of the dough before you seal it in.
 

@@ -144,7 +144,7 @@ The Ethiopian coffee ceremony is a profound cultural ritual—green beans are ro
 
 Berbere is THE spice blend of Ethiopian cuisine—every family has their own recipe with slight variations. Traditional berbere typically includes: dried chilies (often Ethiopian berbere peppers), fenugreek seeds, coriander seeds, black peppercorns, cardamom, cinnamon, cloves, ginger, and sometimes ajwain or korarima (Ethiopian cardamom).
 
-The blend should be earthy, warm, slightly bitter from the fenugreek, aromatic from the cardamom and cloves, with gentle heat from the chilies—not aggressive spiciness, but warmth. Buy berbere from Ethiopian markets, good spice companies (Burlap & Barrel, Diaspora Co.), or online. Quality matters here, homie—old, stale berbere tastes dusty and flat.
+The blend should be earthy, warm, slightly bitter from the fenugreek, aromatic from the cardamom and cloves, with gentle heat from the chilies—not aggressive spiciness, but warmth. Buy berbere from Ethiopian markets, good spice companies (Burlap & Barrel, Diaspora Co.), or online. Quality matters here, dude—old, stale berbere tastes dusty and flat.
 
 In the caramel, start with 1 tsp berbere and taste. You can always add more after cooling if you want it more pronounced. Too much can overpower everything and make it bitter.
 

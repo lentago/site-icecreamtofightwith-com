@@ -15,7 +15,7 @@ dietary: []
 
 **Total Time:** 6-8 hours (most of which is chilling time while you wonder if you added enough hot sauce)
 
-Okay homie, if you've ever bought mango from a street cart in Mexico City, you know the deal: sweet fruit meets chile, lime, and salt in this perfect balance that makes your brain short-circuit. Thai food does something similar with that sweet-spicy-sour-salty thing, but this ice cream is inspired by Mexican street food culture—specifically that Tajin-dusted, chamoy-drizzled mango situation. The whole deal hinges on getting the heat level *right*—and here's the thing: cold absolutely murders spice. Like, brutally. What tastes aggressively spicy at room temperature will be just right when frozen.
+Okay buddy, if you've ever bought mango from a street cart in Mexico City, you know the deal: sweet fruit meets chile, lime, and salt in this perfect balance that makes your brain short-circuit. Thai food does something similar with that sweet-spicy-sour-salty thing, but this ice cream is inspired by Mexican street food culture—specifically that Tajin-dusted, chamoy-drizzled mango situation. The whole deal hinges on getting the heat level *right*—and here's the thing: cold absolutely murders spice. Like, brutally. What tastes aggressively spicy at room temperature will be just right when frozen.
 
 You'll definitely need to taste-test this one. Multiple times. For science. (Ask me how I know. Actually, don't.)
 
@@ -66,7 +66,7 @@ Pull it off the heat and let it chill out for 5 minutes while you stir it occasi
 
 Here's the tricky part: Start with 2 tbsp of Yellowbird and stir thoroughly. Put a spoonful in the freezer for 5 minutes, then taste it *cold*—you should feel noticeable warmth building in your mouth. Not burning, but definitely there. If it's too mild, add more hot sauce, remembering that cold is a spice assassin. Better to err on the side of more heat. You can always add; you can't take away. (Ask me how I know. Actually, don't. It involved wasted mango and regret.)
 
-Strain the whole thing through a fine-mesh sieve one more time (gets rid of any eggy bits or zest chunks). Cool it over an ice bath, stirring occasionally until it's not hot anymore. Then refrigerate for at least 4 hours or overnight. Patience, homie.
+Strain the whole thing through a fine-mesh sieve one more time (gets rid of any eggy bits or zest chunks). Cool it over an ice bath, stirring occasionally until it's not hot anymore. Then refrigerate for at least 4 hours or overnight. Patience, friend.
 
 **Spicy Honey Swirl:**
 

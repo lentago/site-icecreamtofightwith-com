@@ -17,7 +17,7 @@ dietary: []
 
 Atole de anis is a traditional Mexican hot beverage—thick, corny, spiced with star anise and sweetened with piloncillo. This ice cream tries to capture that same warm-spiced-corn feeling, which sounds weird as hell until you remember that corn is SWEET and piloncillo (Mexican brown sugar) is basically concentrated caramel that got serious about life. The toasted masa crumble reinforces the corn theme and the piloncillo brittle adds these shards of dark, almost smoky sweetness.
 
-Fair warning, homie: you'll be toasting masa harina and praying to every god you can think of that it doesn't burn.
+Fair warning, chief: you'll be toasting masa harina and praying to every god you can think of that it doesn't burn.
 
 ## Ingredients
 
@@ -116,5 +116,5 @@ Tan-brown base with golden masa pieces and very dark—almost black—brittle sh
 
 Sweet corn first—not candy-sweet, real-corn-sweet, that warm golden flavor you get from the best ear of the summer. Star anise comes in warm and licorice-y, not aggressive, just steady. Cinnamon underneath. Piloncillo gives everything this deep, almost smoky caramel depth that regular sugar can't touch—darker, more complex, more interesting. Masa crumble adds nutty crunch that reminds you this is corn three ways. Brittle shards hit in concentrated bursts of dark caramelized sweetness.
 
-If you've had real atole, you'll recognize this immediately. If you haven't, imagine comfort itself—warm, spiced, golden—frozen solid and somehow still comforting. That's this, homie.
+If you've had real atole, you'll recognize this immediately. If you haven't, imagine comfort itself—warm, spiced, golden—frozen solid and somehow still comforting. That's this, pal.
 

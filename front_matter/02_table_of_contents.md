@@ -55,4 +55,4 @@
 
 **The Back**
 
-- [That's All, Homie](#thats-all-homie)
+- [That's All, Friend](#thats-all-friend)

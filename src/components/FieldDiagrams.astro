@@ -2,12 +2,7 @@
 // "Field Diagrams" — the logic-checked faux-science figures, embedded per
 // recipe/essay exactly as the editorial design specifies. Figures and the
 // slug→figure mappings live in src/data/diagrams.js.
-//
-// Site profanity policy applies here too: captions/notes go through
-// redactHtml (hover-to-reveal bars); SVG text nodes get redactPlain
-// (asterisks), since span markup can't live inside <text> safely.
 import { diagrams } from '../data/diagrams.js';
-import { redactHtml, redactPlain } from '../lib/redact.mjs';
 
 interface Props {
   kind: 'recipe' | 'essay';
@@ -19,16 +14,16 @@ const { kind, slug } = Astro.props;
 const keys: string[] =
   (kind === 'recipe' ? diagrams.byRecipe : diagrams.byEssay)[slug] ?? [];
 
-/** Minimal inline-markdown for captions/notes: redact, then **bold** / *em*. */
+const escapeHtml = (s: string): string =>
+  s.replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c] as string));
+
+/** Escape, then render the caption's **bold** / *em* markdown. */
 function mdInline(text: string): string {
-  return redactHtml(text)
+  return escapeHtml(text)
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>');
-}
-
-/** redactPlain over SVG text nodes only (content between tags). */
-function sanitizeSvg(svg: string): string {
-  return svg.replace(/>([^<>]+)</g, (_, t) => '>' + redactPlain(t) + '<');
 }
 
 const figures = keys
@@ -37,7 +32,7 @@ const figures = keys
   .map((f) => ({
     fig: f.fig,
     title: f.title,
-    svg: sanitizeSvg(f.svg),
+    svg: f.svg,
     caption: mdInline(f.caption),
     note: mdInline(f.note),
     corrected: f.noteType === 'corrected',

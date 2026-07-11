@@ -20,7 +20,7 @@ dietary:
 
 Allspice is THE signature spice of Jamaica—it's called pimento locally and has this warm, complex flavor that tastes like cinnamon, nutmeg, and cloves all decided to have a threesome. Combined with rum-caramelized bananas, candied ginger, and a rum-butterscotch swirl, you get something that feels like a party where everyone's having a genuinely good time. Bright, spirited, deeply flavorful.
 
-You might flambe some bananas. This is optional but absolutely fucking fun, homie.
+You might flambe some bananas. This is optional but absolutely fucking fun, pal.
 
 ## Ingredients
 
@@ -90,7 +90,7 @@ Melt butter in a large skillet over medium-high heat. Add the dark brown sugar a
 
 Add the banana rounds in a single layer—work in batches if needed to avoid crowding because crowded bananas steam instead of caramelize and that's just sad. Cook WITHOUT STIRRING for 2-3 minutes until the bottoms are deep golden and caramelized. Flip carefully, cook another 2 minutes. Bananas should be soft but still hold their shape. You want caramelized, not mushy—there's a difference.
 
-Reduce heat to medium-low. Sprinkle nutmeg over the bananas. Carefully add the rum—may flame BRIEFLY if using a gas stove, which is normal and safe and honestly pretty cool. Don't freak out, homie. The flames will die naturally. Let the alcohol cook off, stirring gently, about 1-2 minutes.
+Reduce heat to medium-low. Sprinkle nutmeg over the bananas. Carefully add the rum—may flame BRIEFLY if using a gas stove, which is normal and safe and honestly pretty cool. Don't freak out, buddy. The flames will die naturally. Let the alcohol cook off, stirring gently, about 1-2 minutes.
 
 Add a pinch of salt and squeeze of lime juice. Pull it off the heat. The liquid should be thick, syrupy, deeply caramelized—almost mahogany. If yours looks pale and thin, it needed more time. Trust the color.
 
@@ -160,7 +160,7 @@ Candied and crystallized ginger is beloved in Jamaican sweets—ginger candy, gi
 
 **Banana caramelization:**
 
-This technique of caramelizing bananas with butter, brown sugar, and rum is essentially simplified bananas foster. While bananas foster was created in New Orleans in 1951, it draws directly on Caribbean ingredients and techniques. Jamaicans have been cooking bananas with rum, sugar, and spices LONG before that—this is cultural appropriation done backwards, homie.
+This technique of caramelizing bananas with butter, brown sugar, and rum is essentially simplified bananas foster. While bananas foster was created in New Orleans in 1951, it draws directly on Caribbean ingredients and techniques. Jamaicans have been cooking bananas with rum, sugar, and spices LONG before that—this is cultural appropriation done backwards, friend.
 
 The key is getting real color on the bananas. If they look pale, your heat was too low or you crowded the pan. You want deep golden-brown—that's where the Maillard reaction creates hundreds of new flavor compounds that raw banana simply doesn't have.
 

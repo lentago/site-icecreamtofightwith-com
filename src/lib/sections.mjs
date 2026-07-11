@@ -13,7 +13,7 @@
 // Runs after rehypeRedact in the chain, so profanity inside headings has
 // already been wrapped; this plugin only moves nodes, never edits text.
 //
-// Plain .mjs so astro.config.mjs can import it, same as redact.mjs.
+// Plain .mjs so astro.config.mjs can import it.
 
 const isH2 = (node) => node.type === 'element' && node.tagName === 'h2';
 

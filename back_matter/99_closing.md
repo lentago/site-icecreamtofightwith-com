@@ -1,4 +1,4 @@
-# That's All, Homie
+# That's All, Friend
 
 You made it through all the recipes. That's some commitment right there.
 

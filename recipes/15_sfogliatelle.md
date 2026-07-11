@@ -12,7 +12,7 @@ dietary:
 
 *Naples' pastry, now frozen*
 
-**Difficulty:** LEGIT - You've got four components to manage (candied apricots, reduction, semolina crumble, ricotta custard), and those candied apricots will sit around drying for 4+ hours while you contemplate your life choices. The ricotta MUST be whipped smooth or you'll have grainy ice cream. Nothing technically hard, just lots of waiting and component juggling. Multi-day commitment, homie.
+**Difficulty:** LEGIT - You've got four components to manage (candied apricots, reduction, semolina crumble, ricotta custard), and those candied apricots will sit around drying for 4+ hours while you contemplate your life choices. The ricotta MUST be whipped smooth or you'll have grainy ice cream. Nothing technically hard, just lots of waiting and component juggling. Multi-day commitment, boss.
 
 **Total Time:** 10-12 hours across 2-3 days (includes 4+ hours of apricot drying where you'll check on them obsessively and they still won't be ready)
 
@@ -128,4 +128,4 @@ The candied apricots can be made up to a week ahead and stored airtight. The sem
 
 **What it tastes like:**
 
-Creamy ricotta first—smooth, slightly tangy, unmistakably Italian. Warm cinnamon-vanilla spice underneath, familiar and comforting. Bright apricot sweetness cuts through in concentrated bursts—tart, fruity, almost jammy where the candied pieces have softened. Semolina crumble adds that crucial textural crunch and a toasty, wheaty note that makes your brain go "oh yeah, this is supposed to be a pastry." The whole thing captures sfogliatelle's essence—ricotta filling, warm spice, fruit, flaky crunch—without trying to literally recreate the pastry in frozen form. Naples in a bowl, homie.
+Creamy ricotta first—smooth, slightly tangy, unmistakably Italian. Warm cinnamon-vanilla spice underneath, familiar and comforting. Bright apricot sweetness cuts through in concentrated bursts—tart, fruity, almost jammy where the candied pieces have softened. Semolina crumble adds that crucial textural crunch and a toasty, wheaty note that makes your brain go "oh yeah, this is supposed to be a pastry." The whole thing captures sfogliatelle's essence—ricotta filling, warm spice, fruit, flaky crunch—without trying to literally recreate the pastry in frozen form. Naples in a bowl, dude.

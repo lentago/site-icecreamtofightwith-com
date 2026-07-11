@@ -11,7 +11,7 @@ dietary: []
 
 *Greek summer in a bowl*
 
-**Difficulty:** THE REAL DEAL - You're triple-blanching lemon peel (tedious as hell), emulsifying olive oil into custard (which requires drizzling SLOWLY or you'll fuck it up), and adding yogurt to cold custard without curdling it. The candied peel alone takes hours. The olive oil emulsification is where most people fail—rush it and you get greasy separated mess with no fix. Multiple components, precise technique, not much room for error. This is not for beginners, homie.
+**Difficulty:** THE REAL DEAL - You're triple-blanching lemon peel (tedious as hell), emulsifying olive oil into custard (which requires drizzling SLOWLY or you'll fuck it up), and adding yogurt to cold custard without curdling it. The candied peel alone takes hours. The olive oil emulsification is where most people fail—rush it and you get greasy separated mess with no fix. Multiple components, precise technique, not much room for error. This is not for beginners, boss.
 
 **Total Time:** 10-12 hours across 2-3 days (includes triple blanching, 4+ hours of peel drying, overnight chilling, plus time spent drizzling olive oil at a pace that would make a snail impatient)
 

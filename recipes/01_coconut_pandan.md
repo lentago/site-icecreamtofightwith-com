@@ -12,7 +12,7 @@ dietary:
 
 *Southeast Asia's vanilla, now frozen*
 
-**Difficulty:** CHILL - You're making tea, basically. Fancy tea, sure, but tea. Heat coconut milk and cream with pandan leaves and sugar, let it steep until it turns pale green and smells like a tropical daydream, strain, chill, churn. No tempering, no emulsification, no eggs, no catastrophic failure points. The only challenge is sourcing fresh pandan leaves, which might require a field trip to an Asian market. Pandan extract exists as a backup, but using extract when you could use fresh leaves is like bringing a kazoo to a symphony—technically it makes noise, but come on, homie.
+**Difficulty:** CHILL - You're making tea, basically. Fancy tea, sure, but tea. Heat coconut milk and cream with pandan leaves and sugar, let it steep until it turns pale green and smells like a tropical daydream, strain, chill, churn. No tempering, no emulsification, no eggs, no catastrophic failure points. The only challenge is sourcing fresh pandan leaves, which might require a field trip to an Asian market. Pandan extract exists as a backup, but using extract when you could use fresh leaves is like bringing a kazoo to a symphony—technically it makes noise, but come on, dude.
 
 **Total Time:** 6-8 hours (20 minutes of actual work, the rest is steeping and chilling while you wonder how you've gone your entire life without knowing pandan exists)
 
@@ -44,13 +44,13 @@ If you're stuck with pandan extract because you couldn't find fresh leaves—shi
 
 Combine the coconut milk, heavy cream, palm sugar, salt, and prepared pandan leaves in a medium saucepan. Heat over medium, stirring occasionally, until the sugar completely dissolves and the mixture just barely starts to steam—you want it around 170-180°F, hot but NOT boiling. Palm sugar can be stubborn about dissolving, so give it time and keep stirring. Don't crank the heat to hurry it along—you'll scorch the coconut milk and that's a flavor you can't unfuck.
 
-Once the sugar is dissolved and the mixture is steaming, pull it off the heat, cover the pan, and let it steep for 45 minutes to 1 hour. You're making pandan tea, essentially. The leaves will gradually release their oils and the liquid will transform from white to pale green. The longer you steep, the more pronounced the pandan flavor and color become. Taste it after 45 minutes—it should smell incredible and taste distinctly of pandan. If it tastes weak or the color is barely green, let it steep another 15-20 minutes. Trust your senses here, homie—your nose knows what "enough pandan" smells like even if your brain hasn't caught up yet.
+Once the sugar is dissolved and the mixture is steaming, pull it off the heat, cover the pan, and let it steep for 45 minutes to 1 hour. You're making pandan tea, essentially. The leaves will gradually release their oils and the liquid will transform from white to pale green. The longer you steep, the more pronounced the pandan flavor and color become. Taste it after 45 minutes—it should smell incredible and taste distinctly of pandan. If it tastes weak or the color is barely green, let it steep another 15-20 minutes. Trust your senses here, chief—your nose knows what "enough pandan" smells like even if your brain hasn't caught up yet.
 
 **Strain and Enrich:**
 
 Strain the mixture through a fine-mesh sieve, pressing on the pandan leaves to extract every drop of flavored liquid. Discard the leaves—they've done their job and earned their retirement.
 
-Stir in the coconut cream (that thick, almost solid stuff from the top of a refrigerated coconut milk can). This adds extra richness and helps create a creamier texture since you're not using eggs for emulsification. If you couldn't find separate coconut cream, just refrigerate another can of coconut milk for a few hours, then scoop the thick layer from the top. Science, homie. Cold coconut milk separates into cream and water, and that cream is liquid gold for this recipe.
+Stir in the coconut cream (that thick, almost solid stuff from the top of a refrigerated coconut milk can). This adds extra richness and helps create a creamier texture since you're not using eggs for emulsification. If you couldn't find separate coconut cream, just refrigerate another can of coconut milk for a few hours, then scoop the thick layer from the top. Science, pal. Cold coconut milk separates into cream and water, and that cream is liquid gold for this recipe.
 
 If you used pandan extract instead of fresh leaves, this is when you'd stir in 2 teaspoons of extract. Mix thoroughly until the color is even.
 

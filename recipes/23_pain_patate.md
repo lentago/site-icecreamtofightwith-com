@@ -148,7 +148,7 @@ Represents Haitian home cooking at its most comforting and celebratory. This cap
 
 **Haitian spice tradition:**
 
-This five-spice blend is signature to Haitian desserts. Cinnamon provides warmth, nutmeg adds aromatic depth, ginger brings heat, cloves offer intensity, star anise contributes licorice-like complexity. This isn't subtle, homie—Haitian desserts are BOLDLY, assertively spiced. The intensity is authentic and essential. If your mouth isn't experiencing a spice party, you used too little.
+This five-spice blend is signature to Haitian desserts. Cinnamon provides warmth, nutmeg adds aromatic depth, ginger brings heat, cloves offer intensity, star anise contributes licorice-like complexity. This isn't subtle, pal—Haitian desserts are BOLDLY, assertively spiced. The intensity is authentic and essential. If your mouth isn't experiencing a spice party, you used too little.
 
 **Rum selection:**
 

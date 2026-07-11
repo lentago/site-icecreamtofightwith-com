@@ -13,7 +13,7 @@ dietary:
 
 *Deep South tradition, elevated*
 
-**Difficulty:** THE REAL DEAL - You'll brown butter THREE SEPARATE TIMES, homie. Your kitchen will smell incredible and you'll question every decision that led you here, but the result is worth it. Plus there's candy work with the pecans that requires paying the fuck attention or you'll have a burnt mess on your hands. This is a commitment.
+**Difficulty:** THE REAL DEAL - You'll brown butter THREE SEPARATE TIMES, buddy. Your kitchen will smell incredible and you'll question every decision that led you here, but the result is worth it. Plus there's candy work with the pecans that requires paying the fuck attention or you'll have a burnt mess on your hands. This is a commitment.
 
 **Total Time:** 6-8 hours (includes 2-4 hours for pecans to dry, 4+ hours freezing time, plus about 1.5 hours of you actually browning butter and wondering if this is your whole personality now)
 
@@ -65,7 +65,7 @@ Line another baking sheet with parchment, set it nearby. You'll need it in arm's
 
 In a saucepan, combine sorghum syrup, bourbon, brown sugar, that browned butter, cinnamon, and salt. Heat over medium-high, stirring until the butter and sugar dissolve. Bring to a boil.
 
-Cook WITHOUT STIRRING to 240-250°F (soft ball stage)—should be bubbling vigorously and thickened, about 5-7 minutes. Sorghum's natural thickness means this happens faster than with other syrups, so pay the fuck attention, homie. Don't wander off.
+Cook WITHOUT STIRRING to 240-250°F (soft ball stage)—should be bubbling vigorously and thickened, about 5-7 minutes. Sorghum's natural thickness means this happens faster than with other syrups, so pay the fuck attention, friend. Don't wander off.
 
 Pull it off the heat IMMEDIATELY when it hits temp. Add the toasted pecans, stir quickly to coat completely—every single nut needs that glossy treatment.
 
@@ -109,7 +109,7 @@ Carefully pour in the warmed cream—it'll bubble VIGOROUSLY like it's personall
 
 Pull it off the heat. Stir in bourbon and salt. Should smell INTENSELY of butterscotch, bourbon, and that characteristic sorghum tang that makes your brain go "what is that and why do I love it?"
 
-Cool to room temperature, then refrigerate. Should be thick but pourable when cold, like honey. Warm it gently if it's too thick—but don't microwave it on high like some kind of monster. Just gentle heat, homie. Treat it with respect.
+Cool to room temperature, then refrigerate. Should be thick but pourable when cold, like honey. Warm it gently if it's too thick—but don't microwave it on high like some kind of monster. Just gentle heat, boss. Treat it with respect.
 
 **Churn:**
 
@@ -156,7 +156,7 @@ The bourbon cooks off during candying and swirl-making, leaving only depth and w
 - Butterscotch swirl: Make the day before, refrigerate (reheat gently before using)
 - Custard base: Make the night before (the sorghum and brown butter flavors meld beautifully overnight)
 
-This recipe has a lot of components but none of them are hard to do ahead. Spread it over two days and it goes from "overwhelming" to "totally manageable." Don't try to be a hero and do it all at once, homie.
+This recipe has a lot of components but none of them are hard to do ahead. Spread it over two days and it goes from "overwhelming" to "totally manageable." Don't try to be a hero and do it all at once, dude.
 
 **Allergen Information:** Contains tree nuts (pecans)
 

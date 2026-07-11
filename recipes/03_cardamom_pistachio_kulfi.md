@@ -19,7 +19,7 @@ dietary:
 
 **Allergen Information:** Contains tree nuts (pistachios).
 
-Look, homie—kulfi is India's traditional frozen dessert that predates Western ice cream by centuries, and it's denser, richer, and more intensely flavored than anything you'll get from a churned custard base. Traditionally, you'd reduce milk for 2+ hours until it's thick as hell. And yeah, that tastes incredible. But you know what? Most people making kulfi at home in India TODAY use this condensed milk shortcut method, and it's not "cheating"—it's being a practical human being who has other shit to do.
+Look, boss—kulfi is India's traditional frozen dessert that predates Western ice cream by centuries, and it's denser, richer, and more intensely flavored than anything you'll get from a churned custard base. Traditionally, you'd reduce milk for 2+ hours until it's thick as hell. And yeah, that tastes incredible. But you know what? Most people making kulfi at home in India TODAY use this condensed milk shortcut method, and it's not "cheating"—it's being a practical human being who has other shit to do.
 
 This version gets you 95% of the way there in about 20 minutes of active work instead of sacrificing your entire afternoon to milk reduction. You still get that dense, fudgy texture. You still get the cardamom-saffron-pistachio flavor profile that makes kulfi taste like kulfi. You just skip the part where you stand over a pot questioning your life choices for two hours.
 
@@ -259,4 +259,4 @@ Making kulfi at home—even with the shortcut method—connects you to centuries
 
 Rich. Dense. Intensely cardamom-forward—that warm, almost minty heat spreading through everything. Saffron underneath, subtle and golden. Pistachios add nutty crunch and reinforce the green. Rose water—if you use it—floats through in delicate floral bursts that make the whole thing feel elegant without trying. The texture is fudgy and slow—you savor this in small bites, not big scoops.
 
-Tastes like India. Like summer afternoons and celebration dinners and the best street vendor's cart you've ever found. Familiar and surprising at the same time, homie.
+Tastes like India. Like summer afternoons and celebration dinners and the best street vendor's cart you've ever found. Familiar and surprising at the same time, dude.

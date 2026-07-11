@@ -12,7 +12,7 @@ dietary:
 
 *Vietnam's beloved avocado smoothie, frozen solid and ready to fight*
 
-**Difficulty:** CHILL - This is almost offensively easy, homie. You're blending ripe avocado with sweetened condensed milk and lime juice, then freezing the result. No heating, no tempering, no custard anxiety. The only challenge is psychological—your Western brain is going to scream "avocado is for guacamole, not dessert!" but Vietnamese cuisine has known for generations that avocado's buttery richness works beautifully in sweets. Trust the process, blend the fruit, and prepare to have your assumptions thoroughly fucking scrambled.
+**Difficulty:** CHILL - This is almost offensively easy, buddy. You're blending ripe avocado with sweetened condensed milk and lime juice, then freezing the result. No heating, no tempering, no custard anxiety. The only challenge is psychological—your Western brain is going to scream "avocado is for guacamole, not dessert!" but Vietnamese cuisine has known for generations that avocado's buttery richness works beautifully in sweets. Trust the process, blend the fruit, and prepare to have your assumptions thoroughly fucking scrambled.
 
 **Total Time:** 4-6 hours (15 minutes active work, the rest is just freezing while you contemplate how wrong this seemed before you tasted it)
 
@@ -75,7 +75,7 @@ Lime juice does two things here. First, it provides acidity that balances the ri
 
 **Cultural context:**
 
-Sinh tố bơ is a staple of Vietnamese street food and cafe culture—you'll find it everywhere from Hanoi to Ho Chi Minh City. The name breaks down simply: sinh tố means smoothie or blended drink, and bơ means avocado (also butter, which is not a coincidence—Vietnamese cuisine recognized avocado's butteriness and ran with it). It's typically made with condensed milk, sometimes coconut milk, sometimes both, always sweet. This recipe freezes that drink rather than inventing some new thing. The addition of heavy cream and the churning are the only real departures from tradition, and both exist to serve the texture goals of ice cream rather than change what the flavor is. Credit where it's due, homie.
+Sinh tố bơ is a staple of Vietnamese street food and cafe culture—you'll find it everywhere from Hanoi to Ho Chi Minh City. The name breaks down simply: sinh tố means smoothie or blended drink, and bơ means avocado (also butter, which is not a coincidence—Vietnamese cuisine recognized avocado's butteriness and ran with it). It's typically made with condensed milk, sometimes coconut milk, sometimes both, always sweet. This recipe freezes that drink rather than inventing some new thing. The addition of heavy cream and the churning are the only real departures from tradition, and both exist to serve the texture goals of ice cream rather than change what the flavor is. Credit where it's due, friend.
 
 **Make-ahead:**
 

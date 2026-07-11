@@ -6,7 +6,6 @@
 import { render } from 'astro:content';
 import FieldDiagrams from './FieldDiagrams.astro';
 import type { EssayMeta } from '../lib/essays';
-import { redactHtml } from '../lib/redact.mjs';
 
 interface Props {
   essay: EssayMeta;
@@ -22,7 +21,7 @@ const next = idx >= 0 && idx < essays.length - 1 ? essays[idx + 1] : null;
 ---
 <article class="fade essay">
   <div class="kicker">The Front Shit · {essay.num}</div>
-  <h1 set:html={redactHtml(essay.title)} />
+  <h1>{essay.title}</h1>
 
   <div class="essay-body">
     <Content />

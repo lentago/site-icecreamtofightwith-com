@@ -11,7 +11,7 @@ dietary: []
 
 *Five-spice and stone fruit*
 
-**Difficulty:** LEGIT - You're roasting plums with five-spice (easy), making custard (standard), and either making candied ginger from scratch (which takes 4+ hours of drying time) or buying it pre-made (smart). The individual techniques are straightforward, but if you make the ginger yourself you'll be checking on those drying pieces obsessively. Nothing technically hard, just time management, homie.
+**Difficulty:** LEGIT - You're roasting plums with five-spice (easy), making custard (standard), and either making candied ginger from scratch (which takes 4+ hours of drying time) or buying it pre-made (smart). The individual techniques are straightforward, but if you make the ginger yourself you'll be checking on those drying pieces obsessively. Nothing technically hard, just time management, chief.
 
 **Total Time:** 10-12 hours across 2-3 days if making candied ginger, or 6-7 hours if buying it (includes overnight chilling, plus roasting time when your kitchen smells so good you'll want to lose your mind)
 
@@ -85,7 +85,7 @@ Freeze 4+ hours.
 
 **Chinese five-spice:**
 
-Star anise is the dominant flavor, with cloves, cinnamon, Sichuan peppercorns, and fennel backing it up. This blend has been used in Chinese cooking for literally thousands of years—it appears in ancient texts from the Han Dynasty. The combination is designed to hit all five flavor elements in Chinese philosophy: sweet, sour, bitter, pungent, and salty. That's not just good cooking, homie—that's an entire philosophical framework in a spice jar.
+Star anise is the dominant flavor, with cloves, cinnamon, Sichuan peppercorns, and fennel backing it up. This blend has been used in Chinese cooking for literally thousands of years—it appears in ancient texts from the Han Dynasty. The combination is designed to hit all five flavor elements in Chinese philosophy: sweet, sour, bitter, pungent, and salty. That's not just good cooking, pal—that's an entire philosophical framework in a spice jar.
 
 Buy it from an Asian market if possible—it'll be way fresher than that jar that's been sitting in the international aisle for literal years. Pre-ground five-spice loses its aromatic oils quickly, so look for the freshest you can find or, if you're feeling ambitious, buy the whole spices and grind them yourself. The difference is no bullshit—it's significant.
 

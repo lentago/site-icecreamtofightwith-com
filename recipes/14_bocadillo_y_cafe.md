@@ -17,7 +17,7 @@ dietary: []
 
 Bocadillo—guava paste—is everywhere in Colombian desserts. It's basically concentrated guava sweetness in a block, which sounds weird but is absolutely fucking delicious. Combined with dark panela-coffee caramel and candied coffee beans, you get something distinctly Colombian: bright tropical fruit balanced by deep, dark coffee notes that'll wake you up and make you happy.
 
-More components than strictly necessary, but they all earn their place. No freeloaders here, homie.
+More components than strictly necessary, but they all earn their place. No freeloaders here, buddy.
 
 ## Ingredients
 
@@ -133,4 +133,4 @@ Bright pink guava base with dark brown coffee-caramel swirls and glossy dark can
 
 **What it tastes like:**
 
-Bright tropical guava up front—floral, sweet, unmistakably guava in a way that hits different from any other fruit. Then dark coffee-caramel ribbons cut through, intense and bittersweet, pulling the whole thing toward something richer and more complex. Crunchy candied coffee beans scatter through in little bursts of caffeine and roasted bitterness that wake up your palate. Two bold flavors that somehow complement each other instead of fighting—the guava's tropical sweetness grounding the coffee's edge, the coffee's depth keeping the guava honest. Distinctly Colombian, unapologetically bold. Worth every damn minute of the effort, homie.
+Bright tropical guava up front—floral, sweet, unmistakably guava in a way that hits different from any other fruit. Then dark coffee-caramel ribbons cut through, intense and bittersweet, pulling the whole thing toward something richer and more complex. Crunchy candied coffee beans scatter through in little bursts of caffeine and roasted bitterness that wake up your palate. Two bold flavors that somehow complement each other instead of fighting—the guava's tropical sweetness grounding the coffee's edge, the coffee's depth keeping the guava honest. Distinctly Colombian, unapologetically bold. Worth every damn minute of the effort, friend.

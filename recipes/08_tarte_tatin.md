@@ -52,7 +52,7 @@ It tastes like walking past a French patisserie and deciding fuck it, you're eat
 
 **Buttery Pastry Crumble (make this first, can be made up to 3 days ahead):**
 
-Preheat your oven to 350°F. Combine flour, sugar, and salt in a bowl. Add the cold cubed butter and work it in with your fingers or a pastry cutter until the mixture looks like coarse sand with some pea-sized butter bits. You want irregular chunks, homie—that's what creates flaky, crispy texture when it bakes.
+Preheat your oven to 350°F. Combine flour, sugar, and salt in a bowl. Add the cold cubed butter and work it in with your fingers or a pastry cutter until the mixture looks like coarse sand with some pea-sized butter bits. You want irregular chunks, dude—that's what creates flaky, crispy texture when it bakes.
 
 If the mixture seems too dry and won't hold together when you squeeze it, add the ice water a teaspoon at a time. It should just barely come together when pressed. Don't overwork it or add too much water—you want crumbly, not doughy.
 
@@ -74,7 +74,7 @@ When the apples are done roasting, pull the pan from the oven and immediately ad
 
 Let cool for about 15-20 minutes until they're warm but not steaming hot.
 
-Here's the two-texture approach, homie: Puree half the roasted apples with all those pan juices until completely smooth. This pureed portion will integrate into the custard base, providing apple flavor throughout. Chop the remaining half into roughly 1/2-inch pieces. These chunks get mixed into the ice cream for textural interest—you'll bite into actual pieces of caramelized apple while eating it, just like cutting into a slice of Tarte Tatin. Refrigerate both the puree and the chunks.
+Here's the two-texture approach, chief: Puree half the roasted apples with all those pan juices until completely smooth. This pureed portion will integrate into the custard base, providing apple flavor throughout. Chop the remaining half into roughly 1/2-inch pieces. These chunks get mixed into the ice cream for textural interest—you'll bite into actual pieces of caramelized apple while eating it, just like cutting into a slice of Tarte Tatin. Refrigerate both the puree and the chunks.
 
 **Make Vanilla Custard:**
 

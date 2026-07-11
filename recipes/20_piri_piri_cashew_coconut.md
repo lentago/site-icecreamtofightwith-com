@@ -15,7 +15,7 @@ dietary:
 
 *Vegan and surprisingly rich*
 
-**Difficulty:** THE REAL DEAL - You're soaking cashews for hours, blending them into submission, candying more cashews without burning their high-fat asses, making piri piri caramel that sounds batshit but works, and managing a vegan base that behaves differently than dairy. The individual techniques aren't brutal, but there's timing choreography and you need to trust that spicy-garlicky caramel is a good idea (it is). Plus sourcing actual piri piri might require hunting down an African or Portuguese market, homie.
+**Difficulty:** THE REAL DEAL - You're soaking cashews for hours, blending them into submission, candying more cashews without burning their high-fat asses, making piri piri caramel that sounds batshit but works, and managing a vegan base that behaves differently than dairy. The individual techniques aren't brutal, but there's timing choreography and you need to trust that spicy-garlicky caramel is a good idea (it is). Plus sourcing actual piri piri might require hunting down an African or Portuguese market, friend.
 
 **Total Time:** 8-10 hours (includes 4+ hours soaking cashews while you do literally anything else, plus 4+ hours base chilling because patience is a virtue you're learning)
 
@@ -158,7 +158,7 @@ Garlic in a sweet context sounds absolutely fucking insane but provides savory d
 
 **Soaking cashews:**
 
-This is CRITICAL, homie. Unsoaked cashews won't blend smooth even in a high-powered blender—they'll stay grainy and ruin everything. Need minimum 4 hours, preferably overnight. Hot water soak works in a pinch (pour boiling water over cashews, soak 30-60 minutes) but overnight cold soak is better.
+This is CRITICAL, boss. Unsoaked cashews won't blend smooth even in a high-powered blender—they'll stay grainy and ruin everything. Need minimum 4 hours, preferably overnight. Hot water soak works in a pinch (pour boiling water over cashews, soak 30-60 minutes) but overnight cold soak is better.
 
 **Visual:**
 

@@ -36,7 +36,6 @@ const isActiveRecipe = (slug: string) =>
           <span class="essay-num">Essay {e.num}</span>
           <span class="essay-name">{e.shortTitle}</span>
         </div>
-        <div class="film-label muted">The Front Shit</div>
       </a>
     ))}
 
@@ -78,7 +77,6 @@ const isActiveRecipe = (slug: string) =>
           <span class="essay-num">Essay {e.num}</span>
           <span class="essay-name">{e.shortTitle}</span>
         </div>
-        <div class="film-label muted">The Front Shit</div>
       </a>
     ))}
 
@@ -127,7 +125,7 @@ const isActiveRecipe = (slug: string) =>
 
   .film-card {
     flex: 0 0 auto;
-    width: 112px;
+    width: 172px;
     scroll-snap-align: start;
     text-decoration: none;
     opacity: 0.6;
@@ -145,7 +143,7 @@ const isActiveRecipe = (slug: string) =>
 
   .film-tile {
     position: relative;
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 2;
     border: 1.5px solid var(--ink);
     overflow: hidden;
   }

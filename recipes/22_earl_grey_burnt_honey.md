@@ -11,7 +11,7 @@ dietary: []
 
 *Tea time gets complicated (in the best possible way)*
 
-**Difficulty:** THE REAL DEAL - You're making honeycomb that'll foam up like a volcano, burning honey in TWO different batches while praying you don't take it too far, steeping tea, and making custard. The honeycomb demands lightning reflexes when that baking soda hits. The burnt honey requires you to stare intensely at a pan and make judgment calls with zero margin for error. Every single component here can go sideways on you, and at least one of them probably will. This is not your first rodeo, homie.
+**Difficulty:** THE REAL DEAL - You're making honeycomb that'll foam up like a volcano, burning honey in TWO different batches while praying you don't take it too far, steeping tea, and making custard. The honeycomb demands lightning reflexes when that baking soda hits. The burnt honey requires you to stare intensely at a pan and make judgment calls with zero margin for error. Every single component here can go sideways on you, and at least one of them probably will. This is not your first rodeo, chief.
 
 **Total Time:** 8-10 hours across 2 days (includes overnight chilling, plus an hour spent nervously hovering over honey wondering if you've messed it up)
 

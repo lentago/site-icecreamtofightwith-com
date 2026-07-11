@@ -19,7 +19,7 @@ dietary:
 
 **Allergen Information:** 
 
-Listen up, homie—this is the Café Du Monde experience in frozen form. If you've ever sat at those green tables on Decatur Street at 2 AM, powdered sugar all over your shirt, café au lait burning your tongue, beignets so hot they're basically molten dough pillows... this is that. But in ice cream form.
+Listen up, chief—this is the Café Du Monde experience in frozen form. If you've ever sat at those green tables on Decatur Street at 2 AM, powdered sugar all over your shirt, café au lait burning your tongue, beignets so hot they're basically molten dough pillows... this is that. But in ice cream form.
 
 Chicory coffee isn't just "coffee with stuff added." It's a whole NOLA thing that goes back to the Civil War when coffee was scarce and people started cutting it with roasted chicory root. Now it's the city's signature coffee flavor—earthy, slightly bitter, with this woody depth that regular coffee just doesn't have. We're making a café au lait base (that's coffee + hot milk, for the uninitiated), then studding it with actual fried beignet pieces that stay tender and chewy, and finishing with a rum-butter swirl because this is New Orleans and rum belongs in everything.
 
@@ -99,7 +99,7 @@ Chicory coffee isn't just "coffee with stuff added." It's a whole NOLA thing tha
 
 13. **Knead until smooth and elastic.** If using a stand mixer, knead on medium-low speed for about 5-6 minutes. If kneading by hand, turn the dough out onto a lightly floured surface and knead for 8-10 minutes. You want it smooth, elastic, and slightly tacky but not sticky-wet. It should spring back when you poke it.
 
-14. **First rise: be patient, homie.** Lightly oil a large bowl, put the dough in, and turn it to coat all sides with oil. Cover with a damp kitchen towel or plastic wrap. Set it somewhere warmish (like on top of your fridge or near a warm oven) and let it rise for 1.5 to 2 hours, until it's doubled in size. THIS WILL FEEL LIKE FOREVER. Resist the urge to rush it. Yeast moves at its own pace.
+14. **First rise: be patient, pal.** Lightly oil a large bowl, put the dough in, and turn it to coat all sides with oil. Cover with a damp kitchen towel or plastic wrap. Set it somewhere warmish (like on top of your fridge or near a warm oven) and let it rise for 1.5 to 2 hours, until it's doubled in size. THIS WILL FEEL LIKE FOREVER. Resist the urge to rush it. Yeast moves at its own pace.
 
 15. **Roll and cut those beignets.** Once the dough has doubled, punch it down (literally just punch it to deflate it—very satisfying). Turn it out onto a lightly floured surface and roll it out to about 1/4-inch thickness. Using a sharp knife or pizza cutter, cut the dough into small squares or rectangles—about 1.5 to 2 inches. You want them small enough to be bite-sized in the ice cream, not full Café Du Monde portion size. You should get about 30-40 pieces.
 
@@ -127,7 +127,7 @@ Chicory root is roasted and ground, then blended with coffee. It's earthy, woody
 
 **The Yeasted Dough Reality Check:**
 
-Yeah, this takes 2-3 hours from start to finish because of rising time. That's REAL beignets, homie. The quick drop-batter version is faster but it doesn't give you that pillowy, tender, slightly chewy texture that makes actual NOLA beignets so fucking good. The yeasted dough has this lightness and structure that holds up in ice cream without getting soggy or disappearing. Is it more work? Yes. Is it worth it? Absolutely.
+Yeah, this takes 2-3 hours from start to finish because of rising time. That's REAL beignets, buddy. The quick drop-batter version is faster but it doesn't give you that pillowy, tender, slightly chewy texture that makes actual NOLA beignets so fucking good. The yeasted dough has this lightness and structure that holds up in ice cream without getting soggy or disappearing. Is it more work? Yes. Is it worth it? Absolutely.
 
 If you're in a major rush and need to cut corners, you could use store-bought pizza dough in a pinch—let it come to room temp, roll it out, cut it, and fry it. It won't be EXACTLY the same, but it'll get you 75% of the way there and save you the rising time.
 

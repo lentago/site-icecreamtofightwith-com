@@ -9,7 +9,6 @@ import Filmstrip from '../components/Filmstrip.astro';
 import { getEssays } from '../lib/essays';
 import { TIERS } from '../lib/tiers';
 import { diagrams } from '../data/diagrams.js';
-import { redactPlain, redactHtml } from '../lib/redact.mjs';
 
 interface Props {
   title?: string;
@@ -27,10 +26,6 @@ const {
   active,
 } = Astro.props;
 
-// <title> and meta description are plain-text sinks — bowdlerize centrally.
-const safeTitle = redactPlain(title);
-const safeDescription = redactPlain(description);
-
 // Footer tally, computed from the real data so it can't drift.
 const recipeCount = (await getCollection('recipes')).length;
 const essayCount = (await getEssays()).length;
@@ -45,8 +40,8 @@ const bodyStyle = bg
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={safeDescription} />
-  <title>{safeTitle}</title>
+  <meta name="description" content={description} />
+  <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -92,21 +87,6 @@ const bodyStyle = bg
     @media (prefers-reduced-motion: reduce) {
       .fade { animation: none; }
     }
-
-    /* Redaction bars — the book swears; the website pleads the fifth.
-       Hover to reveal. Real text stays in the DOM. */
-    .redacted {
-      background: var(--ink);
-      color: transparent;
-      border-radius: 3px;
-      transition: color 0.2s ease, background 0.2s ease;
-    }
-    .redacted:hover,
-    .redacted:active {
-      background: transparent;
-      color: inherit;
-    }
-    .redacted::selection { color: transparent; }
   </style>
 </head>
 <body style={bodyStyle} class:list={[{ 'has-flag': Boolean(bg) }]}>
@@ -132,7 +112,7 @@ const bodyStyle = bg
           {TIERS.map((t) => (
             <span class="tier-key-item">
               <span class="tier-swatch" style={`background:${t.color}`}></span>
-              <span class="tier-key-label" set:html={redactHtml(t.label)} />
+              <span class="tier-key-label">{t.label}</span>
             </span>
           ))}
         </div>
@@ -149,7 +129,7 @@ const bodyStyle = bg
       <div class="footer-inner">
         <div>
           <div class="footer-mark">Ice Cream to Fight With</div>
-          <div class="footer-tagline"><span set:html={redactHtml("Recipes You'll Fuck Up At Least Once")} /><a
+          <div class="footer-tagline"><span>Recipes You'll Fuck Up At Least Once</span><a
             href="https://pl-preview-e8ef58a5.icecreamtofightwith.com"
             class="footer-dot"
             aria-hidden="true"

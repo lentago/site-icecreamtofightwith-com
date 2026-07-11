@@ -107,7 +107,7 @@ Freeze at least 4 hours before serving.
 
 Long-grain white rice is traditional for horchata. Some recipes use jasmine rice, which adds a subtle floral note—that's fine too if you want to go that route. The key is to soak it long enough that it actually softens and releases its starches. If you're in a rush, you can soak it in warm milk (not hot, just warm) for 2-3 hours instead of cold for 4-6 hours, but overnight is still better because extended cold soaking extracts more flavor compounds without cooking anything.
 
-The rice infusion is what makes this actually taste like horchata instead of just cinnamon ice cream, homie. Don't skip it or try to substitute rice milk from a carton—that stuff is designed for drinking, not for infusing into custard, and it won't give you the right flavor, texture, or that characteristic slightly grainy sweetness that makes horchata taste like horchata.
+The rice infusion is what makes this actually taste like horchata instead of just cinnamon ice cream, chief. Don't skip it or try to substitute rice milk from a carton—that stuff is designed for drinking, not for infusing into custard, and it won't give you the right flavor, texture, or that characteristic slightly grainy sweetness that makes horchata taste like horchata.
 
 **Cinnamon varieties:**
 

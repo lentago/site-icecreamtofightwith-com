@@ -10,7 +10,6 @@ import { getCollection } from 'astro:content';
 import { tierMeta } from '../../lib/tiers';
 import { designSlug } from '../../lib/design';
 import { pageBg } from '../../data/page_bg.js';
-import { redactHtml } from '../../lib/redact.mjs';
 
 export async function getStaticPaths() {
   const recipes = await getCollection('recipes');
@@ -88,13 +87,13 @@ if (recipe.data.illustration) {
 
     <div class="recipe-grid">
       <div class="recipe-main">
-        <span class="tier-chip" set:html={redactHtml(tm.label)} />
+        <span class="tier-chip">{tm.label}</span>
         <h1>{recipe.data.title}</h1>
-        <p class="subtitle" set:html={redactHtml(recipe.data.subtitle)} />
+        <p class="subtitle">{recipe.data.subtitle}</p>
 
         <div class="difficulty-callout">
-          <div class="difficulty-label">Difficulty · <span set:html={redactHtml(tm.label)} /></div>
-          <p set:html={redactHtml(recipe.data.difficultyText)} />
+          <div class="difficulty-label">Difficulty · {tm.label}</div>
+          <p>{recipe.data.difficultyText}</p>
         </div>
 
         <div class="recipe-body">
@@ -181,11 +180,6 @@ if (recipe.data.illustration) {
     background: var(--tier);
     color: var(--panel);
   }
-  /* Redaction bars need to stay visible against the tier-colored chip. */
-  .tier-chip :global(.redacted) { background: var(--panel); }
-  .tier-chip :global(.redacted:hover),
-  .tier-chip :global(.redacted:active) { background: transparent; color: inherit; }
-
   h1 {
     font-family: var(--font-display);
     font-weight: 800;

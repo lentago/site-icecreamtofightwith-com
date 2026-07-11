@@ -63,7 +63,7 @@ You're making actual brigadeiro pieces to mix in, plus a chocolate base inspired
 
 In a heavy-bottomed saucepan, combine the sweetened condensed milk, cocoa powder, butter, and salt. Whisk until the cocoa is fully incorporated with no lumps remaining.
 
-Cook over medium-low heat, stirring CONSTANTLY with a silicone spatula or wooden spoon. This is not optional, homie—you walk away and it burns. Scrape the bottom and sides continuously.
+Cook over medium-low heat, stirring CONSTANTLY with a silicone spatula or wooden spoon. This is not optional, buddy—you walk away and it burns. Scrape the bottom and sides continuously.
 
 Cook for 10-15 minutes, stirring constantly, until the mixture thickens significantly and starts pulling away from the sides of the pan when you stir. You should be able to see the bottom of the pan when you scrape across it, and the mixture should slowly flow back together rather than immediately filling the gap. It should look glossy, thick, and deeply brown.
 
@@ -138,7 +138,7 @@ Freeze at least 4 hours or overnight.
 ## Notes
 
 **The Soul of Brigadeiro:**
-Brigadeiro is to Brazil what chocolate chip cookies are to America—THE childhood sweet, the birthday party staple, the thing everyone's grandmother makes. Created in the 1940s during Brigadier Eduardo Gomes's presidential campaign, these chocolate fudge balls became so popular they outlasted the campaign by about 80 years and counting. Traditional brigadeiro relies entirely on the caramelized milk sugars and thick texture of sweetened condensed milk (Moça is traditional, but Nestlé or Eagle Brand work). You absolutely cannot substitute regular milk and sugar here, homie. And don't skimp on the sprinkles—authentic Brazilian granulado (chocolate sprinkles) are non-negotiable for the true experience.
+Brigadeiro is to Brazil what chocolate chip cookies are to America—THE childhood sweet, the birthday party staple, the thing everyone's grandmother makes. Created in the 1940s during Brigadier Eduardo Gomes's presidential campaign, these chocolate fudge balls became so popular they outlasted the campaign by about 80 years and counting. Traditional brigadeiro relies entirely on the caramelized milk sugars and thick texture of sweetened condensed milk (Moça is traditional, but Nestlé or Eagle Brand work). You absolutely cannot substitute regular milk and sugar here, friend. And don't skimp on the sprinkles—authentic Brazilian granulado (chocolate sprinkles) are non-negotiable for the true experience.
 
 **Passion Fruit Sourcing:**
 Maracuja (passion fruit) is EVERYWHERE in Brazilian cuisine. Fresh juice at breakfast, mousses for dessert, ice cream at the beach. Fresh is always better if you can get it—look for wrinkled passion fruits that feel heavy for their size, which means they're ripe and juicy inside. Frozen passion fruit pulp (found at Latin American markets) works well in a pinch. It usually comes pre-seeded, which saves effort but loses some textural interest. If using frozen, you'll need about half a cup.
