@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The scoop mark: the site wordmark's logo shape. Three rounded corners
+       with a squared-off bottom-left, echoing the header's CSS
+       border-radius: 50% 50% 50% 4px, in the brand red, with the inset
+       bottom "scoop" shadow band. -->
+  <defs>
+    <clipPath id="scoop">
+      <path d="M3,16 A13 13 0 0 1 16,3 A13 13 0 0 1 29,16 A13 13 0 0 1 16,29 L6,29 A3 3 0 0 1 3,26 Z"/>
+    </clipPath>
+  </defs>
+  <path d="M3,16 A13 13 0 0 1 16,3 A13 13 0 0 1 29,16 A13 13 0 0 1 16,29 L6,29 A3 3 0 0 1 3,26 Z" fill="#A32B29"/>
+  <rect x="0" y="22" width="32" height="10" fill="#000" fill-opacity="0.14" clip-path="url(#scoop)"/>
+</svg>
