@@ -1,0 +1,222 @@
+---
+// The filmstrip — the site's primary navigation, per the editorial design.
+// Book order: essays 03-09 lead ("The Front Shit"), then all 28 recipes,
+// then Final Thoughts (10) closes. The active card gets an ink ring and
+// is scrolled into view on load.
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { getEssays } from '../lib/essays';
+import { tierMeta } from '../lib/tiers';
+import { designSlug } from '../lib/design';
+
+interface Props {
+  active?: { kind: 'recipe' | 'essay'; slug: string };
+}
+
+const { active } = Astro.props;
+
+const recipes = (await getCollection('recipes')).sort(
+  (a, b) => a.data.recipeNumber - b.data.recipeNumber
+);
+const essays = await getEssays();
+const essaysLead = essays.filter((e) => e.slug !== 'final-thoughts');
+const essaysEnd = essays.filter((e) => e.slug === 'final-thoughts');
+
+const isActiveEssay = (slug: string) =>
+  active?.kind === 'essay' && active.slug === slug;
+const isActiveRecipe = (slug: string) =>
+  active?.kind === 'recipe' && active.slug === slug;
+---
+<div class="filmstrip">
+  <nav class="film-scroll" aria-label="Book navigation">
+
+    {essaysLead.map((e) => (
+      <a href={e.href} class="film-card" data-active={isActiveEssay(e.slug)}>
+        <div class="film-tile essay-tile">
+          <span class="essay-num">Essay {e.num}</span>
+          <span class="essay-name">{e.shortTitle}</span>
+        </div>
+        <div class="film-label muted">The Front Shit</div>
+      </a>
+    ))}
+
+    <div class="film-divider" role="presentation"></div>
+
+    {recipes.map((r) => {
+      const tm = tierMeta(r.data.tier);
+      const dslug = designSlug(r.data.recipeSlug);
+      return (
+        <a
+          href={`/recipes/${r.data.recipeSlug}/`}
+          class="film-card"
+          data-active={isActiveRecipe(dslug)}
+        >
+          <div class="film-tile" style={`background:${tm.tint}`}>
+            {r.data.illustration && (
+              <Image
+                src={r.data.illustration}
+                alt=""
+                width={224}
+                height={224}
+                loading="lazy"
+              />
+            )}
+            <span class="film-num" style={`background:${tm.color}`}>
+              {String(r.data.recipeNumber).padStart(2, '0')}
+            </span>
+          </div>
+          <div class="film-label">{r.data.title}</div>
+        </a>
+      );
+    })}
+
+    <div class="film-divider" role="presentation"></div>
+
+    {essaysEnd.map((e) => (
+      <a href={e.href} class="film-card" data-active={isActiveEssay(e.slug)}>
+        <div class="film-tile essay-tile">
+          <span class="essay-num">Essay {e.num}</span>
+          <span class="essay-name">{e.shortTitle}</span>
+        </div>
+        <div class="film-label muted">The Front Shit</div>
+      </a>
+    ))}
+
+  </nav>
+</div>
+
+<script>
+  // Center the active card. Instant (no smooth) so the strip is simply
+  // "already there" on load, like the SPA it's translated from.
+  const strip = document.querySelector<HTMLElement>('.film-scroll');
+  const activeCard = strip?.querySelector<HTMLElement>('[data-active="true"]');
+  if (strip && activeCard) {
+    strip.scrollLeft =
+      activeCard.offsetLeft - strip.clientWidth / 2 + activeCard.clientWidth / 2;
+  }
+</script>
+
+<style>
+  .filmstrip {
+    position: sticky;
+    top: 60px;
+    z-index: 55;
+    background: rgba(251, 250, 246, 0.92);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .film-scroll {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 13px 20px 15px;
+    display: flex;
+    gap: 11px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    align-items: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: #c9bd9f transparent;
+  }
+  .film-scroll::-webkit-scrollbar { height: 9px; }
+  .film-scroll::-webkit-scrollbar-track { background: transparent; }
+  .film-scroll::-webkit-scrollbar-thumb {
+    background: #c9bd9f;
+    border-radius: 6px;
+  }
+
+  .film-card {
+    flex: 0 0 auto;
+    width: 112px;
+    scroll-snap-align: start;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .film-card:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    color: inherit;
+  }
+  .film-card[data-active='true'] { opacity: 1; }
+  .film-card[data-active='true'] .film-tile {
+    box-shadow: 0 0 0 3px var(--ink);
+  }
+
+  .film-tile {
+    position: relative;
+    aspect-ratio: 1;
+    border: 1.5px solid var(--ink);
+    overflow: hidden;
+  }
+  .film-tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .film-num {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 5px;
+    color: var(--panel);
+  }
+
+  .essay-tile {
+    background: var(--newsprint);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 9px;
+  }
+  .essay-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+  }
+  .essay-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .film-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.25;
+    margin-top: 6px;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .film-label.muted { color: var(--muted); }
+
+  .film-divider {
+    flex: 0 0 auto;
+    width: 1px;
+    align-self: stretch;
+    background: rgba(23, 19, 15, 0.2);
+    margin: 0 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .film-card { transition: none; }
+    .film-card:hover { transform: none; }
+  }
+</style>

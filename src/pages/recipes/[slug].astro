@@ -1,13 +1,16 @@
 ---
+// Recipe view per the editorial design: framed hero panel, tier chip,
+// difficulty callout, intro → field diagrams → sections (with numbered
+// step chips in Instructions), sticky stats aside, prev/next.
 import Base from '../../layouts/Base.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RecipeMeta from '../../components/RecipeMeta.astro';
-import RecipeNav from '../../components/RecipeNav.astro';
 import RecipeJsonLd from '../../components/RecipeJsonLd.astro';
-import RelatedRecipes from '../../components/RelatedRecipes.astro';
+import FieldDiagrams from '../../components/FieldDiagrams.astro';
 import { Image, getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import { redactPlain } from '../../lib/redact.mjs';
+import { tierMeta } from '../../lib/tiers';
+import { designSlug } from '../../lib/design';
+import { pageBg } from '../../data/page_bg.js';
+import { redactHtml } from '../../lib/redact.mjs';
 
 export async function getStaticPaths() {
   const recipes = await getCollection('recipes');
@@ -20,14 +23,29 @@ export async function getStaticPaths() {
 const { recipe } = Astro.props;
 const { Content } = await recipe.render();
 
-// Find prev/next recipes. Walk all 28 in recipeNumber order (01 → 28).
+const tm = tierMeta(recipe.data.tier);
+const dslug = designSlug(recipe.data.recipeSlug);
+const bg = (pageBg as Record<string, { base: string; grad: string }>)[dslug] ?? null;
+
+// Prev/next walk the 28 recipes in book order.
 const allRecipes = await getCollection('recipes');
 allRecipes.sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
 const idx = allRecipes.findIndex(r => r.data.recipeSlug === recipe.data.recipeSlug);
 const prev = idx > 0 ? allRecipes[idx - 1] : null;
 const next = idx >= 0 && idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
 
-// Absolute URLs for JSON-LD. Astro.site is set in astro.config.mjs.
+// "6-8 hours (20 minutes of actual work, …)" → "6-8 hours"
+const totalTimeShort = recipe.data.totalTime.split('(')[0].trim() || '—';
+
+const stats = [
+  { label: 'Cuisine', value: recipe.data.cuisine ?? '—' },
+  { label: 'Active time', value: recipe.data.activeTimeMinutes != null ? `${recipe.data.activeTimeMinutes} min` : '—' },
+  { label: 'Total time', value: totalTimeShort },
+  { label: 'Yield', value: recipe.data.recipeYield ?? '—' },
+];
+const dietary = recipe.data.dietary ?? [];
+
+// Absolute URLs for JSON-LD.
 const canonicalUrl = new URL(`/recipes/${recipe.data.recipeSlug}/`, Astro.site).toString();
 let imageUrl: string | undefined;
 if (recipe.data.illustration) {
@@ -35,7 +53,12 @@ if (recipe.data.illustration) {
   imageUrl = new URL(optimized.src, Astro.site).toString();
 }
 ---
-<Base title={`${recipe.data.title} — Ice Cream to Fight With`} description={recipe.data.subtitle}>
+<Base
+  title={`${recipe.data.title} — Ice Cream to Fight With`}
+  description={recipe.data.subtitle}
+  bg={bg}
+  active={{ kind: 'recipe', slug: dslug }}
+>
   <RecipeJsonLd
     title={recipe.data.title}
     subtitle={recipe.data.subtitle}
@@ -50,101 +73,327 @@ if (recipe.data.illustration) {
     dietary={recipe.data.dietary}
   />
 
-  <article class="page-container" data-pagefind-body data-pagefind-meta={`title:${recipe.data.title},cuisine:${recipe.data.cuisine ?? ''},tier:${redactPlain(recipe.data.tier)}`}>
-    <Breadcrumbs
-      tier={recipe.data.tier}
-      recipeTitle={recipe.data.title}
-      recipeUrl={canonicalUrl}
-      siteUrl={Astro.site!.toString()}
-    />
-
+  <article class="fade recipe" style={`--tier:${tm.color};--tint:${tm.tint}`}>
     {recipe.data.illustration && (
-      <figure class="recipe-hero">
+      <div class="hero-panel">
         <Image
           src={recipe.data.illustration}
           alt={`Illustration for ${recipe.data.title}`}
           widths={[480, 800, 1200, 1800]}
-          sizes="(max-width: 768px) 100vw, min(1200px, 100vw)"
+          sizes="(max-width: 768px) 100vw, min(1160px, 100vw)"
           loading="eager"
         />
-      </figure>
+      </div>
     )}
 
-    <header class="recipe-header">
-      <span class="recipe-number">Recipe #{String(recipe.data.recipeNumber).padStart(2, '0')}</span>
-      <h1>{recipe.data.title}</h1>
-      <p class="subtitle">{recipe.data.subtitle}</p>
-    </header>
+    <div class="recipe-grid">
+      <div class="recipe-main">
+        <span class="tier-chip" set:html={redactHtml(tm.label)} />
+        <h1>{recipe.data.title}</h1>
+        <p class="subtitle" set:html={redactHtml(recipe.data.subtitle)} />
 
-    <RecipeMeta
-      tier={recipe.data.tier}
-      difficultyText={recipe.data.difficultyText}
-      totalTime={recipe.data.totalTime}
-      cuisine={recipe.data.cuisine}
-      activeTimeMinutes={recipe.data.activeTimeMinutes}
-      recipeYield={recipe.data.recipeYield}
-      dietary={recipe.data.dietary}
-    />
+        <div class="difficulty-callout">
+          <div class="difficulty-label">Difficulty · <span set:html={redactHtml(tm.label)} /></div>
+          <p set:html={redactHtml(recipe.data.difficultyText)} />
+        </div>
 
-    <div class="recipe-body">
-      <Content />
+        <div class="recipe-body">
+          <Content />
+          <div class="recipe-diagrams">
+            <FieldDiagrams kind="recipe" slug={dslug} />
+          </div>
+        </div>
+
+        <nav class="pager" aria-label="Recipe pagination">
+          <a href={prev ? `/recipes/${prev.data.recipeSlug}/` : undefined} class:list={['pager-link', { disabled: !prev }]}>
+            <div class="pager-dir">← Previous</div>
+            <div class="pager-title">{prev?.data.title}</div>
+          </a>
+          <a href={next ? `/recipes/${next.data.recipeSlug}/` : undefined} class:list={['pager-link', 'pager-next', { disabled: !next }]}>
+            <div class="pager-dir">Next →</div>
+            <div class="pager-title">{next?.data.title}</div>
+          </a>
+        </nav>
+      </div>
+
+      <aside class="stats">
+        <div class="stats-head">
+          <div class="stats-title">The Stats</div>
+        </div>
+        <div class="stats-body">
+          {stats.map((s) => (
+            <div class="stat-row">
+              <div class="stat-label">{s.label}</div>
+              <div class="stat-value">{s.value}</div>
+            </div>
+          ))}
+          <div class="stat-dietary">
+            <div class="stat-label">Dietary</div>
+            <div class="dietary-tags">
+              {dietary.length > 0
+                ? dietary.map((tag) => <span class="dietary-tag">{tag}</span>)
+                : <span class="dietary-none">Nothing off-limits.</span>}
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
-
-    <RelatedRecipes current={recipe} all={allRecipes} />
-
-    <RecipeNav
-      prev={prev ? { slug: prev.data.recipeSlug, title: prev.data.title } : null}
-      next={next ? { slug: next.data.recipeSlug, title: next.data.title } : null}
-    />
   </article>
-
 </Base>
 
 <style>
-  .recipe-hero {
-    margin: 0 0 2rem;
-    border-radius: 12px;
+  .recipe {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 30px 26px 74px;
+  }
+
+  .hero-panel {
+    position: relative;
+    border: 1.5px solid var(--ink);
+    background: var(--tint);
+    box-shadow: 8px 8px 0 var(--ink);
     overflow: hidden;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   }
-
-  .recipe-hero img {
-    display: block;
+  .hero-panel :global(img) {
     width: 100%;
-    height: auto;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
   }
 
-  .recipe-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 52px;
+    margin-top: 36px;
+    align-items: start;
   }
 
-  .recipe-number {
+  .tier-chip {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    margin-left: 0.5rem;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 11px;
+    background: var(--tier);
+    color: var(--panel);
   }
+  /* Redaction bars need to stay visible against the tier-colored chip. */
+  .tier-chip :global(.redacted) { background: var(--panel); }
+  .tier-chip :global(.redacted:hover),
+  .tier-chip :global(.redacted:active) { background: transparent; color: inherit; }
 
-  .recipe-header h1 {
+  h1 {
     font-family: var(--font-display);
-    font-size: 2.5rem;
-    margin: 0.5rem 0 0.25rem;
-    line-height: 1.15;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 68px);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    margin: 16px 0 0;
+    color: var(--ink);
   }
-
   .subtitle {
-    font-size: 1.15rem;
+    font-family: var(--font-serif);
     font-style: italic;
-    color: var(--color-text-muted);
-    margin-bottom: 1.5rem;
+    font-size: clamp(19px, 2.2vw, 26px);
+    color: var(--muted);
+    margin: 12px 0 0;
   }
 
-  @media (max-width: 640px) {
-    .recipe-header h1 { font-size: 1.85rem; }
+  .difficulty-callout {
+    border-left: 5px solid var(--tier);
+    background: var(--tint);
+    padding: 18px 22px;
+    margin: 30px 0;
+  }
+  .difficulty-label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tier);
+    margin-bottom: 8px;
+  }
+  .difficulty-callout p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--body);
+  }
+
+  /* Intro → diagrams → sections, in the design's visual order. The DOM
+     keeps content-then-diagrams; flex order handles the rest. */
+  .recipe-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .recipe-body :global(.recipe-intro) { order: 0; }
+  .recipe-diagrams { order: 1; }
+  .recipe-body :global(section.recipe-section) { order: 2; }
+
+  .recipe-body :global(.recipe-intro p) {
+    font-size: 19px;
+    line-height: 1.62;
+    margin: 0 0 18px;
+    color: var(--body);
+  }
+
+  .recipe-body :global(section.recipe-section) {
+    margin-top: 44px;
+  }
+  .recipe-body :global(section.recipe-section > h2) {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+    color: var(--ink);
+  }
+  .recipe-body :global(section.recipe-section p) {
+    font-size: 18px;
+    line-height: 1.62;
+    margin: 0 0 15px;
+    color: var(--body);
+  }
+  .recipe-body :global(h3.subhead) {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 26px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .recipe-body :global(h3.subhead .step) {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--panel);
+    background: var(--tier);
+    padding: 4px 9px;
+    flex: none;
+  }
+  .recipe-body :global(section.recipe-section ul),
+  .recipe-body :global(section.recipe-section ol) {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+  }
+  .recipe-body :global(section.recipe-section li) {
+    position: relative;
+    padding: 6px 0 6px 20px;
+    border-bottom: 1px dotted rgba(23, 19, 15, 0.2);
+    font-size: 17.5px;
+    line-height: 1.5;
+  }
+  .recipe-body :global(section.recipe-section li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85em;
+    width: 8px;
+    height: 8px;
+    background: var(--tier);
+  }
+  .recipe-body :global(hr) {
+    border: none;
+    border-top: 1px dotted rgba(23, 19, 15, 0.25);
+    margin: 26px 0;
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 56px;
+    border-top: 2px solid var(--ink);
+    padding-top: 20px;
+  }
+  .pager-link { max-width: 46%; transition: opacity 0.15s ease; }
+  .pager-link:hover { opacity: 0.7; }
+  .pager-link.disabled { opacity: 0.25; pointer-events: none; }
+  .pager-next { text-align: right; margin-left: auto; }
+  .pager-dir {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .pager-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  .stats {
+    position: sticky;
+    top: 150px;
+    border: 1.5px solid var(--ink);
+    background: var(--panel);
+  }
+  .stats-head {
+    padding: 16px 18px;
+    border-bottom: 1.5px solid var(--ink);
+    background: var(--tint);
+  }
+  .stats-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--tier);
+    font-weight: 700;
+  }
+  .stats-body { padding: 6px 18px 14px; }
+  .stat-row {
+    padding: 11px 0;
+    border-bottom: 1px dotted rgba(23, 19, 15, 0.2);
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .stat-value { font-size: 17px; margin-top: 2px; }
+  .stat-dietary { padding: 13px 0 4px; }
+  .dietary-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .dietary-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 3px 8px;
+  }
+  .dietary-none {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    .recipe-grid {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+    .stats { position: static; }
   }
 </style>

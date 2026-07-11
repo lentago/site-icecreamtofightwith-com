@@ -1,0 +1,168 @@
+---
+// "Field Diagrams" — the logic-checked faux-science figures, embedded per
+// recipe/essay exactly as the editorial design specifies. Figures and the
+// slug→figure mappings live in src/data/diagrams.js.
+//
+// Site profanity policy applies here too: captions/notes go through
+// redactHtml (hover-to-reveal bars); SVG text nodes get redactPlain
+// (asterisks), since span markup can't live inside <text> safely.
+import { diagrams } from '../data/diagrams.js';
+import { redactHtml, redactPlain } from '../lib/redact.mjs';
+
+interface Props {
+  kind: 'recipe' | 'essay';
+  slug: string; // design slug ("coconut-pandan", "custard-fundamentals")
+}
+
+const { kind, slug } = Astro.props;
+
+const keys: string[] =
+  (kind === 'recipe' ? diagrams.byRecipe : diagrams.byEssay)[slug] ?? [];
+
+/** Minimal inline-markdown for captions/notes: redact, then **bold** / *em*. */
+function mdInline(text: string): string {
+  return redactHtml(text)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+
+/** redactPlain over SVG text nodes only (content between tags). */
+function sanitizeSvg(svg: string): string {
+  return svg.replace(/>([^<>]+)</g, (_, t) => '>' + redactPlain(t) + '<');
+}
+
+const figures = keys
+  .map((k) => (diagrams.figures as Record<string, any>)[k])
+  .filter(Boolean)
+  .map((f) => ({
+    fig: f.fig,
+    title: f.title,
+    svg: sanitizeSvg(f.svg),
+    caption: mdInline(f.caption),
+    note: mdInline(f.note),
+    corrected: f.noteType === 'corrected',
+  }));
+---
+{figures.length > 0 && (
+  <div class="diagrams">
+    <div class="diagrams-rule">
+      <span class="diagrams-kicker">Field Diagrams</span>
+      <span class="diagrams-sub">the science, logic-checked</span>
+    </div>
+    <div class="diagrams-grid">
+      {figures.map((f) => (
+        <figure class="dg">
+          <div class="dg-head">
+            <span class="dg-fig">{f.fig}</span>
+            <h3 class="dg-title">{f.title}</h3>
+          </div>
+          <div class="dgdraw" set:html={f.svg} />
+          <figcaption class="dg-caption" set:html={f.caption} />
+          <p class={`dg-note ${f.corrected ? 'corrected' : 'checked'}`}>
+            <span class="dg-note-label">{f.corrected ? 'CORRECTED' : 'CHECKED'} — </span>
+            <span set:html={f.note} />
+          </p>
+        </figure>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .diagrams { margin: 44px 0 0; }
+  .diagrams-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .diagrams-kicker {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--red);
+  }
+  .diagrams-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .diagrams-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 26px;
+    margin-top: 22px;
+  }
+  .dg {
+    margin: 0;
+    border: 1.5px solid var(--ink);
+    background: var(--panel);
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 18px 20px 20px;
+  }
+  .dg-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dg-fig {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+    border-bottom: 2px solid var(--red);
+    white-space: nowrap;
+  }
+  .dg-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    margin: 0;
+    line-height: 1.12;
+    color: var(--ink);
+  }
+  .dgdraw { overflow-x: auto; }
+  .dgdraw :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 660px;
+    margin: 0 auto;
+  }
+  .dg-caption {
+    margin-top: 14px;
+    font-size: 16.5px;
+    line-height: 1.5;
+    color: var(--body);
+  }
+  .dg-note {
+    margin: 12px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #3a332b;
+    padding: 9px 0 9px 12px;
+  }
+  .dg-note.checked {
+    border-left: 4px solid #2e8b6a;
+    background: rgba(46, 139, 106, 0.07);
+  }
+  .dg-note.corrected {
+    border-left: 4px solid #c4562a;
+    background: rgba(196, 86, 42, 0.07);
+  }
+  .dg-note-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .dg-note.checked .dg-note-label { color: #2e8b6a; }
+  .dg-note.corrected .dg-note-label { color: #c4562a; }
+</style>

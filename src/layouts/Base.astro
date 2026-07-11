@@ -1,24 +1,44 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+// Editorial layout — implements "Ice Cream to Fight With.dc.html" from the
+// Claude Design project "Ice Cream Blog Redesign": warm paper + ink + red,
+// Bricolage Grotesque / Newsreader / Space Mono, sticky header with the
+// tier key, the filmstrip as primary nav, and per-recipe national-flag
+// page backgrounds.
 import { getCollection } from 'astro:content';
-import { redactPlain } from '../lib/redact.mjs';
+import Filmstrip from '../components/Filmstrip.astro';
+import { getEssays } from '../lib/essays';
+import { TIERS } from '../lib/tiers';
+import { diagrams } from '../data/diagrams.js';
+import { redactPlain, redactHtml } from '../lib/redact.mjs';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Per-recipe flag background; null/undefined = plain paper. */
+  bg?: { base: string; grad: string } | null;
+  /** Which filmstrip card is active. */
+  active?: { kind: 'recipe' | 'essay'; slug: string };
 }
 
-const { title = 'Ice Cream to Fight With', description = 'Recipes You\'ll Fuck Up At Least Once' } = Astro.props;
+const {
+  title = 'Ice Cream to Fight With',
+  description = "Recipes You'll Fuck Up At Least Once",
+  bg = null,
+  active,
+} = Astro.props;
 
-// <title> and meta description are plain-text sinks — bowdlerize here,
-// centrally, so no page has to remember to. Visible text uses redactHtml.
+// <title> and meta description are plain-text sinks — bowdlerize centrally.
 const safeTitle = redactPlain(title);
 const safeDescription = redactPlain(description);
 
-// Slugs are baked into the page at build time so the "Surprise me" button
-// can pick a random recipe with zero network round-trips.
-const allRecipes = await getCollection('recipes');
-const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
+// Footer tally, computed from the real data so it can't drift.
+const recipeCount = (await getCollection('recipes')).length;
+const essayCount = (await getEssays()).length;
+const diagramCount = Object.keys(diagrams.figures).length;
+
+const bodyStyle = bg
+  ? `background-color:${bg.base};background-image:${bg.grad};background-attachment:fixed;`
+  : undefined;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -29,338 +49,244 @@ const recipeSlugs = allRecipes.map(r => r.data.recipeSlug);
   <title>{safeTitle}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="alternate" type="application/rss+xml" title="Ice Cream to Fight With" href="/rss.xml" />
 
-  <script is:inline>
-    // FOUC prevention: apply saved theme before first paint.
-    // Allowed values: 'light' | 'dark'. Anything else means "follow system",
-    // which the CSS prefers-color-scheme media query handles.
-    (() => {
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'light' || saved === 'dark') {
-          document.documentElement.dataset.theme = saved;
-        }
-      } catch {}
-    })();
-  </script>
-
-  <ClientRouter />
   <style is:global>
     :root {
-      /* Light palette — warm, food-inspired */
-      --color-bg: #faf7f2;
-      --color-surface: #ffffff;
-      --color-text: #2d2a26;
-      --color-text-muted: #6b6560;
-      --color-accent: #c4533a;
-      --color-accent-light: #f0d5cf;
-      --color-border: #e8e2da;
-      --color-nav-bg: rgba(250, 247, 242, 0.92);
+      --paper: #F2EADA;
+      --panel: #FBF5E9;
+      --newsprint: #EDE3CF;
+      --ink: #17130F;
+      --body: #241f19;
+      --muted: #6E6456;
+      --red: #A32B29;
 
-      /* Tier brand colors — same in both modes */
-      --tier-chill: #4a9e82;
-      --tier-legit: #d4a12e;
-      --tier-real-deal: #d07030;
-      --tier-ordeal: #c4533a;
-
-      /* Type scale */
-      --font-display: 'DM Serif Display', Georgia, serif;
-      --font-body: 'Space Grotesk', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-
-      color-scheme: light;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-mono: 'Space Mono', monospace;
     }
 
-    /* Dark palette — applies when:
-       1. User has chosen dark explicitly (data-theme="dark"), OR
-       2. User has no preference set AND system is dark.
-       :not([data-theme="light"]) keeps the media query from overriding
-       an explicit light choice. */
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --color-bg: #1c1a17;
-        --color-surface: #28241f;
-        --color-text: #ece5da;
-        --color-text-muted: #a59c8e;
-        --color-accent: #d96b52;
-        --color-accent-light: #3a2a25;
-        --color-border: #3a342c;
-        --color-nav-bg: rgba(28, 26, 23, 0.92);
-        color-scheme: dark;
-      }
-    }
-
-    :root[data-theme="dark"] {
-      --color-bg: #1c1a17;
-      --color-surface: #28241f;
-      --color-text: #ece5da;
-      --color-text-muted: #a59c8e;
-      --color-accent: #d96b52;
-      --color-accent-light: #3a2a25;
-      --color-border: #3a342c;
-      --color-nav-bg: rgba(28, 26, 23, 0.92);
-      color-scheme: dark;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      font-size: 18px;
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font-body);
-      color: var(--color-text);
-      background: var(--color-bg);
-      line-height: 1.65;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 19px;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      font-optical-sizing: auto;
     }
 
-    /* --- Navigation --- */
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--color-nav-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      padding: 0.75rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    a { color: var(--red); text-decoration: none; }
+    a:hover { color: var(--ink); }
+    ::selection { background: var(--ink); color: var(--paper); }
+
+    @keyframes icfwfade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fade { animation: icfwfade 0.45s ease both; }
+    @media (prefers-reduced-motion: reduce) {
+      .fade { animation: none; }
     }
 
-    .site-nav a {
-      text-decoration: none;
-      color: var(--color-text);
-    }
-
-    .site-nav .logo {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      letter-spacing: -0.01em;
-    }
-
-    .site-nav .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .site-nav .nav-links a:hover {
-      color: var(--color-accent);
-    }
-
-    .site-nav .nav-random,
-    .site-nav .nav-theme {
-      /* Style buttons so they read as peers of the nav links */
-      background: none;
-      border: none;
-      padding: 0;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      letter-spacing: inherit;
-      text-transform: inherit;
-    }
-
-    .site-nav .nav-random:hover,
-    .site-nav .nav-theme:hover {
-      color: var(--color-accent);
-    }
-
-    /* --- Main content --- */
-    .page-container {
-      max-width: 48rem;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-
-    .page-container.wide {
-      max-width: 64rem;
-    }
-
-    /* --- Typography for rendered markdown --- */
-    .recipe-body h2 {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      margin-top: 2.5rem;
-      margin-bottom: 0.75rem;
-      color: var(--color-text);
-    }
-
-    .recipe-body h3 {
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
-      color: var(--color-text-muted);
-    }
-
-    .recipe-body p {
-      margin-bottom: 1rem;
-    }
-
-    .recipe-body ul, .recipe-body ol {
-      margin: 0.5rem 0 1rem 1.5rem;
-    }
-
-    .recipe-body li {
-      margin-bottom: 0.35rem;
-    }
-
-    .recipe-body strong {
-      font-weight: 600;
-    }
-
-    .recipe-body em {
-      font-style: italic;
-    }
-
-    .recipe-body hr {
-      border: none;
-      border-top: 1px solid var(--color-border);
-      margin: 2rem 0;
-    }
-
-    /* --- Tier badges --- */
-    .tier-badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      color: white;
-    }
-
-    .tier-badge.chill { background: var(--tier-chill); }
-    .tier-badge.legit { background: var(--tier-legit); }
-    .tier-badge.real-deal { background: var(--tier-real-deal); }
-    .tier-badge.ordeal { background: var(--tier-ordeal); }
-
-    /* --- Redaction bars --- */
-    /* The book swears; the website pleads the fifth. Hover to reveal.
-       Real text stays in the DOM (transparent under the bar), so
-       copy/paste and screen readers get the uncensored experience. */
+    /* Redaction bars — the book swears; the website pleads the fifth.
+       Hover to reveal. Real text stays in the DOM. */
     .redacted {
-      background: var(--color-text);
+      background: var(--ink);
       color: transparent;
       border-radius: 3px;
       transition: color 0.2s ease, background 0.2s ease;
     }
-
     .redacted:hover,
     .redacted:active {
       background: transparent;
       color: inherit;
     }
-
-    .redacted::selection {
-      color: transparent; /* stays coy even when selected — paste it to find out */
-    }
-
-    /* --- Footer --- */
-    .site-footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-      border-top: 1px solid var(--color-border);
-    }
-
-    /* --- Responsive --- */
-    @media (max-width: 640px) {
-      html { font-size: 16px; }
-      .site-nav { padding: 0.65rem 1rem; }
-      .site-nav .nav-links { gap: 1rem; font-size: 0.75rem; }
-      .page-container { padding: 1.5rem 1rem 3rem; }
-    }
+    .redacted::selection { color: transparent; }
   </style>
 </head>
-<body>
-  <nav class="site-nav" transition:persist>
-    <a href="/" class="logo">Ice Cream to Fight With</a>
-    <ul class="nav-links">
-      <li><a href="/">Recipes</a></li>
-      <li><a href="/search">Search</a></li>
-      <li><a href="/about">About</a></li>
-      <li><button type="button" id="random-recipe" class="nav-random">Surprise me</button></li>
-      <li>
-        <button type="button" id="theme-toggle" class="nav-theme" aria-label="Toggle color theme">
-          <span class="theme-label">Auto</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
+<body style={bodyStyle} class:list={[{ 'has-flag': Boolean(bg) }]}>
 
-  <script define:vars={{ recipeSlugs }}>
-    // transition:persist keeps the nav across SPA navigations,
-    // so these listeners only need to bind once.
+  <!-- Hand-drawn wobble filter used by the field-diagram SVGs -->
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sketch" x="-6%" y="-6%" width="112%" height="112%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="2" seed="7" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
 
-    document.getElementById('random-recipe')?.addEventListener('click', () => {
-      const slug = recipeSlugs[Math.floor(Math.random() * recipeSlugs.length)];
-      window.location.href = `/recipes/${slug}/`;
-    });
+  <div class="shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="/" class="wordmark">
+          <span class="scoop" aria-hidden="true"></span>
+          <span class="wordmark-text">Ice Cream to Fight With</span>
+        </a>
+        <div class="tier-key" aria-label="Difficulty tiers">
+          {TIERS.map((t) => (
+            <span class="tier-key-item">
+              <span class="tier-swatch" style={`background:${t.color}`}></span>
+              <span class="tier-key-label" set:html={redactHtml(t.label)} />
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
 
-    // Theme toggle: cycles Auto -> Light -> Dark -> Auto
-    (() => {
-      const order = ['auto', 'light', 'dark'];
-      const labels = { auto: 'Auto', light: 'Light', dark: 'Dark' };
-      const btn = document.getElementById('theme-toggle');
-      if (!btn) return;
-      const labelEl = btn.querySelector('.theme-label');
+    <Filmstrip active={active} />
 
-      function readState() {
-        try {
-          const saved = localStorage.getItem('theme');
-          if (saved === 'light' || saved === 'dark') return saved;
-        } catch {}
-        return 'auto';
-      }
+    <main>
+      <slot />
+    </main>
 
-      function applyTheme(state) {
-        if (state === 'auto') {
-          delete document.documentElement.dataset.theme;
-          try { localStorage.removeItem('theme'); } catch {}
-        } else {
-          document.documentElement.dataset.theme = state;
-          try { localStorage.setItem('theme', state); } catch {}
-        }
-        if (labelEl) labelEl.textContent = labels[state];
-      }
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-mark">Ice Cream to Fight With</div>
+          <div class="footer-tagline"><span set:html={redactHtml("Recipes You'll Fuck Up At Least Once")} /><a
+            href="https://pl-preview-e8ef58a5.icecreamtofightwith.com"
+            class="footer-dot"
+            aria-hidden="true"
+            tabindex="-1"
+          >.</a></div>
+        </div>
+        <div class="footer-tally">{recipeCount} recipes · {essayCount} essays · {diagramCount} field diagrams</div>
+      </div>
+    </footer>
+  </div>
 
-      // Sync label with the state the inline head script already applied
-      if (labelEl) labelEl.textContent = labels[readState()];
+<style>
+  .shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main { flex: 1; }
 
-      btn.addEventListener('click', () => {
-        const current = readState();
-        const next = order[(order.indexOf(current) + 1) % order.length];
-        applyTheme(next);
-      });
-    })();
-  </script>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    height: 60px;
+    background: rgba(242, 234, 218, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(23, 19, 15, 0.15);
+  }
+  :global(body.has-flag) .site-header {
+    background: rgba(251, 250, 246, 0.82);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 22px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .scoop {
+    width: 22px;
+    height: 22px;
+    border-radius: 50% 50% 50% 4px;
+    background: var(--red);
+    display: inline-block;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.14);
+  }
+  .wordmark-text {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tier-key {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .tier-key-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tier-swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .tier-key-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
 
-  <slot />
+  .site-footer {
+    border-top: 2px solid var(--ink);
+    background: var(--newsprint);
+  }
+  :global(body.has-flag) .site-footer {
+    background: transparent;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 34px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .footer-tagline {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  /* The full stop after the tagline is a doorway, not punctuation —
+     the easter egg ported from the old homepage hero. Visually identical
+     to a plain period; out of the a11y tree and tab order. */
+  .footer-dot,
+  .footer-dot:hover,
+  .footer-dot:focus,
+  .footer-dot:visited {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+  }
+  .footer-tally {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
 
-  <footer class="site-footer" transition:persist>
-    Ice Cream to Fight With &copy; {new Date().getFullYear()}
-  </footer>
+  @media (max-width: 720px) {
+    .tier-key { display: none; }
+  }
+</style>
 </body>
 </html>
