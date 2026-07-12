@@ -4,6 +4,7 @@
 // Intro chapter IS the landing page.
 import Base from '../layouts/Base.astro';
 import EssayArticle from '../components/EssayArticle.astro';
+import TitleHero from '../components/TitleHero.astro';
 import { getEssays } from '../lib/essays';
 
 const essays = await getEssays();
@@ -11,5 +12,6 @@ const intro = essays.find((e) => e.slug === 'intro');
 if (!intro) throw new Error('front_matter/03_intro.md missing — homepage has no content');
 ---
 <Base active={{ kind: 'essay', slug: 'intro' }}>
+  <TitleHero />
   <EssayArticle essay={intro} essays={essays} />
 </Base>
