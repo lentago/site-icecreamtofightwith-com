@@ -88,6 +88,89 @@ const bodyStyle = bg
     @media (prefers-reduced-motion: reduce) {
       .fade { animation: none; }
     }
+
+    /* Field diagrams — the logic-checked faux-science figures, injected
+       inline beside the step they explain by src/lib/sections.mjs. Styled
+       globally because that injected markup isn't scoped to any component. */
+    .dg {
+      margin: 34px 0;
+      border: 1.5px solid var(--ink);
+      background: var(--panel);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 18px 20px 20px;
+    }
+    .dg-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .dg-kicker {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      width: 100%;
+      margin-bottom: 2px;
+    }
+    .dg-fig {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      border-bottom: 2px solid var(--red);
+      white-space: nowrap;
+    }
+    .dg-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      margin: 0;
+      line-height: 1.12;
+      color: var(--ink);
+    }
+    .dgdraw { overflow-x: auto; }
+    .dgdraw svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .dg-caption {
+      margin-top: 14px;
+      font-size: 16.5px;
+      line-height: 1.5;
+      color: var(--body);
+    }
+    .dg-note {
+      margin: 12px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #3a332b;
+      padding: 9px 0 9px 12px;
+    }
+    .dg-note.checked {
+      border-left: 4px solid #2e8b6a;
+      background: rgba(46, 139, 106, 0.07);
+    }
+    .dg-note.corrected {
+      border-left: 4px solid #c4562a;
+      background: rgba(196, 86, 42, 0.07);
+    }
+    .dg-note-label {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .dg-note.checked .dg-note-label { color: #2e8b6a; }
+    .dg-note.corrected .dg-note-label { color: #c4562a; }
   </style>
 </head>
 <body style={bodyStyle} class:list={[{ 'has-flag': Boolean(bg) }]}>

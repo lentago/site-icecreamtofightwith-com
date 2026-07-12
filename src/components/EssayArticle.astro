@@ -4,7 +4,6 @@
 // in-body first heading suppressed — the title is rendered here), embedded
 // field diagrams, and prev/next across the essay sequence.
 import { render } from 'astro:content';
-import FieldDiagrams from './FieldDiagrams.astro';
 import type { EssayMeta } from '../lib/essays';
 
 interface Props {
@@ -26,8 +25,6 @@ const next = idx >= 0 && idx < essays.length - 1 ? essays[idx + 1] : null;
   <div class="essay-body">
     <Content />
   </div>
-
-  <FieldDiagrams kind="essay" slug={essay.slug} />
 
   <nav class="pager" aria-label="Essay pagination">
     <a href={prev ? prev.href : undefined} class:list={['pager-link', { disabled: !prev }]}>

@@ -1,9 +1,11 @@
 // Field diagrams — ported verbatim from the Claude Design project
 // "Ice Cream Blog Redesign" (data/diagrams.js), which adapted the 12
-// logic-checked faux-science figures drafted for the book. One addition
-// over the design data: chile-chocolate also maps to fig10 — its orange
-// peel gets the same triple-blanch the figure explains.
-// Rendered by src/components/FieldDiagrams.astro.
+// logic-checked faux-science figures drafted for the book. Additions over
+// the design data: chile-chocolate also maps to fig10 (its orange peel gets
+// the same triple-blanch the figure explains), and coffee-berbere maps to
+// fig11 (its spiced brittle does the same baking-soda-in-molten-sugar foam).
+// The mappings carry inline anchors; figures are injected next to the step
+// they explain by the rehypeRecipeSections plugin in src/lib/sections.mjs.
 
 export const diagrams = {
  "figures": {
@@ -42,10 +44,10 @@ export const diagrams = {
   "fig4": {
    "fig": "Fig. 4",
    "title": "The browning gauge",
-   "noteType": "checked",
+   "noteType": "corrected",
    "svg": "<svg viewBox=\"0 0 680 300\" role=\"img\" aria-label=\"A horizontal temperature track from steaming to Maillard flavor to arson.\">\n<g filter=\"url(#sketch)\"><rect x=\"60\" y=\"120\" width=\"120\" height=\"40\" fill=\"#2F6F80\" opacity=\".30\" stroke=\"#17130F\" stroke-width=\"2\"/><rect x=\"180\" y=\"120\" width=\"120\" height=\"40\" fill=\"#e9d9b0\" stroke=\"#17130F\" stroke-width=\"2\"/><rect x=\"300\" y=\"120\" width=\"150\" height=\"40\" fill=\"#C98A22\" opacity=\".55\" stroke=\"#17130F\" stroke-width=\"2\"/><rect x=\"450\" y=\"120\" width=\"80\" height=\"40\" fill=\"#7a4a1e\" stroke=\"#17130F\" stroke-width=\"2\"/><rect x=\"530\" y=\"120\" width=\"90\" height=\"40\" fill=\"#A32B29\" stroke=\"#17130F\" stroke-width=\"2\"/></g>\n<g filter=\"url(#sketch)\" fill=\"none\" stroke=\"#7a4a1e\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".8\"><path d=\"M330,116 q8,-16 0,-30 q-8,-14 0,-28\"/><path d=\"M375,116 q8,-16 0,-30 q-8,-14 0,-28\"/><path d=\"M420,116 q8,-16 0,-30 q-8,-14 0,-28\"/></g>\n<g font-family=\"ui-sans-serif, system-ui, sans-serif\" fill=\"#17130F\"><text x=\"66\" y=\"112\" font-size=\"12\" font-weight=\"700\" fill=\"#2F6F80\">STEAM</text><text x=\"66\" y=\"182\" font-size=\"11\" fill=\"#6E6456\">wet · pale · boring</text><text x=\"310\" y=\"112\" font-size=\"12.5\" font-weight=\"700\" fill=\"#7a4a1e\">MAILLARD — flavor town</text><text x=\"360\" y=\"182\" font-size=\"11\" fill=\"#6E6456\">brown = new flavor compounds</text><text x=\"536\" y=\"112\" font-size=\"12\" font-weight=\"700\" fill=\"#A32B29\">ARSON</text><text x=\"512\" y=\"182\" font-size=\"11\" fill=\"#6E6456\">carbon · regret</text><text x=\"168\" y=\"210\" font-size=\"11\">212°F</text><text x=\"288\" y=\"210\" font-size=\"11\">~300</text><text x=\"438\" y=\"210\" font-size=\"11\">~375</text><text x=\"518\" y=\"210\" font-size=\"11\">400°F+</text></g>\n<g filter=\"url(#sketch)\" fill=\"none\" stroke=\"#17130F\" stroke-width=\"1.6\"><path d=\"M180,164 L180,196 M300,164 L300,196 M450,164 L450,196 M530,164 L530,196\"/></g>\n</svg>",
    "caption": "Water's still around? You're **steaming**, and steaming is beige and dull. The good stuff starts once the surface dries and hits browning temps. Blink past 400 and you've committed arson.",
-   "note": "Numbers are defensible: no real browning below the 212°F boil; Maillard runs hot from ~300°F; scorching ~400°F+. **Note:** true Maillard needs amino acids plus reducing sugars — not the same as caramelization (sugar alone). The gauge covers both routes."
+   "note": "The first pass called browning impossible below the boil — too strong. Maillard is time AND temperature: it crawls along while the surface stays wet and pinned near 212°F, which is exactly how dulce de leche browns over hours. **Fast** browning needs the surface to dry out and climb past ~300°F; scorching hits ~400°F+. And true Maillard (amino acids + reducing sugars) isn't caramelization (sugar alone) — the gauge covers both routes."
   },
   "fig5": {
    "fig": "Fig. 5",
@@ -104,74 +106,81 @@ export const diagrams = {
    "note": "Balanced equation. Sodium bicarbonate thermally decomposes: 2 NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑ (atoms balance). The CO₂ foams the molten sugar, which sets around it into the classic aerated structure."
   }
  },
+ // Each mapping carries an anchor so the renderer can drop the figure inline,
+ // right after the step it explains (see src/lib/sections.mjs). `after` is a
+ // heading slug — the slugified `**Bold Step:**` label (or a `### N. Heading`
+ // in the essays); the figure lands at the end of that step's block. `section`
+ // (a `## Heading` data-section slug) narrows the search or, on its own, drops
+ // the figure at the end of that whole section.
  "byRecipe": {
   "horchata": [
-   "fig4"
+   { "fig": "fig4", "after": "cinnamon-sugar-swirl" }
   ],
   "miso-matcha": [
-   "fig5"
+   { "fig": "fig5", "after": "make-custard" }
   ],
   "chili-mango": [
-   "fig9"
+   { "fig": "fig9", "after": "spicy-honey-swirl" }
   ],
   "tarte-tatin": [
-   "fig4"
+   { "fig": "fig4", "after": "roast-apples" }
   ],
   "gochugaru-sesame": [
-   "fig5"
+   { "fig": "fig5", "after": "integrate-black-sesame" }
   ],
   "rum-banana": [
-   "fig4",
-   "fig6"
+   { "fig": "fig4", "after": "rum-caramelized-bananas" },
+   { "fig": "fig6", "after": "make-custard" }
   ],
   "brown-bread": [
-   "fig4"
+   { "fig": "fig4", "after": "brown-bread-crumble" }
   ],
   "atole-de-anis": [
-   "fig4"
+   { "fig": "fig4", "after": "toasted-masa-crumble" }
   ],
   "bocadillo-y-cafe": [
-   "fig7"
+   { "fig": "fig7", "after": "candied-coffee-beans" }
   ],
   "sichuan-plum": [
-   "fig8"
+   { "fig": "fig8", "after": "make-custard" }
   ],
   "brown-butter-pecan": [
-   "fig4"
+   { "fig": "fig4", "after": "brown-butter-for-base" }
   ],
   "tahini-rose": [
-   "fig5"
+   { "fig": "fig5", "after": "integrate-tahini" }
   ],
   "coffee-berbere": [
-   "fig7"
+   { "fig": "fig7", "after": "spiced-coffee-brittle" },
+   { "fig": "fig11", "after": "spiced-coffee-brittle" }
   ],
   "earl-grey-burnt-honey": [
-   "fig7",
-   "fig11"
+   { "fig": "fig7", "after": "honeycomb-candy" },
+   { "fig": "fig11", "after": "honeycomb-candy" }
   ],
   "brigadeiro-passion-fruit": [
-   "fig7"
+   { "fig": "fig7", "after": "brigadeiro-fudge-pieces" }
   ],
   "lemon-rosemary-honey": [
-   "fig5",
-   "fig10"
+   { "fig": "fig5", "after": "make-custard" },
+   { "fig": "fig10", "after": "candied-lemon-peel" }
   ],
   "new-orleans-chicory-beignet": [
-   "fig4"
+   { "fig": "fig4", "after": "yeasted-beignet-dough" }
   ],
   "chile-chocolate": [
-   "fig10"
+   { "fig": "fig10", "after": "candied-orange-peel-with-chile" }
   ]
  },
  "byEssay": {
   "difficulty-ratings": [
-   "fig0"
+   { "fig": "fig0", "section": "a-note-on-difficulty" }
   ],
   "custard-fundamentals": [
-   "fig1",
-   "fig2",
-   "fig3",
-   "fig6"
+   { "fig": "fig1", "after": "3-temper-the-yolks" },
+   { "fig": "fig2", "after": "4-cook-the-custard" },
+   { "fig": "fig3", "after": "6-the-ice-bath" },
+   { "fig": "fig6", "after": "7-refrigerate" }
   ]
  }
 };

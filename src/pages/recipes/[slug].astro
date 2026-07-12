@@ -4,7 +4,6 @@
 // step chips in Instructions), sticky stats aside, prev/next.
 import Base from '../../layouts/Base.astro';
 import RecipeJsonLd from '../../components/RecipeJsonLd.astro';
-import FieldDiagrams from '../../components/FieldDiagrams.astro';
 import { Image, getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { tierMeta } from '../../lib/tiers';
@@ -98,9 +97,6 @@ if (recipe.data.illustration) {
 
         <div class="recipe-body">
           <Content />
-          <div class="recipe-diagrams">
-            <FieldDiagrams kind="recipe" slug={dslug} />
-          </div>
         </div>
 
         <nav class="pager" aria-label="Recipe pagination">
@@ -219,16 +215,8 @@ if (recipe.data.illustration) {
     color: var(--body);
   }
 
-  /* Intro → diagrams → sections, in the design's visual order. The DOM
-     keeps content-then-diagrams; flex order handles the rest. */
-  .recipe-body {
-    display: flex;
-    flex-direction: column;
-  }
-  .recipe-body :global(.recipe-intro) { order: 0; }
-  .recipe-diagrams { order: 1; }
-  .recipe-body :global(section.recipe-section) { order: 2; }
-
+  /* Intro, then sections — natural DOM order. Field diagrams are injected
+     inline within the sections (see src/lib/sections.mjs). */
   .recipe-body :global(.recipe-intro p) {
     font-size: 19px;
     line-height: 1.62;
