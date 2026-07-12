@@ -171,6 +171,42 @@ const bodyStyle = bg
     }
     .dg-note.checked .dg-note-label { color: #2e8b6a; }
     .dg-note.corrected .dg-note-label { color: #c4562a; }
+
+    /* Scroll-linked reading (src/lib/scroll-reading.ts). The article-end
+       sentinel is a zero-height probe; the "keep scrolling" affordance is
+       injected by the hook just before the pager once the reader reaches
+       the end of the content, so it never appears mid-page. */
+    .article-end { height: 1px; }
+    .keep-scrolling {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin: 40px auto 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+    }
+    .keep-scrolling.show { opacity: 1; transform: none; }
+    .keep-scrolling .ks-title { color: var(--ink); font-weight: 700; }
+    .keep-scrolling .ks-arrow {
+      display: inline-block;
+      animation: ksbob 1.4s ease-in-out infinite;
+    }
+    @keyframes ksbob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .keep-scrolling { transition: none; }
+      .keep-scrolling .ks-arrow { animation: none; }
+    }
   </style>
 </head>
 <body style={bodyStyle} class:list={[{ 'has-flag': Boolean(bg) }]}>
@@ -224,6 +260,10 @@ const bodyStyle = bg
       </div>
     </footer>
   </div>
+
+<script>
+  import '../lib/scroll-reading.ts';
+</script>
 
 <style>
   .shell {

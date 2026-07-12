@@ -5,6 +5,7 @@
 // field diagrams, and prev/next across the essay sequence.
 import { render } from 'astro:content';
 import type { EssayMeta } from '../lib/essays';
+import { getBookOrder, bookNeighbors } from '../lib/bookOrder';
 
 interface Props {
   essay: EssayMeta;
@@ -14,9 +15,12 @@ interface Props {
 const { essay, essays } = Astro.props;
 const { Content } = await render(essay.entry);
 
-const idx = essays.findIndex((e) => e.slug === essay.slug);
-const prev = idx > 0 ? essays[idx - 1] : null;
-const next = idx >= 0 && idx < essays.length - 1 ? essays[idx + 1] : null;
+// Prev/next span the whole book, not just the essays — so the last essay's
+// "next" is recipe 01, which is what carries the reader across the seam on
+// auto-advance. (essays prop kept for API compatibility; order comes from
+// the shared book sequence.)
+const order = await getBookOrder();
+const { prev, next } = bookNeighbors(order, 'essay', essay.slug);
 ---
 <article class="fade essay">
   <div class="kicker">The Front Shit</div>
@@ -26,14 +30,18 @@ const next = idx >= 0 && idx < essays.length - 1 ? essays[idx + 1] : null;
     <Content />
   </div>
 
+  {/* End-of-content marker: the scroll hook (Base.astro) watches this to
+     arm auto-advance to the Next page. After all content, around the pager. */}
+  <div class="article-end" data-article-end aria-hidden="true"></div>
+
   <nav class="pager" aria-label="Essay pagination">
     <a href={prev ? prev.href : undefined} class:list={['pager-link', { disabled: !prev }]}>
       <div class="pager-dir">← Previous</div>
-      <div class="pager-title">{prev?.shortTitle}</div>
+      <div class="pager-title">{prev?.title}</div>
     </a>
     <a href={next ? next.href : undefined} class:list={['pager-link', 'pager-next', { disabled: !next }]}>
       <div class="pager-dir">Next →</div>
-      <div class="pager-title">{next?.shortTitle}</div>
+      <div class="pager-title">{next?.title}</div>
     </a>
   </nav>
 </article>

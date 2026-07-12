@@ -70,16 +70,9 @@ const isActiveRecipe = (slug: string) =>
   </nav>
 </div>
 
-<script>
-  // Center the active card. Instant (no smooth) so the strip is simply
-  // "already there" on load, like the SPA it's translated from.
-  const strip = document.querySelector<HTMLElement>('.film-scroll');
-  const activeCard = strip?.querySelector<HTMLElement>('[data-active="true"]');
-  if (strip && activeCard) {
-    strip.scrollLeft =
-      activeCard.offsetLeft - strip.clientWidth / 2 + activeCard.clientWidth / 2;
-  }
-</script>
+{/* Centering the active card + reflecting read progress on it is handled by
+   the shared scroll-reading hook (src/lib/scroll-reading.ts), loaded once in
+   Base.astro, so the behaviour stays in sync with auto-advance. */}
 
 <style>
   .filmstrip {
@@ -126,6 +119,24 @@ const isActiveRecipe = (slug: string) =>
   .film-card[data-active='true'] { opacity: 1; }
   .film-card[data-active='true'] .film-tile {
     box-shadow: 0 0 0 3px var(--ink);
+  }
+
+  /* Read-progress fill on the active card — the shared hook sets
+     --read-progress (0..1) as the reader moves down the current page, so
+     the strip mirrors how close they are to auto-advancing. */
+  .film-card[data-active='true'] .film-tile::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: calc(var(--read-progress, 0) * 100%);
+    background: var(--red);
+    transition: width 0.15s linear;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .film-card[data-active='true'] .film-tile::after { transition: none; }
   }
 
   .film-tile {

@@ -8,6 +8,7 @@ import { Image, getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { tierMeta } from '../../lib/tiers';
 import { designSlug } from '../../lib/design';
+import { getBookOrder, bookNeighbors } from '../../lib/bookOrder';
 import { pageBg } from '../../data/page_bg.js';
 
 export async function getStaticPaths() {
@@ -25,12 +26,11 @@ const tm = tierMeta(recipe.data.tier);
 const dslug = designSlug(recipe.data.recipeSlug);
 const bg = (pageBg as Record<string, { base: string; grad: string }>)[dslug] ?? null;
 
-// Prev/next walk the 28 recipes in book order.
-const allRecipes = await getCollection('recipes');
-allRecipes.sort((a, b) => a.data.recipeNumber - b.data.recipeNumber);
-const idx = allRecipes.findIndex(r => r.data.recipeSlug === recipe.data.recipeSlug);
-const prev = idx > 0 ? allRecipes[idx - 1] : null;
-const next = idx >= 0 && idx < allRecipes.length - 1 ? allRecipes[idx + 1] : null;
+// Prev/next span the whole book: recipe 01's "prev" is the last front-matter
+// essay (Final Thoughts), and recipe N's "next" is recipe N+1 — same
+// sequence the filmstrip and auto-advance use.
+const order = await getBookOrder();
+const { prev, next } = bookNeighbors(order, 'recipe', dslug);
 
 // "6-8 hours (20 minutes of actual work, …)" → "6-8 hours"
 const totalTimeShort = recipe.data.totalTime.split('(')[0].trim() || '—';
@@ -99,14 +99,20 @@ if (recipe.data.illustration) {
           <Content />
         </div>
 
+        {/* End-of-content marker: the scroll hook (Base.astro) watches this
+           to arm auto-advance to the Next page. After all content (the
+           inline field diagrams live inside .recipe-body above), around the
+           pager. */}
+        <div class="article-end" data-article-end aria-hidden="true"></div>
+
         <nav class="pager" aria-label="Recipe pagination">
-          <a href={prev ? `/recipes/${prev.data.recipeSlug}/` : undefined} class:list={['pager-link', { disabled: !prev }]}>
+          <a href={prev ? prev.href : undefined} class:list={['pager-link', { disabled: !prev }]}>
             <div class="pager-dir">← Previous</div>
-            <div class="pager-title">{prev?.data.title}</div>
+            <div class="pager-title">{prev?.title}</div>
           </a>
-          <a href={next ? `/recipes/${next.data.recipeSlug}/` : undefined} class:list={['pager-link', 'pager-next', { disabled: !next }]}>
+          <a href={next ? next.href : undefined} class:list={['pager-link', 'pager-next', { disabled: !next }]}>
             <div class="pager-dir">Next →</div>
-            <div class="pager-title">{next?.data.title}</div>
+            <div class="pager-title">{next?.title}</div>
           </a>
         </nav>
       </div>
