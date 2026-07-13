@@ -249,7 +249,7 @@ const bodyStyle = bg
     <footer class="site-footer">
       <div class="footer-inner">
         <div>
-          <div class="footer-mark">Ice Cream to Fight With</div>
+          <div class="footer-mark">Ice Cream to <span class="wordmark-fight">Fight</span> With</div>
           <div class="footer-tagline"><span>Recipes You'll Screw Up At Least Once</span><a
             href="https://pl-preview-e8ef58a5.icecreamtofightwith.com"
             class="footer-dot"
@@ -317,10 +317,11 @@ const bodyStyle = bg
     letter-spacing: -0.02em;
     color: var(--ink);
   }
-  /* "Fight" in the header wordmark echoes the homepage hero — Great Vibes
-     script in red. Scaled up so the small script x-height stays legible at
-     the 18px wordmark size; line-height:1 keeps its ascenders/descenders
-     from stretching the 60px header's line box. */
+  /* "Fight" in the header and footer wordmarks echoes the homepage hero —
+     Great Vibes script in red. The em-based size scales to each mark (18px
+     header, 20px footer) so the small script x-height stays legible;
+     line-height:1 keeps its ascenders/descenders from stretching the line
+     box (notably the 60px header). */
   .wordmark-fight {
     font-family: var(--font-script);
     font-weight: 400;
