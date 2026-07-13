@@ -24,21 +24,23 @@
       </svg>
     </div>
 
-    <p class="hero-title">Ice Cream<br>to Fight With</p>
+    <p class="hero-title">Ice Cream<br>to <span class="hero-fight">Fight</span> With</p>
     <p class="hero-tagline">Recipes You'll Screw Up At Least Once</p>
   </div>
 </section>
 
 <style>
   .title-hero {
-    /* Fill the viewport below the sticky 60px header so the intro starts
-       below the fold. 100svh avoids the mobile browser toolbar trap. */
-    min-height: calc(100vh - 60px);
-    min-height: calc(100svh - 60px);
+    /* Tall enough to read as a hero and keep the intro's first line near
+       the fold, but trimmed from a full 100vh so the title isn't marooned
+       in dead space below the filmstrip. 72svh avoids the mobile toolbar
+       trap. Content stays vertically centered within this shorter band. */
+    min-height: calc(72vh - 60px);
+    min-height: calc(72svh - 60px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(32px, 6vw, 60px) 26px;
+    padding: clamp(24px, 4vw, 44px) 26px;
     border-bottom: 2px solid var(--ink);
   }
 
@@ -63,12 +65,32 @@
   .hero-title {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(52px, 12vw, 156px);
-    line-height: 0.93;
+    font-size: clamp(46px, 10.5vw, 140px);
+    line-height: 0.96;
     letter-spacing: -0.04em;
     color: var(--ink);
     margin: 0 0 clamp(18px, 3vw, 40px);
     overflow-wrap: break-word;
+    /* The size ramp above keeps "to Fight With" on one line even with the
+       wide calligraphic Fight; balance is a safeguard against a stray
+       "With" being orphaned if the copy ever lengthens. */
+    text-wrap: balance;
+  }
+
+  /* "Fight" set as fancy calligraphic script in red — the one flourish in
+     an otherwise bold grotesque wordmark. Great Vibes has a small x-height
+     and long ascenders/descenders, so scale it up to sit optically level
+     with the grotesque caps, drop the grotesque's tight tracking, and give
+     the swashes vertical room so they aren't clipped by the tight leading. */
+  .hero-fight {
+    font-family: var(--font-script);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--red);
+    font-size: 1.32em;
+    letter-spacing: normal;
+    line-height: 1;
+    padding: 0 0.06em;
   }
 
   .hero-tagline {
