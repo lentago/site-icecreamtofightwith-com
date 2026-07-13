@@ -227,7 +227,7 @@ const bodyStyle = bg
       <div class="header-inner">
         <a href="/" class="wordmark">
           <span class="scoop" aria-hidden="true"></span>
-          <span class="wordmark-text">Ice Cream to Fight With</span>
+          <span class="wordmark-text">Ice Cream to <span class="wordmark-fight">Fight</span> With</span>
         </a>
         <div class="tier-key" aria-label="Difficulty tiers">
           {TIERS.map((t) => (
@@ -316,6 +316,19 @@ const bodyStyle = bg
     font-size: 18px;
     letter-spacing: -0.02em;
     color: var(--ink);
+  }
+  /* "Fight" in the header wordmark echoes the homepage hero — Great Vibes
+     script in red. Scaled up so the small script x-height stays legible at
+     the 18px wordmark size; line-height:1 keeps its ascenders/descenders
+     from stretching the 60px header's line box. */
+  .wordmark-fight {
+    font-family: var(--font-script);
+    font-weight: 400;
+    color: var(--red);
+    font-size: 1.5em;
+    letter-spacing: normal;
+    line-height: 1;
+    padding: 0 0.04em;
   }
   .tier-key {
     display: flex;
