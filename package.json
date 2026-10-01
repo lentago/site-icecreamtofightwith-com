@@ -9,10 +9,10 @@
     "test:a11y": "pa11y-ci --config pa11yci.config.json"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.2.4",
+    "@astrojs/markdown-remark": "^7.3.0",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.4"
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.1"
   },
   "devDependencies": {
     "pa11y-ci": "^4.1.1",
