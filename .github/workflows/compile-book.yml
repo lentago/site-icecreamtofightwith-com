@@ -25,7 +25,7 @@ jobs:
         run: python compile_book.py
 
       - name: Spell check with typos
-        uses: crate-ci/typos@a8168dc2984a9e2352f183ffe788f0f23a300389 # v1.49.1
+        uses: crate-ci/typos@00f422f3b19c57bc6338715ebfe3316d38768461 # v1.50.3
         with:
           config: ./_typos.toml
 
