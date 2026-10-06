@@ -6,7 +6,7 @@ echo "Compiling book..."
 echo ""
 
 # Create/clear output file
-> Ice_Cream_to_Fight_With_COMPLETE.md
+: > Ice_Cream_to_Fight_With_COMPLETE.md
 
 # Counter for stats
 front_count=0
