@@ -28,7 +28,7 @@ jobs:
       issues: write
       id-token: write
       actions: read
-    uses: lentago/shared-workflows/.github/workflows/claude-responder.yml@main
+    uses: lentago/shared-workflows/.github/workflows/claude-responder.yml@v1.2.3
     secrets: inherit
     with:
       default_model: haiku
