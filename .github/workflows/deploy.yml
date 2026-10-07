@@ -4,11 +4,11 @@
 #
 # Thin caller for the shared site-deploy reusable workflow. The full pipeline
 # (Astro build, Trivy scan, build-provenance attestation, ECS roll) lives in:
-#   lentago/shared-workflows/.github/workflows/site-deploy.yml @ v1.1.1
+#   lentago/shared-workflows/.github/workflows/site-deploy.yml @ v1.2.3
 #
-# Pinned to v1.1.1, not v1.1.0 — v1.1.0 carried a job-level concurrency group
-# that deadlocks against this repo's workflow-level `deploy-main` group.
-# Fixed upstream in shared-workflows#51 / released as v1.1.1.
+# Never pin v1.1.0: it carried a job-level concurrency group that deadlocks
+# against this repo's workflow-level `deploy-main` group. Fixed upstream in
+# shared-workflows#51 (v1.1.1); every later tag, including v1.2.3, has the fix.
 #
 # This repo needs one extra step the reusable doesn't do by default: syncing
 # recipes/*.md into the Astro content collection before the build. That's
@@ -37,7 +37,7 @@ jobs:
       contents: read
       attestations: write  # store build provenance in GitHub's attestation store
       packages: read       # required by actions/attest-build-provenance
-    uses: lentago/shared-workflows/.github/workflows/site-deploy.yml@v1.2.2
+    uses: lentago/shared-workflows/.github/workflows/site-deploy.yml@v1.2.3
     with:
       ecr_repo: solidago-dev-app
       ecs_cluster: solidago-dev-cluster
