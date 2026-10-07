@@ -2,7 +2,7 @@
      Regenerate there; do not hand-edit the banner or badge URLs. -->
 <a href="https://lentago.dev"><img src="./assets/banner.svg" alt="site-icecreamtofightwith-com — icecreamtofightwith.com · 28 custard recipes" width="100%"></a>
 
-[![main](https://img.shields.io/github/check-runs/lentago/site-icecreamtofightwith-com/main?style=flat-square&labelColor=0e2b1a&color=1b4b2e&label=main)](https://github.com/lentago/site-icecreamtofightwith-com/actions) [![License](https://img.shields.io/github/license/lentago/site-icecreamtofightwith-com?style=flat-square&labelColor=0e2b1a&color=1b4b2e)](https://github.com/lentago/site-icecreamtofightwith-com/blob/main/LICENSE) [![Ask DeepWiki](https://img.shields.io/badge/Ask-DeepWiki-1b4b2e?style=flat-square&labelColor=0e2b1a&logo=readthedocs&logoColor=E0A81C)](https://deepwiki.com/lentago/site-icecreamtofightwith-com)
+[![main](https://img.shields.io/github/check-runs/lentago/site-icecreamtofightwith-com/main?style=flat-square&labelColor=0e2b1a&color=1b4b2e&label=main)](https://github.com/lentago/site-icecreamtofightwith-com/actions) [![License](https://img.shields.io/github/license/lentago/site-icecreamtofightwith-com?style=flat-square&labelColor=0e2b1a&color=1b4b2e)](https://github.com/lentago/site-icecreamtofightwith-com/blob/main/LICENSE)
 
 ![Astro](https://img.shields.io/badge/Astro-1b4b2e?style=flat-square&labelColor=0e2b1a&logo=astro&logoColor=E0A81C) ![AWS](https://img.shields.io/badge/AWS-1b4b2e?style=flat-square&labelColor=0e2b1a&logo=amazonwebservices&logoColor=E0A81C) ![Markdown](https://img.shields.io/badge/Markdown-1b4b2e?style=flat-square&labelColor=0e2b1a&logo=markdown&logoColor=E0A81C)
 
@@ -11,18 +11,6 @@
 A 28-recipe custard-based ice cream cookbook spanning international cuisines, built as a modular Markdown project and served as content for [icecreamtofightwith.com](https://icecreamtofightwith.com). It's also this org's fun exhibit: a real content pipeline — lint, compile, deploy — run with the same rigor as any production service, on stakes low enough to poke at without fear.
 
 **Authorship:** The recipes, front matter, and build scripts in this repo are co-written with [Claude](https://claude.ai) (Anthropic). I bring the flavor ideas, technique experience, and editorial direction; Claude writes the prose and the code. I'm an infrastructure operator, not a software engineer or a professional writer — please don't read this repo as a portfolio of either coding or authorship.
-
-## 📚 Ask this codebase (DeepWiki)
-
-<a href="https://deepwiki.com/lentago/site-icecreamtofightwith-com"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" height="32"></a>
-
-[DeepWiki](https://deepwiki.com/lentago/site-icecreamtofightwith-com) maintains an AI-generated wiki over this repository — architecture pages, diagrams, and a Q&A box grounded in the actual code. Every public Lentago Labs repo is indexed ([deepwiki.com/lentago](https://deepwiki.com/lentago)); it is the fastest way to orient before reading source. It is AI-generated: trust it to orient you, verify against the code before you act on it.
-
-**Good first questions:**
-
-- How does the compile-book.yml workflow keep Ice_Cream_to_Fight_With_COMPLETE.md in sync when a recipe file changes?
-- How does the deploy.yml workflow authenticate to AWS, and what solidago-owned resources does it target?
-- Why is docs-check.yml deliberately not path-filtered, and what problem does that avoid for required status checks?
 
 ## 🧭 What this repo demonstrates
 
@@ -121,5 +109,4 @@ MIT License — see [LICENSE](LICENSE).
 > 🌱 **Lentago Labs** is a pro-bono operations practice for organizations that
 > run on volunteers, donations, and one overworked tech person. Everything here
 > is free to take, and we practice what we publish: our own estate runs this
-> way, in the open. Start at the [org profile](https://github.com/lentago), and
-> read this repo on [DeepWiki](https://deepwiki.com/lentago/site-icecreamtofightwith-com).
+> way, in the open. Start at the [org profile](https://github.com/lentago).
