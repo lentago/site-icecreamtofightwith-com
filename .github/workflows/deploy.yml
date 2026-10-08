@@ -37,7 +37,7 @@ jobs:
       contents: read
       attestations: write  # store build provenance in GitHub's attestation store
       packages: read       # required by actions/attest-build-provenance
-    uses: lentago/shared-workflows/.github/workflows/site-deploy.yml@v1.2.3
+    uses: lentago/shared-workflows/.github/workflows/site-deploy.yml@v1.3.0
     with:
       ecr_repo: solidago-dev-app
       ecs_cluster: solidago-dev-cluster
