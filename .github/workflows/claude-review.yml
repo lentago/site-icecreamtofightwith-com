@@ -1,0 +1,114 @@
+# ============================================================================
+# Claude Code — Automated PR Review (advisory)
+# ============================================================================
+# Thin wrapper around lentago/shared-workflows/claude-review.yml, per
+# lentago/.github ADR-0013. This is copied from lentago/repo-template's
+# claude-review.yml: other repos copy it and replace only the review_prompt.
+#
+# - Runs when a PR is opened or marked ready for review, and again when it is
+#   labelled `re-review` (Haiku) or `review:sonnet` (Sonnet). It does NOT run on
+#   every push: it shares the fleet's Claude subscription with the bullpen.
+# - Advisory, never a required status check (shared-workflows ADR-0003). The
+#   gate is the arming rule: don't arm until a review has posted and every
+#   finding is triaged on the PR (shared-workflows CLAUDE.md, Auto-merge
+#   arming). A "could not complete" soft-fail comment is not a review —
+#   label `re-review`.
+# - After a labelled run, `clear-label` removes the label so adding it again
+#   triggers again.
+# - A PR that adds or changes THIS file is not reviewed by it: the Claude Code
+#   action skips unless the workflow is identical to the default branch's copy,
+#   and the reusable workflow (v1.5.0+) posts a "not a review" notice instead.
+#   Review such PRs locally and post the result as "Review (Haiku, local)"
+#   (ADR-0013 Decision 2).
+# - Dependabot PRs are skipped: Dependabot runs don't receive Actions secrets,
+#   so the required token would fail the call. Review a bump locally if it
+#   warrants one.
+# - Drafts are skipped (by the reusable workflow) and keep their trigger label
+#   until they are ready.
+# ============================================================================
+
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, labeled]
+
+jobs:
+  review:
+    if: >-
+      github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.draft == false &&
+      (github.event.action != 'labeled' ||
+       github.event.label.name == 're-review' ||
+       github.event.label.name == 'review:sonnet')
+    # One review at a time per PR: a re-label during a running review queues
+    # behind it instead of posting a duplicate.
+    concurrency:
+      group: claude-review-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+    uses: lentago/shared-workflows/.github/workflows/claude-review.yml@v1.5.0
+    secrets: inherit
+    with:
+      model: ${{ github.event.label.name == 'review:sonnet' && 'sonnet' || 'haiku' }}
+      review_prompt: |
+        This repository is a markdown ice-cream cookbook ("Ice Cream to Fight
+        With"): 28 recipes in `recipes/*.md` that compile into a printable book
+        and an Astro static site (nginx on ECS Fargate, deployed on merge to
+        main). Focus your review on:
+
+        - **Recipe and prose correctness**: ingredient, quantity and step
+          consistency, technique accuracy, and the rules in `STYLE_GUIDE.md`.
+          The HOMIE voice (profanity, address terms) is intentional and checked
+          by the linter; flag genuine errors, not tone. Plain text only: no
+          emojis or decorative Unicode, no mojibake, files stay UTF-8.
+        - **Two pipelines, one source**: `compile_book.py` strips the YAML
+          frontmatter and `sync_recipes.py` feeds it to the Astro content
+          collection. The frontmatter intentionally restates the body, so don't
+          ask to consolidate it. Watch for changes that desync the two, and for
+          a rename that leaves stale references (`front_matter/08_the_flavors.md`,
+          `STYLE_GUIDE.md`, `canonical_samples/`, the compiled book).
+        - **Build and lint scripts**: Python correctness in `compile_book.py`,
+          `ice_cream_linter.py` and `sync_recipes.py` (globbing, ordering,
+          encoding, anchor slugs). A linter change must not silently loosen a
+          rule or drop content. CI relies on `ice_cream_linter.py` and
+          `compile-book.yml` as required checks.
+        - **Site code**: Astro config and content schema, `src/lib/` (the
+          rehype section plugin, book-order pager, tiers), and accessibility
+          (WCAG2AA, checked by `a11y.yml`). Flag changes that break the
+          book-wide prev/next order or contrast.
+        - **Deploy and hosting surface**: `deploy.yml` (the live-apply path via
+          the shared site-deploy workflow, Node >=22.12, OIDC role), the
+          `Dockerfile`, `nginx.conf` and `nginx-security-headers.conf`. Any
+          `add_header` in a location block must re-include the security-headers
+          file, and CSP changes must match what the built site actually loads.
+        - **Security**: no secrets or account details in scripts, workflows or
+          committed build output (`dist/`, the compiled book), and untrusted
+          event data kept out of `run:` lines.
+
+  clear-label:
+    needs: review
+    if: >-
+      always() && github.event.action == 'labeled' &&
+      github.event.pull_request.draft == false &&
+      (github.event.label.name == 're-review' || github.event.label.name == 'review:sonnet')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Remove the trigger label so it can be added again
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          LABEL: ${{ github.event.label.name }}
+        # REST, not `gh pr edit`: the GraphQL path can trip on PR project
+        # fields with GITHUB_TOKEN, and a label left behind would make the
+        # next re-add a no-op (no `labeled` event).
+        run: |
+          enc=$(jq -rn --arg l "$LABEL" '$l|@uri')
+          gh api --method DELETE "repos/$REPO/issues/$PR/labels/$enc" >/dev/null
