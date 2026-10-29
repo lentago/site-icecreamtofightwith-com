@@ -82,7 +82,7 @@ jobs:
           (WCAG2AA, checked by `a11y.yml`). Flag changes that break the
           book-wide prev/next order or contrast.
         - **Deploy and hosting surface**: `deploy.yml` (the live-apply path via
-          the shared site-deploy workflow, Node >=22.12, OIDC role), the
+          the shared site-deploy workflow pinned to a tag, Node 22, OIDC role), the
           `Dockerfile`, `nginx.conf` and `nginx-security-headers.conf`. Any
           `add_header` in a location block must re-include the security-headers
           file, and CSP changes must match what the built site actually loads.
