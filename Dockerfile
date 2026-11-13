@@ -7,7 +7,7 @@
 # The Astro build happens in the GitHub Action (Node environment).
 # Docker's only job: package the output into a serving container.
 
-# nginx 1.31.3 — comment must stay on its own line: '#' mid-line is not a
+# nginx 1.31.8 — comment must stay on its own line: '#' mid-line is not a
 # comment in a Dockerfile, and an inline tag note makes FROM unparsable.
 FROM nginx@sha256:165ddde8751e75a1c907d24ef10d9f6deb08b57e0fe56caf67512486aff76d82
 
